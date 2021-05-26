@@ -33,6 +33,7 @@ public class ImageExpServer {
         for (HttpContext context : contexts) {
             server.removeContext(context);
         }
+        contexts.clear();
         server.stop(0);
     }
 
