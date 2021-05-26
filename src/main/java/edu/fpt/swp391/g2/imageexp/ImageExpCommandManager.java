@@ -1,7 +1,6 @@
 package edu.fpt.swp391.g2.imageexp;
 
-import edu.fpt.swp391.g2.imageexp.command.Command;
-import edu.fpt.swp391.g2.imageexp.command.impl.*;
+import edu.fpt.swp391.g2.imageexp.command.*;
 
 import java.util.Collection;
 import java.util.HashMap;

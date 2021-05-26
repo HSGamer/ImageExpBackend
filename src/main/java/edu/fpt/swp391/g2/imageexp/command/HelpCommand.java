@@ -1,6 +1,4 @@
-package edu.fpt.swp391.g2.imageexp.command.impl;
-
-import edu.fpt.swp391.g2.imageexp.command.Command;
+package edu.fpt.swp391.g2.imageexp.command;
 
 public class HelpCommand extends Command {
     public HelpCommand() {
