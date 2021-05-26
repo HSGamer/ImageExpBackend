@@ -27,6 +27,7 @@ public class ImageExpMain {
         }
         logger.info("Start the server");
         imageExpServer.enable();
+        logger.info("For help, please type 'help'");
         terminal.start();
     }
 
@@ -49,6 +50,7 @@ public class ImageExpMain {
     private boolean loadServer() {
         try {
             imageExpServer.init();
+            logger.info("Init the server at " + MainConfig.SERVER_IP.getValue() + ":" + MainConfig.SERVER_PORT.getValue());
             return true;
         } catch (Exception e) {
             logger.error("Cannot create the server", e);
