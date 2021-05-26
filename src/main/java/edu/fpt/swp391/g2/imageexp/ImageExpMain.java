@@ -9,8 +9,6 @@ import lombok.Setter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.SQLException;
-
 @Getter
 public class ImageExpMain {
     private final ImageExpCommandManager commandManager = new ImageExpCommandManager();
@@ -29,7 +27,7 @@ public class ImageExpMain {
             return;
         }
         logger.info("Connect to the database");
-        connectDatabase();
+        DatabaseConnector.init();
         logger.info("Start the server");
         imageExpServer.enable();
         logger.info("For help, please type 'help'");
@@ -39,19 +37,19 @@ public class ImageExpMain {
     public void shutdown() {
         imageExpServer.disable();
         commandManager.disable();
-        closeDatabase();
+        DatabaseConnector.disable();
     }
 
     public void reload() {
         imageExpServer.disable();
-        closeDatabase();
+        DatabaseConnector.disable();
         mainConfig.reload();
         if (!loadServer()) {
             shuttingDown = true;
             System.exit(1);
             return;
         }
-        connectDatabase();
+        DatabaseConnector.init();
         imageExpServer.enable();
     }
 
@@ -63,22 +61,6 @@ public class ImageExpMain {
         } catch (Exception e) {
             logger.error("Cannot create the server", e);
             return false;
-        }
-    }
-
-    private void connectDatabase() {
-        try {
-            DatabaseConnector.init();
-        } catch (ClassNotFoundException | SQLException e) {
-            logger.error("Cannot connect to the database", e);
-        }
-    }
-
-    private void closeDatabase() {
-        try {
-            DatabaseConnector.disable();
-        } catch (SQLException e) {
-            logger.error("Cannot close the database", e);
         }
     }
 }

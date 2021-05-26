@@ -4,11 +4,14 @@ import edu.fpt.swp391.g2.imageexp.config.MainConfig;
 import me.hsgamer.hscore.database.Setting;
 import me.hsgamer.hscore.database.client.sql.java.JavaSqlClient;
 import me.hsgamer.hscore.database.driver.MySqlDriver;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
 public class DatabaseConnector {
+    private static final Logger logger = LogManager.getLogger(DatabaseConnector.class);
     private static JavaSqlClient client;
     private static Connection connection;
 
@@ -16,21 +19,29 @@ public class DatabaseConnector {
         // EMPTY
     }
 
-    public static void init() throws ClassNotFoundException, SQLException {
+    public static void init() {
         Setting setting = new Setting()
                 .setHost(MainConfig.DATABASE_HOST.getValue())
                 .setPort(MainConfig.DATABASE_PORT.getValue())
                 .setDatabaseName(MainConfig.DATABASE_DB_NAME.getValue())
                 .setUsername(MainConfig.DATABASE_USERNAME.getValue())
                 .setPassword(MainConfig.DATABASE_PASSWORD.getValue());
-        client = new JavaSqlClient(setting, new MySqlDriver());
-        connection = client.getConnection();
+        try {
+            client = new JavaSqlClient(setting, new MySqlDriver());
+            connection = client.getConnection();
+        } catch (ClassNotFoundException | SQLException e) {
+            logger.error("Cannot connect to the database", e);
+        }
     }
 
-    public static void disable() throws SQLException {
+    public static void disable() {
         client = null;
-        if (connection != null && !connection.isClosed()) {
-            connection.close();
+        try {
+            if (connection != null && !connection.isClosed()) {
+                connection.close();
+            }
+        } catch (SQLException e) {
+            logger.error("Cannot close the database", e);
         }
     }
 
