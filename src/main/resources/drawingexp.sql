@@ -1,0 +1,14 @@
+CREATE TABLE picture (picID int(11) NOT NULL, category varchar(30) NOT NULL, userID int(11) NOT NULL, picture text NOT NULL);
+INSERT INTO picture (picID, category, userID, picture) VALUES(1, 'sample', 1, '');
+CREATE TABLE post (postID int(11) NOT NULL, userID int(11) NOT NULL, picID int(11) NOT NULL, keyword varchar(128) NOT NULL, status varchar(30) NOT NULL, likes int(11) NOT NULL);
+INSERT INTO post (postID, userID, picID, keyword, status, likes) VALUES(1, 1, 1, '#this#is#key#word', 'banned', 1234);
+CREATE TABLE user (userid int(11) NOT NULL, email varchar(64) NOT NULL, password text NOT NULL, username varchar(64) NOT NULL, avatar text NOT NULL, status varchar(30) NOT NULL);
+INSERT INTO user (userid, email, password, username, avatar, status) VALUES (1, 'daylaemail@gmail.com', 'iHUUuHGdJfYUgIKHo2333jB@HJ32k32j3b', 'daylauser', '', '');
+ALTER TABLE picture ADD PRIMARY KEY (picID), ADD KEY FK_picture_userID (userID);
+ALTER TABLE post ADD PRIMARY KEY (postID), ADD KEY FK_post_userID (userID), ADD KEY fk_post_pictureid (picID);
+ALTER TABLE user ADD PRIMARY KEY (userid);
+ALTER TABLE picture MODIFY picID int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+ALTER TABLE post MODIFY postID int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE user MODIFY userid int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+ALTER TABLE picture ADD CONSTRAINT FK_picture_userID FOREIGN KEY (userID) REFERENCES user (userid);
+ALTER TABLE post ADD CONSTRAINT FK_post_userID FOREIGN KEY (userID) REFERENCES user (userid), ADD CONSTRAINT fk_post_pictureid FOREIGN KEY (picID) REFERENCES picture (picID);

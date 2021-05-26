@@ -37,6 +37,11 @@ public class DatabaseConnector {
             }
             client = new JavaSqlClient(setting, driver);
             connection = client.getConnection();
+            if (MainConfig.DATABASE_FIRST_LOAD.getValue()) {
+                LocalDatabaseExecutor.createDatabase(connection);
+                MainConfig.DATABASE_FIRST_LOAD.setValue(false);
+                MainConfig.DATABASE_FIRST_LOAD.getConfig().save();
+            }
         } catch (ClassNotFoundException | SQLException e) {
             logger.error("Cannot connect to the database", e);
         }
