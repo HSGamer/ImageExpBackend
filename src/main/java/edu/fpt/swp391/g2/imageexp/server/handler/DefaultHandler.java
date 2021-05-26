@@ -24,6 +24,10 @@ public class DefaultHandler implements HttpHandler {
         info.put("protocol", httpExchange.getProtocol());
         info.put("method", httpExchange.getRequestMethod());
         info.put("headers", httpExchange.getRequestHeaders());
+        JSONObject user = new JSONObject();
+        jsonObject.put("user", user);
+        user.put("name", httpExchange.getPrincipal().getName());
+        user.put("realm", httpExchange.getPrincipal().getRealm());
         byte[] bytes = jsonObject.toString().getBytes();
 
         httpExchange.sendResponseHeaders(200, bytes.length);
