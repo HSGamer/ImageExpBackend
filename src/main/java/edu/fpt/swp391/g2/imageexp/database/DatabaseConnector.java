@@ -1,6 +1,7 @@
 package edu.fpt.swp391.g2.imageexp.database;
 
 import edu.fpt.swp391.g2.imageexp.config.MainConfig;
+import me.hsgamer.hscore.config.Config;
 import me.hsgamer.hscore.database.Driver;
 import me.hsgamer.hscore.database.Setting;
 import me.hsgamer.hscore.database.client.sql.java.JavaSqlClient;
@@ -9,6 +10,7 @@ import me.hsgamer.hscore.database.driver.SqliteDriver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -40,9 +42,12 @@ public class DatabaseConnector {
             if (MainConfig.DATABASE_FIRST_LOAD.getValue()) {
                 LocalDatabaseExecutor.createDatabase(connection);
                 MainConfig.DATABASE_FIRST_LOAD.setValue(false);
-                MainConfig.DATABASE_FIRST_LOAD.getConfig().save();
+                Config config = MainConfig.DATABASE_FIRST_LOAD.getConfig();
+                if (config != null) {
+                    config.save();
+                }
             }
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (ClassNotFoundException | SQLException | IOException e) {
             logger.error("Cannot connect to the database", e);
         }
     }
