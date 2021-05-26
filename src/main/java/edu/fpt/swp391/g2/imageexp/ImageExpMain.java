@@ -20,11 +20,7 @@ public class ImageExpMain {
 
     public void enable() {
         mainConfig.setup();
-        try {
-            imageExpServer.init();
-            logger.info("Init the server");
-        } catch (Exception e) {
-            logger.error("Cannot create the server", e);
+        if (!loadServer()) {
             shuttingDown = true;
             System.exit(1);
             return;
@@ -42,14 +38,21 @@ public class ImageExpMain {
     public void reload() {
         imageExpServer.disable();
         mainConfig.reload();
-        try {
-            imageExpServer.init();
-        } catch (Exception e) {
-            logger.error("Cannot create the server", e);
+        if (!loadServer()) {
             shuttingDown = true;
             System.exit(1);
             return;
         }
         imageExpServer.enable();
+    }
+
+    private boolean loadServer() {
+        try {
+            imageExpServer.init();
+            return true;
+        } catch (Exception e) {
+            logger.error("Cannot create the server", e);
+            return false;
+        }
     }
 }
