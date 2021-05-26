@@ -21,7 +21,7 @@ public class ImageExpServer {
         server = HttpServer.create(new InetSocketAddress(8000), 0);
         server.setExecutor(Executors.newFixedThreadPool(10));
 
-        registerHandler("/", new ChangeableTextHandler());
+        registerHandler("/changeable", new ChangeableTextHandler());
     }
 
     public void enable() {
