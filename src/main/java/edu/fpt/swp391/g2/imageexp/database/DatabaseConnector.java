@@ -40,6 +40,7 @@ public class DatabaseConnector {
             client = new JavaSqlClient(setting, driver);
             connection = client.getConnection();
             if (MainConfig.DATABASE_FIRST_LOAD.getValue()) {
+                logger.info("Load database at first run");
                 LocalDatabaseExecutor.createDatabase(connection);
                 MainConfig.DATABASE_FIRST_LOAD.setValue(false);
                 Config config = MainConfig.DATABASE_FIRST_LOAD.getConfig();
