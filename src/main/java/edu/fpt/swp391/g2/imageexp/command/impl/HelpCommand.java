@@ -11,7 +11,12 @@ public class HelpCommand extends Command {
     public void runCommand(String argument) {
         getLogger().info("Available commands: ");
         for (Command command : getInstance().getCommandManager().getCommands()) {
-            getLogger().info("  " + command.getUsage());
+            getLogger().info(() -> String.format("%30s\t%-30s", command.getUsage(), command.getDescription()));
         }
+    }
+
+    @Override
+    public String getDescription() {
+        return "Help Command";
     }
 }

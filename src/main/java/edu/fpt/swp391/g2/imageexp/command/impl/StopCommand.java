@@ -14,4 +14,9 @@ public class StopCommand extends Command {
         getInstance().shutdown();
         System.exit(0);
     }
+
+    @Override
+    public String getDescription() {
+        return "Stop Command";
+    }
 }

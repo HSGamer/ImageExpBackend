@@ -33,4 +33,8 @@ public abstract class Command {
     public String getUsage() {
         return name;
     }
+
+    public String getDescription() {
+        return "";
+    }
 }

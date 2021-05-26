@@ -12,4 +12,9 @@ public class ReloadCommand extends Command {
         getInstance().reload();
         getLogger().info("Reloaded");
     }
+
+    @Override
+    public String getDescription() {
+        return "Reload Command";
+    }
 }
