@@ -3,6 +3,7 @@ package edu.fpt.swp391.g2.imageexp.server;
 import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
+import edu.fpt.swp391.g2.imageexp.config.MainConfig;
 import edu.fpt.swp391.g2.imageexp.server.handler.ChangeableTextHandler;
 import lombok.Getter;
 
@@ -18,7 +19,7 @@ public class ImageExpServer {
     private HttpServer server;
 
     public void init() throws IOException {
-        server = HttpServer.create(new InetSocketAddress(8000), 0);
+        server = HttpServer.create(new InetSocketAddress(MainConfig.SERVER_IP.getValue(), MainConfig.SERVER_PORT.getValue()), 0);
         server.setExecutor(Executors.newFixedThreadPool(10));
 
         registerHandler("/changeable", new ChangeableTextHandler());

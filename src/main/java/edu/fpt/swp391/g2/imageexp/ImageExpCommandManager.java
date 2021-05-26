@@ -1,10 +1,7 @@
 package edu.fpt.swp391.g2.imageexp;
 
 import edu.fpt.swp391.g2.imageexp.command.Command;
-import edu.fpt.swp391.g2.imageexp.command.impl.ChangeTextCommand;
-import edu.fpt.swp391.g2.imageexp.command.impl.EchoCommand;
-import edu.fpt.swp391.g2.imageexp.command.impl.HelpCommand;
-import edu.fpt.swp391.g2.imageexp.command.impl.StopCommand;
+import edu.fpt.swp391.g2.imageexp.command.impl.*;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -18,6 +15,7 @@ public class ImageExpCommandManager {
         addCommand(new EchoCommand());
         addCommand(new ChangeTextCommand());
         addCommand(new HelpCommand());
+        addCommand(new ReloadCommand());
     }
 
     public void addCommand(Command command) {
