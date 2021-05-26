@@ -88,6 +88,10 @@
                         <manifestEntries>
                             <Main-Class>edu.fpt.swp391.g2.imageexp.ImageExpBoostrap</Main-Class>
                         </manifestEntries>
+                        <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                        </manifest>
                     </archive>
                 </configuration>
             </plugin>

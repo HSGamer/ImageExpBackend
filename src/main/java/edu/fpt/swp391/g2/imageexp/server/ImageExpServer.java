@@ -5,6 +5,7 @@ import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 import edu.fpt.swp391.g2.imageexp.config.MainConfig;
 import edu.fpt.swp391.g2.imageexp.server.handler.ChangeableTextHandler;
+import edu.fpt.swp391.g2.imageexp.server.handler.DefaultHandler;
 import lombok.Getter;
 
 import java.io.IOException;
@@ -23,6 +24,7 @@ public class ImageExpServer {
         server.setExecutor(Executors.newFixedThreadPool(10));
 
         registerHandler("/changeable", new ChangeableTextHandler());
+        registerHandler("/", new DefaultHandler());
     }
 
     public void enable() {
