@@ -16,7 +16,7 @@ public class ChangeableTextHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         Headers headers = httpExchange.getResponseHeaders();
-        headers.set("content-type", "application/json");
+        headers.set("Content-Type", "application/json");
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("text", text);
