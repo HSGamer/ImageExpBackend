@@ -38,7 +38,7 @@ public class ImageExpServer {
         contexts.clear();
         server.stop(0);
     }
-    //djawjdahd
+
     public HttpContext registerHandler(String path, HttpHandler httpHandler) {
         HttpContext context = server.createContext(path, httpHandler);
         contexts.add(context);
