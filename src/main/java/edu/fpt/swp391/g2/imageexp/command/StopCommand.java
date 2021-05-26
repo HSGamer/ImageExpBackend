@@ -10,7 +10,6 @@ public class StopCommand extends Command {
         getInstance().setShuttingDown(true);
         getLogger().info("Shutting down!");
         getInstance().shutdown();
-        System.exit(0);
     }
 
     @Override

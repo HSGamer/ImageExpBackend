@@ -38,6 +38,7 @@ public class ImageExpMain {
         imageExpServer.disable();
         commandManager.disable();
         DatabaseConnector.disable();
+        System.exit(0);
     }
 
     public void reload() {
