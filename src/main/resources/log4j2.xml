@@ -2,7 +2,8 @@
 <Configuration status="WARN">
     <Appenders>
         <TerminalConsole name="TerminalConsole">
-            <PatternLayout pattern="[%d{HH:mm:ss} %style{%highlight{%level}{FATAL=red dark, ERROR=red, WARN=yellow bright, INFO=cyan bright, DEBUG=green, TRACE=white}}] %minecraftFormatting{%msg}%n"/>
+            <PatternLayout
+                    pattern="[%d{HH:mm:ss} %style{%highlight{%level}{FATAL=red dark, ERROR=red, WARN=yellow bright, INFO=cyan bright, DEBUG=green, TRACE=white}}] %minecraftFormatting{%msg}%n"/>
         </TerminalConsole>
     </Appenders>
     <Loggers>
