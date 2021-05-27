@@ -38,27 +38,27 @@
         <dependency>
             <groupId>me.HSGamer</groupId>
             <artifactId>HSCore-config-simpleconfiguration</artifactId>
-            <version>3.3</version>
+            <version>3.4</version>
         </dependency>
         <dependency>
             <groupId>me.HSGamer</groupId>
             <artifactId>HSCore-database-client-java</artifactId>
-            <version>3.3</version>
+            <version>3.4</version>
         </dependency>
         <dependency>
             <groupId>me.HSGamer</groupId>
             <artifactId>HSCore-database-driver-mysql</artifactId>
-            <version>3.3</version>
+            <version>3.4</version>
         </dependency>
         <dependency>
             <groupId>me.HSGamer</groupId>
             <artifactId>HSCore-database-driver-sqlite</artifactId>
-            <version>3.3</version>
+            <version>3.4</version>
         </dependency>
         <dependency>
             <groupId>me.HSGamer</groupId>
             <artifactId>HSCore-config-path</artifactId>
-            <version>3.3</version>
+            <version>3.4</version>
         </dependency>
         <dependency>
             <groupId>me.carleslc.Simple-YAML</groupId>
