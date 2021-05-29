@@ -9,6 +9,10 @@ import lombok.Setter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * The main instance of the project, where all services run.
+ * You can get all the services with the get...() method
+ */
 @Getter
 public class ImageExpMain {
     private final ImageExpCommandManager commandManager = new ImageExpCommandManager();
@@ -19,6 +23,9 @@ public class ImageExpMain {
     @Setter
     private boolean shuttingDown = false;
 
+    /**
+     * Enable the services
+     */
     public void enable() {
         mainConfig.setup();
         if (!loadServer()) {
@@ -34,6 +41,9 @@ public class ImageExpMain {
         terminal.start();
     }
 
+    /**
+     * Shut down the services
+     */
     public void shutdown() {
         imageExpServer.disable();
         commandManager.disable();
@@ -41,6 +51,9 @@ public class ImageExpMain {
         System.exit(0);
     }
 
+    /**
+     * Reload the services (Mainly used when changing in the config file)
+     */
     public void reload() {
         imageExpServer.disable();
         DatabaseConnector.disable();
@@ -54,6 +67,11 @@ public class ImageExpMain {
         imageExpServer.enable();
     }
 
+    /**
+     * Load the HTTP server
+     *
+     * @return whether the server can be enabled
+     */
     private boolean loadServer() {
         try {
             imageExpServer.init();

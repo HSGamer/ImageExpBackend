@@ -5,6 +5,9 @@ import net.minecrell.terminalconsole.SimpleTerminalConsole;
 
 import static edu.fpt.swp391.g2.imageexp.ImageExpBoostrap.INSTANCE;
 
+/**
+ * The terminal console, which also handles the incoming terminal commands
+ */
 @Log4j2
 public class ImageExpTerminal extends SimpleTerminalConsole {
 

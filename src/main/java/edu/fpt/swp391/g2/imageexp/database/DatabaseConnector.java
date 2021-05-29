@@ -14,6 +14,9 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+/**
+ * The database connector, which holds the connection to the database
+ */
 public class DatabaseConnector {
     private static final Logger logger = LogManager.getLogger(DatabaseConnector.class);
     private static JavaSqlClient client;
@@ -23,6 +26,9 @@ public class DatabaseConnector {
         // EMPTY
     }
 
+    /**
+     * Init the client and the database connection
+     */
     public static void init() {
         Setting setting = new Setting()
                 .setHost(MainConfig.DATABASE_HOST.getValue())
@@ -53,6 +59,9 @@ public class DatabaseConnector {
         }
     }
 
+    /**
+     * Break the database connection
+     */
     public static void disable() {
         client = null;
         try {
@@ -64,6 +73,11 @@ public class DatabaseConnector {
         }
     }
 
+    /**
+     * Get the database connection
+     *
+     * @return the database connection
+     */
     public static Connection getConnection() {
         return connection;
     }
