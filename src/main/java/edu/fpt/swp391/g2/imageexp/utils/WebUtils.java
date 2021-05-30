@@ -3,6 +3,9 @@ package edu.fpt.swp391.g2.imageexp.utils;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The utility class for web handling
+ */
 public class WebUtils {
     private WebUtils() {
         // EMPTY
