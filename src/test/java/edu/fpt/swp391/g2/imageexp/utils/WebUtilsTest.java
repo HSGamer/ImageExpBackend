@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 class WebUtilsTest {
-    private static Map<String, String> testMap = new HashMap<>();
+    private static final Map<String, String> testMap = new HashMap<>();
     private static String testString;
     private static String testFormattedString;
 
