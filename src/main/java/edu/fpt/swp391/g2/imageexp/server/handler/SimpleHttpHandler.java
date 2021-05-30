@@ -31,7 +31,8 @@ public interface SimpleHttpHandler extends HttpHandler {
     default void handle(HttpExchange httpExchange) throws IOException {
         String method = httpExchange.getRequestMethod();
         if ("GET".equalsIgnoreCase(method)) {
-            Map<String, String> params = WebUtils.formatParameters(httpExchange.getRequestURI().getQuery());
+            String query = httpExchange.getRequestURI().getQuery();
+            Map<String, String> params = WebUtils.formatParameters(query != null ? query : "");
             handleGetRequest(httpExchange, params);
         } else if ("POST".equalsIgnoreCase(method)) {
             StringBuilder sb = new StringBuilder();
