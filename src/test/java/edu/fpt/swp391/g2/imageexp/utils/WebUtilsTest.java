@@ -18,13 +18,20 @@ class WebUtilsTest {
     private static String testFormattedString;
 
     @BeforeAll
-    static void setUp() throws UnsupportedEncodingException {
+    static void setUp() {
         testMap.put("test1", "value1");
         testMap.put("test2", "");
         testMap.put("test3", "==");
         testMap.put("test4", "````");
         testString = testMap.entrySet().stream().map(entry -> entry.getKey() + "=" + entry.getValue()).collect(Collectors.joining("&"));
-        testFormattedString = URLEncoder.encode(testString, StandardCharsets.UTF_8.toString());
+        testFormattedString = testMap.entrySet().stream().map(entry -> {
+            try {
+                return entry.getKey() + "=" + URLEncoder.encode(entry.getValue(), StandardCharsets.UTF_8.toString());
+            } catch (UnsupportedEncodingException e) {
+                Assertions.fail(e);
+                return "";
+            }
+        }).collect(Collectors.joining("&"));
     }
 
     @Test
