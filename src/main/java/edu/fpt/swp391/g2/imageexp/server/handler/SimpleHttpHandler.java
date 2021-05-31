@@ -2,30 +2,15 @@ package edu.fpt.swp391.g2.imageexp.server.handler;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import edu.fpt.swp391.g2.imageexp.utils.HandlerUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 
 /**
  * A simple web handler with support for formatting query parameters
  */
 public interface SimpleHttpHandler extends HttpHandler {
-    /**
-     * Send the "404 Not Found" to the http exchange.
-     *
-     * @param httpExchange the http exchange
-     * @throws IOException if there is an I/O error
-     */
-    static void sendNotFoundResponse(HttpExchange httpExchange) throws IOException {
-        String response = "404 (Not Found)";
-        httpExchange.sendResponseHeaders(404, response.length());
-        OutputStream os = httpExchange.getResponseBody();
-        os.write(response.getBytes());
-        os.flush();
-        os.close();
-    }
-
     @Override
     default void handle(HttpExchange httpExchange) throws IOException {
         String method = httpExchange.getRequestMethod();
@@ -54,7 +39,7 @@ public interface SimpleHttpHandler extends HttpHandler {
      * @throws IOException if there is an I/O error
      */
     default void handleGetRequest(HttpExchange httpExchange, String parameters) throws IOException {
-        sendNotFoundResponse(httpExchange);
+        HandlerUtils.sendNotFoundResponse(httpExchange);
     }
 
     /**
@@ -66,7 +51,7 @@ public interface SimpleHttpHandler extends HttpHandler {
      * @throws IOException if there is an I/O error
      */
     default void handlePostRequest(HttpExchange httpExchange, String parameters) throws IOException {
-        sendNotFoundResponse(httpExchange);
+        HandlerUtils.sendNotFoundResponse(httpExchange);
     }
 
     /**
@@ -78,6 +63,6 @@ public interface SimpleHttpHandler extends HttpHandler {
      * @throws IOException if there is an I/O error
      */
     default void handleDefaultRequest(String method, HttpExchange httpExchange) throws IOException {
-        sendNotFoundResponse(httpExchange);
+        HandlerUtils.sendNotFoundResponse(httpExchange);
     }
 }

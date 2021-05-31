@@ -1,14 +1,13 @@
 package edu.fpt.swp391.g2.imageexp.server.handler.misc;
 
 import com.eclipsesource.json.JsonObject;
-import com.eclipsesource.json.WriterConfig;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import edu.fpt.swp391.g2.imageexp.utils.HandlerUtils;
 import lombok.Setter;
 
 import java.io.IOException;
-import java.io.OutputStream;
 
 public class ChangeableTextHandler implements HttpHandler {
     @Setter
@@ -21,12 +20,6 @@ public class ChangeableTextHandler implements HttpHandler {
 
         JsonObject jsonObject = new JsonObject();
         jsonObject.add("text", text);
-        String string = jsonObject.toString(WriterConfig.PRETTY_PRINT);
-
-        httpExchange.sendResponseHeaders(200, string.length());
-        OutputStream outputStream = httpExchange.getResponseBody();
-        outputStream.write(string.getBytes());
-        outputStream.flush();
-        outputStream.close();
+        HandlerUtils.sendJsonResponse(httpExchange, 200, jsonObject);
     }
 }
