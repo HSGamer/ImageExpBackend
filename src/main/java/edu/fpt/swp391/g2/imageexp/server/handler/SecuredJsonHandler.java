@@ -31,7 +31,7 @@ public abstract class SecuredJsonHandler implements SimpleHttpHandler {
         }
         String secretKey = jsonObject.getString("secret-key", "");
         JsonValue body = jsonObject.get("body");
-        if (!secretKey.equals(MainConfig.SERVER_SECRET_KEY.getValue())) {
+        if (!MainConfig.SERVER_SECRET_KEY.getValue().equals(secretKey)) {
             HandlerUtils.sendNotAuthorizedResponse(httpExchange);
             return;
         }
