@@ -19,6 +19,7 @@ public class ImageExpCommandManager {
         addCommand(new ChangeTextCommand());
         addCommand(new HelpCommand());
         addCommand(new ReloadCommand());
+        addCommand(new GetUserByIdCommand());
     }
 
     /**
