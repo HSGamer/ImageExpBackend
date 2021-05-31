@@ -11,7 +11,7 @@ import java.io.OutputStream;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class JsonHandler implements SimpleHttpHandler {
+public abstract class SecuredJsonHandler implements SimpleHttpHandler {
     @Override
     public void handlePostRequest(HttpExchange httpExchange, String parameters) throws IOException {
         Headers headers = httpExchange.getRequestHeaders();
