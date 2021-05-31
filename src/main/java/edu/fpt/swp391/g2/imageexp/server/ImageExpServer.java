@@ -1,8 +1,6 @@
 package edu.fpt.swp391.g2.imageexp.server;
 
-import com.sun.net.httpserver.HttpContext;
-import com.sun.net.httpserver.HttpHandler;
-import com.sun.net.httpserver.HttpServer;
+import com.sun.net.httpserver.*;
 import edu.fpt.swp391.g2.imageexp.config.MainConfig;
 import edu.fpt.swp391.g2.imageexp.server.handler.DefaultHandler;
 import edu.fpt.swp391.g2.imageexp.server.handler.misc.ChangeableTextHandler;
@@ -78,7 +76,18 @@ public class ImageExpServer {
      * @return the instance of the services
      */
     public HttpContext registerHandler(String path, HttpHandler httpHandler) {
-        HttpContext context = server.createContext(path, httpHandler);
+        HttpContext context = server.createContext(path);
+        context.setHandler(httpExchange -> {
+            Headers headers = httpExchange.getResponseHeaders();
+            headers.add("Access-Control-Allow-Origin", "*");
+            if (httpExchange.getRequestMethod().equalsIgnoreCase("OPTIONS")) {
+                headers.add("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+                headers.add("Access-Control-Allow-Headers", "Content-Type");
+                httpExchange.sendResponseHeaders(204, -1);
+                return;
+            }
+            httpHandler.handle(httpExchange);
+        });
         contexts.add(context);
         return context;
     }
