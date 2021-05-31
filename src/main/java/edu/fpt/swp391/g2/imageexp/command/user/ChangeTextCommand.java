@@ -1,5 +1,6 @@
-package edu.fpt.swp391.g2.imageexp.command;
+package edu.fpt.swp391.g2.imageexp.command.user;
 
+import edu.fpt.swp391.g2.imageexp.command.Command;
 import edu.fpt.swp391.g2.imageexp.server.handler.ChangeableTextHandler;
 
 public class ChangeTextCommand extends Command {

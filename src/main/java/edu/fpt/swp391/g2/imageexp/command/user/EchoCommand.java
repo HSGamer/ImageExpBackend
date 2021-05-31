@@ -1,4 +1,6 @@
-package edu.fpt.swp391.g2.imageexp.command;
+package edu.fpt.swp391.g2.imageexp.command.user;
+
+import edu.fpt.swp391.g2.imageexp.command.Command;
 
 public class EchoCommand extends Command {
     public EchoCommand() {

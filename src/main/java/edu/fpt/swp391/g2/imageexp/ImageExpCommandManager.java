@@ -1,6 +1,15 @@
 package edu.fpt.swp391.g2.imageexp;
 
-import edu.fpt.swp391.g2.imageexp.command.*;
+import edu.fpt.swp391.g2.imageexp.command.Command;
+import edu.fpt.swp391.g2.imageexp.command.HelpCommand;
+import edu.fpt.swp391.g2.imageexp.command.misc.GetAllUsersCommand;
+import edu.fpt.swp391.g2.imageexp.command.misc.GetUserByIdCommand;
+import edu.fpt.swp391.g2.imageexp.command.misc.LoginUserCommand;
+import edu.fpt.swp391.g2.imageexp.command.misc.RegisterUserCommand;
+import edu.fpt.swp391.g2.imageexp.command.system.ReloadCommand;
+import edu.fpt.swp391.g2.imageexp.command.system.StopCommand;
+import edu.fpt.swp391.g2.imageexp.command.user.ChangeTextCommand;
+import edu.fpt.swp391.g2.imageexp.command.user.EchoCommand;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -13,15 +22,22 @@ public class ImageExpCommandManager {
     private final Map<String, Command> commands = new HashMap<>();
 
     public ImageExpCommandManager() {
-        // Add commands here
+        // Help
+        addCommand(new HelpCommand());
+
+        // System
         addCommand(new StopCommand());
+        addCommand(new ReloadCommand());
+
+        // Misc
         addCommand(new EchoCommand());
         addCommand(new ChangeTextCommand());
-        addCommand(new HelpCommand());
-        addCommand(new ReloadCommand());
+
+        // User
         addCommand(new GetUserByIdCommand());
         addCommand(new LoginUserCommand());
         addCommand(new RegisterUserCommand());
+        addCommand(new GetAllUsersCommand());
     }
 
     /**

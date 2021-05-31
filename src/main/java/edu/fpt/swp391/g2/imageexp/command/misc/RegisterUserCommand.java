@@ -1,5 +1,6 @@
-package edu.fpt.swp391.g2.imageexp.command;
+package edu.fpt.swp391.g2.imageexp.command.misc;
 
+import edu.fpt.swp391.g2.imageexp.command.Command;
 import edu.fpt.swp391.g2.imageexp.processor.UserProcessor;
 import org.apache.logging.log4j.Level;
 

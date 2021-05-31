@@ -7,6 +7,8 @@ import me.hsgamer.hscore.database.client.sql.PreparedStatementContainer;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class UserProcessor {
@@ -70,6 +72,27 @@ public class UserProcessor {
             user.setAvatar(resultSet.getString("avatar"));
             user.setStatus(resultSet.getString("status"));
             return Optional.of(user);
+        }
+    }
+
+    public static List<User> getAllUsers() throws SQLException {
+        try (
+                PreparedStatementContainer container = PreparedStatementContainer.of(
+                        DatabaseConnector.getConnection(),
+                        "select * from user"
+                );
+                ResultSet resultSet = container.query()
+        ) {
+            List<User> list = new ArrayList<>();
+            while (resultSet.next()) {
+                User user = new User(resultSet.getInt("userid"));
+                user.setUsername(resultSet.getString("username"));
+                user.setEmail(resultSet.getString("email"));
+                user.setAvatar(resultSet.getString("avatar"));
+                user.setStatus(resultSet.getString("status"));
+                list.add(user);
+            }
+            return list;
         }
     }
 }
