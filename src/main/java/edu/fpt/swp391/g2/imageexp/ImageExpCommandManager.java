@@ -20,6 +20,8 @@ public class ImageExpCommandManager {
         addCommand(new HelpCommand());
         addCommand(new ReloadCommand());
         addCommand(new GetUserByIdCommand());
+        addCommand(new LoginUserCommand());
+        addCommand(new RegisterUserCommand());
     }
 
     /**
