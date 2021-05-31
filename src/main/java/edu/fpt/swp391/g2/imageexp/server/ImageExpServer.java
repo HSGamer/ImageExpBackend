@@ -4,9 +4,9 @@ import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 import edu.fpt.swp391.g2.imageexp.config.MainConfig;
-import edu.fpt.swp391.g2.imageexp.server.handler.ChangeableTextHandler;
 import edu.fpt.swp391.g2.imageexp.server.handler.DefaultHandler;
-import edu.fpt.swp391.g2.imageexp.server.handler.TestBodyHandler;
+import edu.fpt.swp391.g2.imageexp.server.handler.misc.ChangeableTextHandler;
+import edu.fpt.swp391.g2.imageexp.server.handler.misc.TestBodyHandler;
 import lombok.Getter;
 
 import java.io.IOException;
@@ -36,9 +36,11 @@ public class ImageExpServer {
         server = HttpServer.create(new InetSocketAddress(MainConfig.SERVER_IP.getValue(), MainConfig.SERVER_PORT.getValue()), 0);
         server.setExecutor(Executors.newFixedThreadPool(10));
 
-        // Add web handlers here
-        registerHandler("/changeable", new ChangeableTextHandler());
+        // Default
         registerHandler("/", new DefaultHandler());
+
+        // Misc
+        registerHandler("/changeable", new ChangeableTextHandler());
         registerHandler("/testbody", new TestBodyHandler());
     }
 

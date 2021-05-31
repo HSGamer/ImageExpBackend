@@ -1,4 +1,4 @@
-package edu.fpt.swp391.g2.imageexp.server.handler;
+package edu.fpt.swp391.g2.imageexp.server.handler.misc;
 
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.WriterConfig;

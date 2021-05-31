@@ -2,12 +2,10 @@ package edu.fpt.swp391.g2.imageexp.server.handler;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import edu.fpt.swp391.g2.imageexp.utils.WebUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Map;
 
 /**
  * A simple web handler with support for formatting query parameters
@@ -24,6 +22,7 @@ public interface SimpleHttpHandler extends HttpHandler {
         httpExchange.sendResponseHeaders(404, response.length());
         OutputStream os = httpExchange.getResponseBody();
         os.write(response.getBytes());
+        os.flush();
         os.close();
     }
 
@@ -32,8 +31,7 @@ public interface SimpleHttpHandler extends HttpHandler {
         String method = httpExchange.getRequestMethod();
         if ("GET".equalsIgnoreCase(method)) {
             String query = httpExchange.getRequestURI().getQuery();
-            Map<String, String> params = WebUtils.formatParameters(query != null ? query : "");
-            handleGetRequest(httpExchange, params);
+            handleGetRequest(httpExchange, query != null ? query : "");
         } else if ("POST".equalsIgnoreCase(method)) {
             StringBuilder sb = new StringBuilder();
             InputStream ios = httpExchange.getRequestBody();
@@ -41,8 +39,7 @@ public interface SimpleHttpHandler extends HttpHandler {
             while ((i = ios.read()) != -1) {
                 sb.append((char) i);
             }
-            Map<String, String> params = WebUtils.formatParameters(sb.toString());
-            handlePostRequest(httpExchange, params);
+            handlePostRequest(httpExchange, sb.toString());
         } else {
             handleDefaultRequest(method, httpExchange);
         }
@@ -56,7 +53,7 @@ public interface SimpleHttpHandler extends HttpHandler {
      * @param parameters   the query parameters
      * @throws IOException if there is an I/O error
      */
-    default void handleGetRequest(HttpExchange httpExchange, Map<String, String> parameters) throws IOException {
+    default void handleGetRequest(HttpExchange httpExchange, String parameters) throws IOException {
         sendNotFoundResponse(httpExchange);
     }
 
@@ -68,7 +65,7 @@ public interface SimpleHttpHandler extends HttpHandler {
      * @param parameters   the query parameters
      * @throws IOException if there is an I/O error
      */
-    default void handlePostRequest(HttpExchange httpExchange, Map<String, String> parameters) throws IOException {
+    default void handlePostRequest(HttpExchange httpExchange, String parameters) throws IOException {
         sendNotFoundResponse(httpExchange);
     }
 
