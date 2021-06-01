@@ -8,8 +8,15 @@ public class HelpCommand extends Command {
     @Override
     public void runCommand(String argument) {
         getLogger().info("Available commands: ");
+        int usageLength = 0;
+        int descLength = 0;
         for (Command command : getInstance().getCommandManager().getCommands()) {
-            getLogger().info(() -> String.format("%30s\t%-30s", command.getUsage(), command.getDescription()));
+            usageLength = Math.max(usageLength, command.getUsage().length());
+            descLength = Math.max(descLength, command.getDescription().length());
+        }
+        String format = "%" + usageLength + "s\t%-" + descLength + "s";
+        for (Command command : getInstance().getCommandManager().getCommands()) {
+            getLogger().info(() -> String.format(format, command.getUsage(), command.getDescription()));
         }
     }
 
