@@ -4,6 +4,7 @@ import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
 import com.eclipsesource.json.WriterConfig;
+import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 
 import java.io.IOException;
@@ -22,6 +23,8 @@ public class HandlerUtils {
      * @throws IOException if there is an I/O error
      */
     public static void sendJsonResponse(HttpExchange httpExchange, int statusCode, JsonValue jsonValue) throws IOException {
+        Headers headers = httpExchange.getResponseHeaders();
+        headers.set("Content-Type", "application/json");
         byte[] bytes = jsonValue.toString(WriterConfig.PRETTY_PRINT).getBytes();
         httpExchange.sendResponseHeaders(statusCode, bytes.length);
         OutputStream os = httpExchange.getResponseBody();

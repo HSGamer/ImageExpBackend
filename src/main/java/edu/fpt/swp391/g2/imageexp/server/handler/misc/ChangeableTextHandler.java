@@ -1,7 +1,6 @@
 package edu.fpt.swp391.g2.imageexp.server.handler.misc;
 
 import com.eclipsesource.json.JsonObject;
-import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import edu.fpt.swp391.g2.imageexp.utils.HandlerUtils;
@@ -15,9 +14,6 @@ public class ChangeableTextHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
-        Headers headers = httpExchange.getResponseHeaders();
-        headers.set("Content-Type", "application/json");
-
         JsonObject jsonObject = new JsonObject();
         jsonObject.add("text", text);
         HandlerUtils.sendJsonResponse(httpExchange, 200, jsonObject);
