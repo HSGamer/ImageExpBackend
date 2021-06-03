@@ -11,6 +11,7 @@ import edu.fpt.swp391.g2.imageexp.server.handler.misc.TestBodyHandler;
 import edu.fpt.swp391.g2.imageexp.server.handler.user.GetUserByIdHandler;
 import edu.fpt.swp391.g2.imageexp.server.handler.user.LoginUserHandler;
 import edu.fpt.swp391.g2.imageexp.server.handler.user.RegisterUserHandler;
+import edu.fpt.swp391.g2.imageexp.server.handler.user.UpdateUserHandler;
 import lombok.Getter;
 
 import java.io.IOException;
@@ -51,6 +52,7 @@ public class ImageExpServer {
         registerHandler("/loginuser", new LoginUserHandler());
         registerHandler("/getuserbyid", new GetUserByIdHandler());
         registerHandler("/registeruser", new RegisterUserHandler());
+        registerHandler("/updateuser", new UpdateUserHandler());
     }
 
     /**
