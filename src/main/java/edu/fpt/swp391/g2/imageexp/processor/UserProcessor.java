@@ -12,8 +12,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class UserProcessor {
-    private Optional<User> user;
-
     private UserProcessor() {
         // EMPTY
     }
@@ -40,7 +38,7 @@ public class UserProcessor {
             user.setEmail(resultSet.getString("email"));
             user.setAvatar(resultSet.getString("avatar"));
             user.setStatus(resultSet.getString("status"));
-            return user;
+            return Optional.of(user);
         }
     }
 
