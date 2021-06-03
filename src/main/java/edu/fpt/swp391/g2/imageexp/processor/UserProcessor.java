@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Optional;
 
 public class UserProcessor {
+    private Optional<User> user;
+
     private UserProcessor() {
         // EMPTY
     }
@@ -38,7 +40,7 @@ public class UserProcessor {
             user.setEmail(resultSet.getString("email"));
             user.setAvatar(resultSet.getString("avatar"));
             user.setStatus(resultSet.getString("status"));
-            return Optional.of(user);
+            return user;
         }
     }
 
@@ -48,6 +50,45 @@ public class UserProcessor {
                         DatabaseConnector.getConnection(),
                         "INSERT into user(email, password, username, avatar, status) values (?, ?, ?, \"\", \"\")",
                         email, Utils.hashMD5(password), email
+                )
+        ) {
+            container.update();
+        }
+    }
+
+    //Create username after register
+    public static void updateUserName(String email, String username) throws SQLException {
+        try (
+                PreparedStatementContainer container = PreparedStatementContainer.of(
+                        DatabaseConnector.getConnection(),
+                        "UPDATE user SET username = ? WHERE email = ?",
+                        email
+                )
+        ) {
+            container.update();
+        }
+    }
+
+    //Change username and avatar
+    public static void updateUserInfo(String email, String username, String avatar) throws SQLException {
+        try (
+                PreparedStatementContainer container = PreparedStatementContainer.of(
+                        DatabaseConnector.getConnection(),
+                        "UPDATE user SET username = ?, avatar = ? WHERE email = ?",
+                        email
+                )
+        ) {
+            container.update();
+        }
+    }
+
+    //Change password
+    public static void changePassword(String email,String password) throws SQLException{
+        try (
+                PreparedStatementContainer container = PreparedStatementContainer.of(
+                        DatabaseConnector.getConnection(),
+                        "UPDATE user SET password = ? WHERE email = ?",
+                        email, Utils.hashMD5(password)
                 )
         ) {
             container.update();
