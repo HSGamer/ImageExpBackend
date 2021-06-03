@@ -79,7 +79,7 @@ public class UserProcessor {
      * @param password user password
      * @throws SQLException if there is SQL error
      */
-    public static void changePassword(String email,String password) throws SQLException{
+    public static void changePassword(String email, String password) throws SQLException{
         try (
                 PreparedStatementContainer container = PreparedStatementContainer.of(
                         DatabaseConnector.getConnection(),
