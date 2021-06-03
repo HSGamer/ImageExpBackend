@@ -54,39 +54,37 @@ public class UserProcessor {
         }
     }
 
-    //Create username after register
-    public static void updateUserName(String email, String username) throws SQLException {
-        try (
-                PreparedStatementContainer container = PreparedStatementContainer.of(
-                        DatabaseConnector.getConnection(),
-                        "UPDATE user SET username = ? WHERE email = ?",
-                        email
-                )
-        ) {
-            container.update();
-        }
-    }
-
-    //Change username and avatar
+    /**
+     * Change username and avatar
+     * @param email the email
+     * @param username the user name
+     * @param avatar the avatar
+     * @throws SQLException if there is an SQL error
+     */
     public static void updateUserInfo(String email, String username, String avatar) throws SQLException {
         try (
                 PreparedStatementContainer container = PreparedStatementContainer.of(
                         DatabaseConnector.getConnection(),
                         "UPDATE user SET username = ?, avatar = ? WHERE email = ?",
-                        email
+                        username ,avatar ,email
                 )
         ) {
             container.update();
         }
     }
 
-    //Change password
+    /**
+     * Change user password
+     * @param email user email
+     * @param password user password
+     * @throws SQLException if there is SQL error
+     */
     public static void changePassword(String email,String password) throws SQLException{
         try (
                 PreparedStatementContainer container = PreparedStatementContainer.of(
                         DatabaseConnector.getConnection(),
                         "UPDATE user SET password = ? WHERE email = ?",
-                        email, Utils.hashMD5(password)
+                        Utils.hashMD5(password), email
                 )
         ) {
             container.update();
