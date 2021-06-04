@@ -71,6 +71,43 @@ public class UserProcessor {
         }
     }
 
+    /**
+     * Change username and avatar
+     * @param email the email
+     * @param username the user name
+     * @param avatar the avatar
+     * @throws SQLException if there is an SQL error
+     */
+    public static void updateUserInfo(String email, String username, String avatar) throws SQLException {
+        try (
+                PreparedStatementContainer container = PreparedStatementContainer.of(
+                        DatabaseConnector.getConnection(),
+                        "UPDATE user SET username = ?, avatar = ? WHERE email = ?",
+                        username ,avatar ,email
+                )
+        ) {
+            container.update();
+        }
+    }
+
+    /**
+     * Change user password
+     * @param email user email
+     * @param password user password
+     * @throws SQLException if there is SQL error
+     */
+    public static void changePassword(String email, String password) throws SQLException{
+        try (
+                PreparedStatementContainer container = PreparedStatementContainer.of(
+                        DatabaseConnector.getConnection(),
+                        "UPDATE user SET password = ? WHERE email = ?",
+                        Utils.hashMD5(password), email
+                )
+        ) {
+            container.update();
+        }
+    }
+
     public static Optional<User> loginUser(String email, String password) throws SQLException {
         try (
                 PreparedStatementContainer container = PreparedStatementContainer.of(
