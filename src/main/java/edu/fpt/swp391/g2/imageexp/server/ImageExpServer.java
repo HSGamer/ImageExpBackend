@@ -51,6 +51,7 @@ public class ImageExpServer {
         registerHandler("/registeruser", new RegisterUserHandler());
         registerHandler("/updateuser", new UpdateUserHandler());
         registerHandler("/changeuserpassword", new ChangeUserPasswordHandler());
+        registerHandler("/getuserbyemail", new GetUserByEmailHandler());
     }
 
     /**

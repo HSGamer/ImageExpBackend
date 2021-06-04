@@ -1,4 +1,4 @@
-package edu.fpt.swp391.g2.imageexp.command.misc;
+package edu.fpt.swp391.g2.imageexp.command.user;
 
 import edu.fpt.swp391.g2.imageexp.command.Command;
 import edu.fpt.swp391.g2.imageexp.entity.User;
@@ -8,29 +8,22 @@ import org.apache.logging.log4j.Level;
 import java.sql.SQLException;
 import java.util.Optional;
 
-public class GetUserByIdCommand extends Command {
-    public GetUserByIdCommand() {
-        super("get-user-by-id");
+public class GetUserByEmailCommand extends Command {
+    public GetUserByEmailCommand() {
+        super("get-user-by-email");
     }
 
     @Override
     public void runCommand(String argument) {
-        int id;
-        try {
-            id = Integer.parseInt(argument.trim());
-        } catch (NumberFormatException e) {
-            getLogger().warn("The id is not a number");
-            return;
-        }
         Optional<User> optionalUser;
         try {
-            optionalUser = UserProcessor.getUserById(id);
+            optionalUser = UserProcessor.getUserByEmail(argument);
         } catch (SQLException e) {
             getLogger().log(Level.WARN, "There is an SQL exception when getting data", e);
             return;
         }
         if (!optionalUser.isPresent()) {
-            getLogger().warn("That user id doesn't exist");
+            getLogger().warn("That email doesn't exist");
             return;
         }
         getLogger().info(optionalUser.get());
@@ -38,6 +31,6 @@ public class GetUserByIdCommand extends Command {
 
     @Override
     public String getUsage() {
-        return super.getUsage() + " <id>";
+        return super.getUsage() + " <email>";
     }
 }

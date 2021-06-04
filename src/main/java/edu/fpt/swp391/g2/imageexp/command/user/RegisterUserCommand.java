@@ -1,4 +1,4 @@
-package edu.fpt.swp391.g2.imageexp.command.misc;
+package edu.fpt.swp391.g2.imageexp.command.user;
 
 import edu.fpt.swp391.g2.imageexp.command.Command;
 import edu.fpt.swp391.g2.imageexp.processor.UserProcessor;
