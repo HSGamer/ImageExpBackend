@@ -34,7 +34,6 @@ public class ChangeUserPasswordHandler extends SecuredJsonHandler {
                 UserProcessor.changePassword(email, newpassword);
                 message.set("message", "Password Changed Successfully!");
                 response.set("response", message);
-                response.set("response1", optionalUser.get().toJsonObject());
             } else {
                 response.set("success", false);
                 message.set("message", "Incorrect old password");
