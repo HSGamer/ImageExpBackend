@@ -2,14 +2,11 @@ package edu.fpt.swp391.g2.imageexp;
 
 import edu.fpt.swp391.g2.imageexp.command.Command;
 import edu.fpt.swp391.g2.imageexp.command.HelpCommand;
-import edu.fpt.swp391.g2.imageexp.command.misc.GetAllUsersCommand;
-import edu.fpt.swp391.g2.imageexp.command.misc.GetUserByIdCommand;
-import edu.fpt.swp391.g2.imageexp.command.misc.LoginUserCommand;
-import edu.fpt.swp391.g2.imageexp.command.misc.RegisterUserCommand;
+import edu.fpt.swp391.g2.imageexp.command.misc.ChangeTextCommand;
+import edu.fpt.swp391.g2.imageexp.command.misc.EchoCommand;
 import edu.fpt.swp391.g2.imageexp.command.system.ReloadCommand;
 import edu.fpt.swp391.g2.imageexp.command.system.StopCommand;
-import edu.fpt.swp391.g2.imageexp.command.user.ChangeTextCommand;
-import edu.fpt.swp391.g2.imageexp.command.user.EchoCommand;
+import edu.fpt.swp391.g2.imageexp.command.user.*;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -38,6 +35,7 @@ public class ImageExpCommandManager {
         addCommand(new LoginUserCommand());
         addCommand(new RegisterUserCommand());
         addCommand(new GetAllUsersCommand());
+        addCommand(new GetUserByEmailCommand());
     }
 
     /**

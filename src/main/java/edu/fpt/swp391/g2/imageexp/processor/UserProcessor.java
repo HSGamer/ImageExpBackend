@@ -42,6 +42,23 @@ public class UserProcessor {
         }
     }
 
+    public static Optional<User> getUserByEmail(String email) throws SQLException {
+        try (
+                PreparedStatementContainer container = PreparedStatementContainer.of(DatabaseConnector.getConnection(), "select * from user where email = ? limit 1", email);
+                ResultSet resultSet = container.query()
+        ) {
+            if (!resultSet.next()) {
+                return Optional.empty();
+            }
+            User user = new User(resultSet.getInt("userid"));
+            user.setUsername(resultSet.getString("username"));
+            user.setEmail(resultSet.getString("email"));
+            user.setAvatar(resultSet.getString("avatar"));
+            user.setStatus(resultSet.getString("status"));
+            return Optional.of(user);
+        }
+    }
+
     public static void registerUser(String email, String password) throws SQLException {
         try (
                 PreparedStatementContainer container = PreparedStatementContainer.of(

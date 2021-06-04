@@ -1,4 +1,4 @@
-package edu.fpt.swp391.g2.imageexp.command.user;
+package edu.fpt.swp391.g2.imageexp.command.misc;
 
 import edu.fpt.swp391.g2.imageexp.command.Command;
 import edu.fpt.swp391.g2.imageexp.server.handler.misc.ChangeableTextHandler;
