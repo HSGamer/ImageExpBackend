@@ -22,7 +22,7 @@ public class ChangeUserPasswordHandler extends SecuredJsonHandler {
         JsonObject jsonObject = body.asObject();
         String email = jsonObject.getString("email","");
         String password = jsonObject.getString("password","");
-        String newpassword = jsonObject.getString("password","");
+        String newpassword = jsonObject.getString("newpassword","");
 
         JsonObject response = new JsonObject();
         Optional<User> optionalUser;
@@ -32,8 +32,9 @@ public class ChangeUserPasswordHandler extends SecuredJsonHandler {
             if (optionalUser.isPresent()) {
                 response.set("success", true);
                 UserProcessor.changePassword(email, newpassword);
-                response.set("response", optionalUser.get().toJsonObject());
                 message.set("message", "Password Changed Successfully!");
+                response.set("response", message);
+                response.set("response1", optionalUser.get().toJsonObject());
             } else {
                 response.set("success", false);
                 message.set("message", "Incorrect old password");
