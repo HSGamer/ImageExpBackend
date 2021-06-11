@@ -73,9 +73,10 @@ public class UserProcessor {
 
     /**
      * Change username and avatar
-     * @param email the email
+     *
+     * @param email    the email
      * @param username the user name
-     * @param avatar the avatar
+     * @param avatar   the avatar
      * @throws SQLException if there is an SQL error
      */
     public static void updateUserInfo(String email, String username, String avatar) throws SQLException {
@@ -83,7 +84,7 @@ public class UserProcessor {
                 PreparedStatementContainer container = PreparedStatementContainer.of(
                         DatabaseConnector.getConnection(),
                         "UPDATE user SET username = ?, avatar = ? WHERE email = ?",
-                        username ,avatar ,email
+                        username, avatar, email
                 )
         ) {
             container.update();
@@ -92,11 +93,12 @@ public class UserProcessor {
 
     /**
      * Change user password
-     * @param email user email
+     *
+     * @param email    user email
      * @param password user password
      * @throws SQLException if there is SQL error
      */
-    public static void changePassword(String email, String password) throws SQLException{
+    public static void changePassword(String email, String password) throws SQLException {
         try (
                 PreparedStatementContainer container = PreparedStatementContainer.of(
                         DatabaseConnector.getConnection(),

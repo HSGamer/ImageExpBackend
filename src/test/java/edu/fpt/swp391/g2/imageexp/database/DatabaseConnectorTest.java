@@ -14,15 +14,15 @@ class DatabaseConnectorTest {
         DatabaseConnector.init();
     }
 
-    @Test
-    void getConnection() {
-        Assertions.assertNotNull(DatabaseConnector.getConnection());
-    }
-
     @AfterAll
     static void stop() {
         DatabaseConnector.disable();
         File file = new File("imageexp.db");
         file.delete();
+    }
+
+    @Test
+    void getConnection() {
+        Assertions.assertNotNull(DatabaseConnector.getConnection());
     }
 }

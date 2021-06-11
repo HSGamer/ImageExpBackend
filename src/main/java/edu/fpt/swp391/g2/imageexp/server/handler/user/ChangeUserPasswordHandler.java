@@ -20,13 +20,13 @@ public class ChangeUserPasswordHandler extends SecuredJsonHandler {
             HandlerUtils.sendServerErrorResponse(httpExchange, new InvalidObjectException("Only Json Object is allowed"));
         }
         JsonObject jsonObject = body.asObject();
-        String email = jsonObject.getString("email","");
-        String password = jsonObject.getString("password","");
-        String newpassword = jsonObject.getString("newpassword","");
+        String email = jsonObject.getString("email", "");
+        String password = jsonObject.getString("password", "");
+        String newpassword = jsonObject.getString("newpassword", "");
 
         JsonObject response = new JsonObject();
         Optional<User> optionalUser;
-        try{
+        try {
             JsonObject message = new JsonObject();
             optionalUser = UserProcessor.loginUser(email, password);
             if (optionalUser.isPresent()) {
@@ -40,7 +40,7 @@ public class ChangeUserPasswordHandler extends SecuredJsonHandler {
                 response.set("response", message);
             }
             HandlerUtils.sendJsonResponse(httpExchange, 200, response);
-        }catch(Exception e){
+        } catch (Exception e) {
             HandlerUtils.sendServerErrorResponse(httpExchange, e);
         }
     }
