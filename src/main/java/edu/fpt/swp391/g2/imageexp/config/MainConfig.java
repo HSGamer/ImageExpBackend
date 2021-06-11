@@ -8,13 +8,14 @@ import me.hsgamer.hscore.config.simpleconfiguration.SimpleConfig;
 import org.simpleyaml.configuration.file.YamlConfiguration;
 
 import java.io.File;
+import java.util.Optional;
 
 /**
  * The main config, which creates the "config.yml" file
  */
 public class MainConfig extends PathableConfig {
     public static final StringConfigPath SERVER_IP = new StringConfigPath("server.ip", "");
-    public static final IntegerConfigPath SERVER_PORT = new IntegerConfigPath("server.port", 8000);
+    public static final IntegerConfigPath SERVER_PORT = new IntegerConfigPath("server.port", Optional.ofNullable(System.getenv("PORT")).map(Integer::parseInt).orElse(8000));
     public static final StringConfigPath SERVER_SECRET_KEY = new StringConfigPath("server.secret-key", "d7sTPQBxmSv8OmHdgjS5");
     public static final BooleanConfigPath DATABASE_MYSQL = new BooleanConfigPath("database.use-mysql", false);
     public static final BooleanConfigPath DATABASE_FIRST_LOAD = new BooleanConfigPath("database.first-load", true);
