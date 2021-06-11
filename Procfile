@@ -1,1 +1,1 @@
-worker: java $JAVA_OPTS -jar target/ImageExpBackend.jar $PORT
+web: java $JAVA_OPTS -jar target/ImageExpBackend.jar $PORT
