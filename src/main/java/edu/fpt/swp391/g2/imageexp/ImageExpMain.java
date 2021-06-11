@@ -26,8 +26,18 @@ public class ImageExpMain {
     /**
      * Enable the services
      */
-    public void enable() {
+    public void enable(String[] args) {
         mainConfig.setup();
+        if (args.length > 0) {
+            String port = args[0];
+            try {
+                int parsedPort = Integer.parseInt(port);
+                MainConfig.SERVER_PORT.setValue(parsedPort);
+                mainConfig.save();
+            } catch (NumberFormatException e) {
+                logger.warn("The port is not a valid number");
+            }
+        }
         if (!loadServer()) {
             shuttingDown = true;
             System.exit(1);

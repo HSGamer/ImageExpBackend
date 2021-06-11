@@ -1,1 +1,1 @@
-web: java -jar target/ImageExpBackend.jar
+web: java -jar target/ImageExpBackend.jar $PORT
