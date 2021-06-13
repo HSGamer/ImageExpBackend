@@ -1,5 +1,6 @@
 package edu.fpt.swp391.g2.imageexp.processor;
 
+import edu.fpt.swp391.g2.imageexp.config.MainConfig;
 import edu.fpt.swp391.g2.imageexp.database.DatabaseConnector;
 import edu.fpt.swp391.g2.imageexp.entity.User;
 import edu.fpt.swp391.g2.imageexp.utils.Utils;
@@ -91,11 +92,15 @@ public class UserProcessor {
      * @throws SQLException if there is an SQL error
      */
     public static void registerUser(String email, String password) throws SQLException {
+        String name = "";
+        if (MainConfig.OPTION_AUTO_ASSIGN_NAME.getValue()) {
+            name = email.split("@", 2)[0];
+        }
         try (
                 PreparedStatementContainer container = PreparedStatementContainer.of(
                         DatabaseConnector.getConnection(),
-                        "INSERT into user(email, password, username, avatar, status) values (?, ?, \"\", \"\", \"\")",
-                        email, Utils.hashMD5(password)
+                        "INSERT into user(email, password, username, avatar, status) values (?, ?, ?, \"\", \"\")",
+                        email, Utils.hashMD5(password), name
                 )
         ) {
             container.update();

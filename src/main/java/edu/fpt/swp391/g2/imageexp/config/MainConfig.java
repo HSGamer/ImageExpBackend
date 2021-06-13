@@ -22,6 +22,7 @@ public class MainConfig extends PathableConfig {
     public static final StringConfigPath DATABASE_DB_NAME = new StringConfigPath("database.db-name", "imageexp");
     public static final StringConfigPath DATABASE_USERNAME = new StringConfigPath("database.username", "root");
     public static final StringConfigPath DATABASE_PASSWORD = new StringConfigPath("database.password", "");
+    public static final BooleanConfigPath OPTION_AUTO_ASSIGN_NAME = new BooleanConfigPath("option.auto-assign-name-to-new-user", false);
 
     public MainConfig() {
         super(new SimpleConfig(new File("config.yml"), YamlConfiguration::loadConfiguration));
