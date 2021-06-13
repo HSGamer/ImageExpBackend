@@ -85,7 +85,7 @@ public class ImageExpMain {
     private boolean loadServer() {
         try {
             imageExpServer.init();
-            logger.info(() -> "Init the server at port" + MainConfig.SERVER_PORT.getValue());
+            logger.info(() -> "Init the server at port " + MainConfig.SERVER_PORT.getValue());
             return true;
         } catch (Exception e) {
             logger.error("Cannot create the server", e);
