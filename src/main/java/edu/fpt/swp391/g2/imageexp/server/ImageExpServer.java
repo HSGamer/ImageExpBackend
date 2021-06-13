@@ -35,7 +35,7 @@ public class ImageExpServer {
      * @throws IOException if the server can not be started
      */
     public void init() throws IOException {
-        server = HttpServer.create(new InetSocketAddress(MainConfig.SERVER_IP.getValue(), MainConfig.SERVER_PORT.getValue()), 0);
+        server = HttpServer.create(new InetSocketAddress(MainConfig.SERVER_PORT.getValue()), 0);
         server.setExecutor(Executors.newFixedThreadPool(10));
 
         // Default

@@ -13,7 +13,6 @@ import java.io.File;
  * The main config, which creates the "config.yml" file
  */
 public class MainConfig extends PathableConfig {
-    public static final StringConfigPath SERVER_IP = new StringConfigPath("server.ip", "localhost");
     public static final IntegerConfigPath SERVER_PORT = new IntegerConfigPath("server.port", 8080);
     public static final StringConfigPath SERVER_SECRET_KEY = new StringConfigPath("server.secret-key", "d7sTPQBxmSv8OmHdgjS5");
     public static final BooleanConfigPath DATABASE_MYSQL = new BooleanConfigPath("database.use-mysql", false);
