@@ -16,6 +16,6 @@ public class ImageExpBoostrap {
      * @param args the arguments
      */
     public static void main(String[] args) {
-        INSTANCE.enable(args);
+        INSTANCE.enable();
     }
 }

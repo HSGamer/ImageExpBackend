@@ -26,10 +26,10 @@ public class ImageExpMain {
     /**
      * Enable the services
      */
-    public void enable(String[] args) {
+    public void enable() {
         mainConfig.setup();
-        if (args.length > 0) {
-            String port = args[0];
+        String port = System.getenv("PORT");
+        if (port != null) {
             try {
                 int parsedPort = Integer.parseInt(port);
                 MainConfig.SERVER_PORT.setValue(parsedPort);
