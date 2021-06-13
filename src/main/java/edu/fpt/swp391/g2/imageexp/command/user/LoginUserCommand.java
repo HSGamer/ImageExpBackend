@@ -18,6 +18,10 @@ public class LoginUserCommand extends Command {
         String[] split = argument.split(" ", 2);
         String email = split[0];
         String password = split.length > 1 ? split[1] : "";
+        if (email.isEmpty()) {
+            getLogger().warn("The email should not be empty");
+            return;
+        }
         Optional<User> optionalUser;
         try {
             optionalUser = UserProcessor.loginUser(email, password);
