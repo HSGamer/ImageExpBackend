@@ -27,47 +27,58 @@ VALUES (1,
 
 CREATE TABLE `picture`
 (
-    `picID`    INTEGER     NOT NULL PRIMARY KEY,
-    `category` varchar(30) NOT NULL,
-    `userID`   INTEGER     NOT NULL,
-    `picture`  text        NOT NULL,
+    `picID`   INTEGER NOT NULL PRIMARY KEY,
+    `userID`  INTEGER NOT NULL,
+    `picture` text    NOT NULL,
     FOREIGN KEY (userID) REFERENCES `user` (userid)
 );
 
 INSERT
 INTO `picture` (`picID`,
-                `category`,
                 `userID`,
                 `picture`)
 VALUES (1,
-        'sample',
         1,
         '');
+
+CREATE TABLE `category`
+(
+    `categoryID`    INTEGER     NOT NULL PRIMARY KEY,
+    `category_name` varchar(32) NOT NULL
+);
+
+INSERT
+INTO `category`(`categoryID`, `category_name`)
+values (1, "test");
 
 CREATE TABLE `post`
 (
     `postID`     INTEGER      NOT NULL PRIMARY KEY,
     `userID`     INTEGER      NOT NULL,
     `picID`      INTEGER      NOT NULL,
+    `categoryID` INTEGER      NOT NULL,
     `created_at` datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `keyword`    varchar(128) NOT NULL,
     `status`     varchar(30)  NOT NULL,
     `likes`      INTEGER      NOT NULL,
     FOREIGN KEY (userID) REFERENCES `user` (userid),
-    FOREIGN KEY (picID) REFERENCES `picture` (picID)
+    FOREIGN KEY (picID) REFERENCES `picture` (picID),
+    FOREIGN KEY (categoryID) REFERENCES `category` (categoryID)
 );
 
 INSERT
 INTO `post` (`postID`,
              `userID`,
              `picID`,
+             `categoryID`,
              `created_at`,
              `updated_at`,
              `keyword`,
              `status`,
              `likes`)
 VALUES (1,
+        1,
         1,
         1,
         '2021-06-08 17:08:16',
