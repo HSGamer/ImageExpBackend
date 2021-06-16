@@ -26,6 +26,8 @@ public class AddPostHandler extends SecuredJsonHandler {
         JsonObject jsonObject = body.asObject();
         int userId = jsonObject.getInt("userId", -1);
         int picId = jsonObject.getInt("picId", -1);
+        String title = jsonObject.getString("title", "");
+        String description = jsonObject.getString("description", "");
         List<Integer> categoryIds = Utils.getIntListFromJsonValue(Optional.ofNullable(jsonObject.get("categoryId")).orElse(new JsonArray()));
         String keyword = jsonObject.getString("keyword", "");
 
@@ -42,7 +44,7 @@ public class AddPostHandler extends SecuredJsonHandler {
                 response.set("success", false);
                 message.set("message", "The category id doesn't exist");
             } else {
-                PostProcessor.postPicture(userId, picId, categoryIds, keyword);
+                PostProcessor.postPicture(userId, picId, title, description, categoryIds, keyword);
                 response.set("success", false);
                 message.set("message", "Successfully posted");
             }

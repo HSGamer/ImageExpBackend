@@ -24,6 +24,8 @@ public class UpdatePostHandler extends SecuredJsonHandler {
         }
         JsonObject jsonObject = body.asObject();
         int postId = jsonObject.getInt("postId", -1);
+        String title = jsonObject.getString("title", "");
+        String description = jsonObject.getString("description", "");
         List<Integer> categoryIds = Utils.getIntListFromJsonValue(Optional.ofNullable(jsonObject.get("categoryId")).orElse(new JsonArray()));
         String keyword = jsonObject.getString("keyword", "");
 
@@ -37,7 +39,7 @@ public class UpdatePostHandler extends SecuredJsonHandler {
                 response.set("success", false);
                 message.set("message", "The category id doesn't exist");
             } else {
-                PostProcessor.updatePost(postId, categoryIds, keyword);
+                PostProcessor.updatePost(postId, title, description, categoryIds, keyword);
                 response.set("success", false);
                 message.set("message", "Successfully updated");
             }

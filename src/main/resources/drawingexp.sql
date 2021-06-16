@@ -25,13 +25,15 @@ CREATE TABLE `picture`
 
 CREATE TABLE `post`
 (
-    `postID`     INTEGER      NOT NULL PRIMARY KEY,
-    `userID`     INTEGER      NOT NULL,
-    `picID`      INTEGER      NOT NULL,
-    `created_at` datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `updated_at` datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `keyword`    varchar(128) NOT NULL,
-    `status`     varchar(32)  NOT NULL,
+    `postID`      INTEGER      NOT NULL PRIMARY KEY,
+    `userID`      INTEGER      NOT NULL,
+    `picID`       INTEGER      NOT NULL,
+    `title`       varchar(128) NOT NULL,
+    `description` varchar(128) NOT NULL,
+    `created_at`  datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at`  datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `keyword`     varchar(128) NOT NULL,
+    `status`      varchar(32)  NOT NULL,
     FOREIGN KEY (`picID`) REFERENCES `picture` (`picID`),
     FOREIGN KEY (`userID`) REFERENCES `user` (`userid`)
 );

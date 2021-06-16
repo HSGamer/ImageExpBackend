@@ -32,6 +32,8 @@ public class PostProcessor {
         Post post = new Post(resultSet.getInt("postID"));
         post.setUserId(resultSet.getInt("userID"));
         post.setPicId(resultSet.getInt("picID"));
+        post.setTitle(resultSet.getString("title"));
+        post.setDescription(resultSet.getString("description"));
         post.setCategoryIdList(getCategoryIdsFromPost(post.getId()));
         post.setCreatedAt(Utils.getDate(resultSet.getString("created_at")));
         post.setUpdatedAt(Utils.getDate(resultSet.getString("updated_at")));
@@ -182,11 +184,13 @@ public class PostProcessor {
      *
      * @param userId         the user id
      * @param picId          the picture id
+     * @param title          the title
+     * @param description    the description
      * @param categoryIdList the list of the category ids
      * @param keyword        the keyword
      * @throws Exception if there is an error
      */
-    public static void postPicture(int userId, int picId, List<Integer> categoryIdList, String keyword) throws Exception {
+    public static void postPicture(int userId, int picId, String title, String description, List<Integer> categoryIdList, String keyword) throws Exception {
         try (
                 BatchBuilder batchBuilder = new BatchBuilder(DatabaseConnector.getConnection());
                 PreparedStatementContainer container = PreparedStatementContainer.of(
@@ -196,8 +200,8 @@ public class PostProcessor {
                 )
         ) {
             batchBuilder.addBatch(
-                    "insert into post(userID, picID, keyword, status) values (?, ?, ?, ?)",
-                    userId, picId, keyword, ""
+                    "insert into post(userID, picID, title, description, keyword, status) values (?, ?, ?, ?, ?, ?)",
+                    userId, picId, title, description, keyword, ""
             );
             batchBuilder.execute();
             batchBuilder.clear();
@@ -220,16 +224,18 @@ public class PostProcessor {
      * Update post
      *
      * @param postId         the post id
+     * @param title          the title
+     * @param description    the description
      * @param categoryIdList the list of the category ids
      * @param keyword        the keyword
      * @throws Exception if there is an error
      */
-    public static void updatePost(int postId, List<Integer> categoryIdList, String keyword) throws Exception {
+    public static void updatePost(int postId, String title, String description, List<Integer> categoryIdList, String keyword) throws Exception {
         try (BatchBuilder batchBuilder = new BatchBuilder(DatabaseConnector.getConnection())) {
             batchBuilder.addBatch("delete from postcategory where postID = ?", postId);
             batchBuilder.addBatch(
-                    "update post set keyword = ?, updated_at = ? where postID = ?",
-                    keyword, Utils.convertDateToString(new Date()), postId
+                    "update post set keyword = ?, title = ?, description = ?, updated_at = ? where postID = ?",
+                    keyword, title, description, Utils.convertDateToString(new Date()), postId
             );
             for (int categoryId : categoryIdList) {
                 batchBuilder.addBatch(

@@ -14,6 +14,8 @@ public class Post {
     private final int id;
     private int userId;
     private int picId;
+    private String title;
+    private String description;
     private List<Integer> categoryIdList = Collections.emptyList();
     private Date createdAt;
     private Date updatedAt;
@@ -24,6 +26,8 @@ public class Post {
         JsonObject postJson = new JsonObject();
         postJson.set("id", id);
         postJson.set("userId", userId);
+        postJson.set("title", title);
+        postJson.set("description", description);
         JsonArray categoryIdJson = new JsonArray();
         for (Integer categoryId : categoryIdList) {
             categoryIdJson.add(categoryId);
