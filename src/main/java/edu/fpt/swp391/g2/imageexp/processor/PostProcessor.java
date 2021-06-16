@@ -3,6 +3,7 @@ package edu.fpt.swp391.g2.imageexp.processor;
 import edu.fpt.swp391.g2.imageexp.database.DatabaseConnector;
 import edu.fpt.swp391.g2.imageexp.entity.Post;
 import edu.fpt.swp391.g2.imageexp.utils.Utils;
+import me.hsgamer.hscore.database.client.sql.BatchBuilder;
 import me.hsgamer.hscore.database.client.sql.PreparedStatementContainer;
 
 import java.sql.ResultSet;
@@ -31,13 +32,36 @@ public class PostProcessor {
         Post post = new Post(resultSet.getInt("postID"));
         post.setUserId(resultSet.getInt("userID"));
         post.setPicId(resultSet.getInt("picID"));
-        post.setCategoryId(resultSet.getInt("categoryID"));
+        post.setCategoryIdList(getCategoryIdsFromPost(post.getId()));
         post.setCreatedAt(Utils.getDate(resultSet.getString("created_at")));
         post.setUpdatedAt(Utils.getDate(resultSet.getString("updated_at")));
         post.setKeyword(resultSet.getString("keyword"));
         post.setStatus(resultSet.getString("status"));
-        post.setLikes(resultSet.getInt("likes"));
         return post;
+    }
+
+    /**
+     * Get the category ids from the post
+     *
+     * @param postId the post id
+     * @return the list of category ids
+     * @throws SQLException if there is an SQL error
+     */
+    public static List<Integer> getCategoryIdsFromPost(int postId) throws SQLException {
+        try (
+                PreparedStatementContainer container = PreparedStatementContainer.of(
+                        DatabaseConnector.getConnection(),
+                        "select categoryID from postcategory where postID = ?",
+                        postId
+                );
+                ResultSet resultSet = container.query()
+        ) {
+            List<Integer> categoryIdList = new ArrayList<>();
+            while (resultSet.next()) {
+                categoryIdList.add(resultSet.getInt("categoryID"));
+            }
+            return categoryIdList;
+        }
     }
 
     /**
@@ -97,7 +121,7 @@ public class PostProcessor {
         try (
                 PreparedStatementContainer container = PreparedStatementContainer.of(
                         DatabaseConnector.getConnection(),
-                        "select * from post where categoryID = ?",
+                        "select p2.* from postcategory p join post p2 on p.postID = p2.postID where p.categoryID = ?",
                         categoryId
                 );
                 ResultSet resultSet = container.query()
@@ -156,41 +180,64 @@ public class PostProcessor {
     /**
      * Post the picture
      *
-     * @param userId     the user id
-     * @param picId      the picture id
-     * @param categoryID the category id
-     * @param keyword    the keyword
-     * @throws SQLException if there is an SQL error
+     * @param userId         the user id
+     * @param picId          the picture id
+     * @param categoryIdList the list of the category ids
+     * @param keyword        the keyword
+     * @throws Exception if there is an error
      */
-    public static void postPicture(int userId, int picId, int categoryID, String keyword) throws SQLException {
+    public static void postPicture(int userId, int picId, List<Integer> categoryIdList, String keyword) throws Exception {
         try (
+                BatchBuilder batchBuilder = new BatchBuilder(DatabaseConnector.getConnection());
                 PreparedStatementContainer container = PreparedStatementContainer.of(
                         DatabaseConnector.getConnection(),
-                        "insert into post(userID, picID, categoryID, keyword, status, likes) values (?, ?, ?, ?, ?, ?)",
-                        userId, picId, categoryID, keyword, "", 0
+                        "select postID from post where userID = ? and picID = ?",
+                        userId, picId
                 )
         ) {
-            container.update();
+            batchBuilder.addBatch(
+                    "insert into post(userID, picID, keyword, status) values (?, ?, ?, ?)",
+                    userId, picId, keyword, ""
+            );
+            batchBuilder.execute();
+            batchBuilder.clear();
+            ResultSet resultSet = container.query();
+            if (!resultSet.next()) {
+                throw new SQLException("The insertion is not finished");
+            }
+            int postId = resultSet.getInt("postID");
+            for (int categoryId : categoryIdList) {
+                batchBuilder.addBatch(
+                        "insert into postcategory(postID, categoryID) values (?, ?)",
+                        postId, categoryId
+                );
+            }
+            batchBuilder.execute();
         }
     }
 
     /**
      * Update post
      *
-     * @param postId     the post id
-     * @param categoryId the category id
-     * @param keyword    the keyword
-     * @throws SQLException if there is an SQL error
+     * @param postId         the post id
+     * @param categoryIdList the list of the category ids
+     * @param keyword        the keyword
+     * @throws Exception if there is an error
      */
-    public static void updatePost(int postId, int categoryId, String keyword) throws SQLException {
-        try (
-                PreparedStatementContainer container = PreparedStatementContainer.of(
-                        DatabaseConnector.getConnection(),
-                        "update post set categoryID = ?, keyword = ?, updated_at = ? where postID = ?",
-                        categoryId, keyword, Utils.convertDateToString(new Date()), postId
-                )
-        ) {
-            container.update();
+    public static void updatePost(int postId, List<Integer> categoryIdList, String keyword) throws Exception {
+        try (BatchBuilder batchBuilder = new BatchBuilder(DatabaseConnector.getConnection())) {
+            batchBuilder.addBatch("delete from postcategory where postID = ?", postId);
+            batchBuilder.addBatch(
+                    "update post set keyword = ?, updated_at = ? where postID = ?",
+                    keyword, Utils.convertDateToString(new Date()), postId
+            );
+            for (int categoryId : categoryIdList) {
+                batchBuilder.addBatch(
+                        "insert into postcategory(postID, categoryID) values (?, ?)",
+                        postId, categoryId
+                );
+            }
+            batchBuilder.execute();
         }
     }
 
@@ -198,17 +245,13 @@ public class PostProcessor {
      * Delete the post
      *
      * @param postId the post id
-     * @throws SQLException if there is an SQL error
+     * @throws Exception if there is an error
      */
-    public static void deletePost(int postId) throws SQLException {
-        try (
-                PreparedStatementContainer container = PreparedStatementContainer.of(
-                        DatabaseConnector.getConnection(),
-                        "delete from post where postID = ?",
-                        postId
-                )
-        ) {
-            container.update();
+    public static void deletePost(int postId) throws Exception {
+        try (BatchBuilder batchBuilder = new BatchBuilder(DatabaseConnector.getConnection())) {
+            batchBuilder.addBatch("delete from postcategory where postID = ?", postId);
+            batchBuilder.addBatch("delete from post where postID = ?", postId);
+            batchBuilder.execute();
         }
     }
 }

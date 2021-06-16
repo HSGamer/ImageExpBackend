@@ -1,5 +1,6 @@
 package edu.fpt.swp391.g2.imageexp.server.handler.post;
 
+import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
 import com.sun.net.httpserver.HttpExchange;
@@ -7,9 +8,12 @@ import edu.fpt.swp391.g2.imageexp.processor.CategoryProcessor;
 import edu.fpt.swp391.g2.imageexp.processor.PostProcessor;
 import edu.fpt.swp391.g2.imageexp.server.handler.SecuredJsonHandler;
 import edu.fpt.swp391.g2.imageexp.utils.HandlerUtils;
+import edu.fpt.swp391.g2.imageexp.utils.Utils;
 
 import java.io.IOException;
 import java.io.InvalidObjectException;
+import java.util.List;
+import java.util.Optional;
 
 public class UpdatePostHandler extends SecuredJsonHandler {
     @Override
@@ -20,7 +24,7 @@ public class UpdatePostHandler extends SecuredJsonHandler {
         }
         JsonObject jsonObject = body.asObject();
         int postId = jsonObject.getInt("postId", -1);
-        int categoryId = jsonObject.getInt("categoryId", -1);
+        List<Integer> categoryIds = Utils.getIntListFromJsonValue(Optional.ofNullable(jsonObject.get("categoryId")).orElse(new JsonArray()));
         String keyword = jsonObject.getString("keyword", "");
 
         JsonObject response = new JsonObject();
@@ -29,11 +33,11 @@ public class UpdatePostHandler extends SecuredJsonHandler {
             if (!PostProcessor.getPostById(postId).isPresent()) {
                 response.set("success", false);
                 message.set("message", "The post id doesn't exist");
-            } else if (!CategoryProcessor.getCategoryById(categoryId).isPresent()) {
+            } else if (!CategoryProcessor.checkAllCategoriesExists(categoryIds)) {
                 response.set("success", false);
                 message.set("message", "The category id doesn't exist");
             } else {
-                PostProcessor.updatePost(postId, categoryId, keyword);
+                PostProcessor.updatePost(postId, categoryIds, keyword);
                 response.set("success", false);
                 message.set("message", "Successfully updated");
             }

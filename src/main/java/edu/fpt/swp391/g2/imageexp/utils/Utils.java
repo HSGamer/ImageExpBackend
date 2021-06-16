@@ -1,10 +1,14 @@
 package edu.fpt.swp391.g2.imageexp.utils;
 
+import com.eclipsesource.json.JsonArray;
+import com.eclipsesource.json.JsonValue;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * The utility class for general purposes
@@ -51,5 +55,26 @@ public class Utils {
     public static String convertDateToString(Date date) {
         SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT);
         return formatter.format(date);
+    }
+
+    /**
+     * Get the integer list from the json value
+     *
+     * @param jsonValue the json value
+     * @return the integer list
+     */
+    public static List<Integer> getIntListFromJsonValue(JsonValue jsonValue) {
+        List<Integer> integerList = new ArrayList<>();
+        if (jsonValue.isNumber()) {
+            integerList.add(jsonValue.asInt());
+        } else if (jsonValue.isArray()) {
+            JsonArray jsonArray = jsonValue.asArray();
+            for (JsonValue value : jsonArray) {
+                if (jsonValue.isNumber()) {
+                    integerList.add(value.asInt());
+                }
+            }
+        }
+        return integerList;
     }
 }

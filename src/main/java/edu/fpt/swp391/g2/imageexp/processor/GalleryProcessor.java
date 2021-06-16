@@ -2,19 +2,17 @@ package edu.fpt.swp391.g2.imageexp.processor;
 
 import edu.fpt.swp391.g2.imageexp.database.DatabaseConnector;
 import edu.fpt.swp391.g2.imageexp.entity.Picture;
-import edu.fpt.swp391.g2.imageexp.entity.Post;
 import me.hsgamer.hscore.database.client.sql.PreparedStatementContainer;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.ArrayList;
 
 public class GalleryProcessor {
     /**
-     *
-     * @param userID user's id
+     * @param userID  user's id
      * @param picture picture as base_64
      * @throws SQLException sql error
      */
@@ -31,7 +29,6 @@ public class GalleryProcessor {
     }
 
     /**
-     *
      * @param picID picture's id
      * @throws SQLException sql error
      */
@@ -48,7 +45,6 @@ public class GalleryProcessor {
     }
 
     /**
-     *
      * @param picID picture's id
      * @return picture
      * @throws SQLException sql error
@@ -70,7 +66,6 @@ public class GalleryProcessor {
     }
 
     /**
-     *
      * @param resultSet get picture as set
      * @return picture
      * @throws SQLException sql error
@@ -83,7 +78,6 @@ public class GalleryProcessor {
     }
 
     /**
-     *
      * @return list pictures
      * @throws SQLException sql error
      */
@@ -104,7 +98,6 @@ public class GalleryProcessor {
     }
 
     /**
-     *
      * @param userId user's id
      * @return list of pictures
      * @throws SQLException sql error

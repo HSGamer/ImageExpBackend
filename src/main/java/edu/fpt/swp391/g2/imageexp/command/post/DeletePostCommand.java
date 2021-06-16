@@ -4,8 +4,6 @@ import edu.fpt.swp391.g2.imageexp.command.Command;
 import edu.fpt.swp391.g2.imageexp.processor.PostProcessor;
 import org.apache.logging.log4j.Level;
 
-import java.sql.SQLException;
-
 public class DeletePostCommand extends Command {
     public DeletePostCommand() {
         super("delete-post");
@@ -27,8 +25,8 @@ public class DeletePostCommand extends Command {
             }
             PostProcessor.deletePost(id);
             getLogger().info("Successfully deleted");
-        } catch (SQLException e) {
-            getLogger().log(Level.WARN, "There is an SQL exception when getting data", e);
+        } catch (Exception e) {
+            getLogger().log(Level.WARN, "There is an exception when getting data", e);
         }
     }
 

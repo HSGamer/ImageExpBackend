@@ -113,4 +113,20 @@ public class CategoryProcessor {
             return Optional.of(getCategory(resultSet));
         }
     }
+
+    /**
+     * Check if all category ids exist
+     *
+     * @param categoryIdList the list of category ids
+     * @return true if they do
+     * @throws SQLException if there is an SQL error
+     */
+    public static boolean checkAllCategoriesExists(List<Integer> categoryIdList) throws SQLException {
+        for (Integer id : categoryIdList) {
+            if (!getCategoryById(id).isPresent()) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
