@@ -58,7 +58,7 @@ public class ImageExpServer {
 
         // Category
         registerHandler("/addcategory", new AddCategoryHandler());
-        registerHandler("/getallcatergories", new GetAllCategoriesHandler());
+        registerHandler("/getallcategories", new GetAllCategoriesHandler());
         registerHandler("/getcategorybyid", new GetCategoryByIdHandler());
     }
 
