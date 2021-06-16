@@ -87,7 +87,7 @@ public class GalleryProcessor {
      * @return list pictures
      * @throws SQLException sql error
      */
-    public static List<Picture> getAllPicture() throws SQLException {
+    public static List<Picture> getAllPictures() throws SQLException {
         try (
                 PreparedStatementContainer container = PreparedStatementContainer.of(
                         DatabaseConnector.getConnection(),
@@ -109,7 +109,7 @@ public class GalleryProcessor {
      * @return list of pictures
      * @throws SQLException sql error
      */
-    public static List<Picture> getPictureByUserId(int userId) throws SQLException {
+    public static List<Picture> getPicturesByUserId(int userId) throws SQLException {
         try (
                 PreparedStatementContainer container = PreparedStatementContainer.of(
                         DatabaseConnector.getConnection(),

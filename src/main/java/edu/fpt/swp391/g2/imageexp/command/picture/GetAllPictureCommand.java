@@ -16,7 +16,7 @@ public class GetAllPictureCommand extends Command {
     @Override
     public void runCommand(String argument) {
         try {
-            List<Picture> pictureList = GalleryProcessor.getAllPicture();
+            List<Picture> pictureList = GalleryProcessor.getAllPictures();
             pictureList.forEach(getLogger()::info);
         } catch (SQLException e) {
             getLogger().log(Level.WARN, "There is an SQL exception when getting data", e);

@@ -12,7 +12,7 @@ import edu.fpt.swp391.g2.imageexp.utils.HandlerUtils;
 import java.io.IOException;
 import java.io.InvalidObjectException;
 
-public class GetPictureByUserIdHandler extends SecuredJsonHandler {
+public class GetPicturesByUserIdHandler extends SecuredJsonHandler {
     @Override
     public void handleJsonRequest(HttpExchange httpExchange, JsonValue body) throws IOException {
         if (!body.isObject()) {
@@ -27,7 +27,7 @@ public class GetPictureByUserIdHandler extends SecuredJsonHandler {
             if (UserProcessor.getUserById(id).isPresent()) {
                 response.set("success", true);
                 JsonArray jsonArray = new JsonArray();
-                GalleryProcessor.getPictureByUserId(id).forEach(picture -> jsonArray.add(picture.toJsonObject()));
+                GalleryProcessor.getPicturesByUserId(id).forEach(picture -> jsonArray.add(picture.toJsonObject()));
                 response.set("response", jsonArray);
             } else {
                 response.set("success", false);
