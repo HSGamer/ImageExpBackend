@@ -19,8 +19,8 @@ public class UpdatePostHandler extends SecuredJsonHandler {
             return;
         }
         JsonObject jsonObject = body.asObject();
-        int postId = jsonObject.getInt("post_id", -1);
-        int categoryId = jsonObject.getInt("category_id", -1);
+        int postId = jsonObject.getInt("postId", -1);
+        int categoryId = jsonObject.getInt("categoryId", -1);
         String keyword = jsonObject.getString("keyword", "");
 
         JsonObject response = new JsonObject();
