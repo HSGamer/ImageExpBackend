@@ -3,7 +3,7 @@ package edu.fpt.swp391.g2.imageexp.entity;
 import com.eclipsesource.json.JsonObject;
 import lombok.Data;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 @Data
 public class Post {
@@ -11,8 +11,8 @@ public class Post {
     private int userId;
     private int picId;
     private int categoryId;
-    private Date createdAt;
-    private Date updatedAt;
+    private Timestamp createdAt;
+    private Timestamp updatedAt;
     private String keyword;
     private String status;
     private int likes;

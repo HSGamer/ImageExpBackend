@@ -7,6 +7,7 @@ import me.hsgamer.hscore.database.client.sql.PreparedStatementContainer;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -21,8 +22,8 @@ public class PostProcessor {
         post.setUserId(resultSet.getInt("userID"));
         post.setPicId(resultSet.getInt("picID"));
         post.setCategoryId(resultSet.getInt("categoryID"));
-        post.setCreatedAt(resultSet.getDate("created_at"));
-        post.setUpdatedAt(resultSet.getDate("updated_at"));
+        post.setCreatedAt(resultSet.getTimestamp("created_at"));
+        post.setUpdatedAt(resultSet.getTimestamp("updated_at"));
         post.setKeyword(resultSet.getString("keyword"));
         post.setStatus(resultSet.getString("status"));
         post.setLikes(resultSet.getInt("likes"));
@@ -125,7 +126,7 @@ public class PostProcessor {
                 PreparedStatementContainer container = PreparedStatementContainer.of(
                         DatabaseConnector.getConnection(),
                         "update post set categoryID = ?, keyword = ?, updated_at = ? where postID = ?",
-                        categoryId, keyword, new Date(System.currentTimeMillis()), postId
+                        categoryId, keyword, new Timestamp(System.currentTimeMillis()), postId
                 )
         ) {
             container.update();
