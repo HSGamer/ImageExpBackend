@@ -11,6 +11,10 @@ import java.util.List;
 import java.util.Optional;
 
 public class CategoryProcessor {
+    private CategoryProcessor() {
+        // EMPTY
+    }
+
     private static Category getCategory(ResultSet resultSet) throws SQLException {
         Category category = new Category(resultSet.getInt("categoryID"));
         category.setName(resultSet.getString("category_name"));

@@ -15,7 +15,7 @@ public class Post {
     private Date updatedAt;
     private String keyword;
     private String status;
-    private int like;
+    private int likes;
 
     public JsonObject toJsonObject() {
         JsonObject postJson = new JsonObject();
@@ -26,7 +26,7 @@ public class Post {
         postJson.set("updatedAt", updatedAt.toString());
         postJson.set("keyword", keyword);
         postJson.set("status", status);
-        postJson.set("like", like);
+        postJson.set("likes", likes);
         return postJson;
     }
 }
