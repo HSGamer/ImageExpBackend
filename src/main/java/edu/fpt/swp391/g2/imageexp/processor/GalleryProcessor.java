@@ -14,6 +14,7 @@ public class GalleryProcessor {
     /**
      * @param userID  user's id
      * @param picture picture as base_64
+     * @return the picture id
      * @throws SQLException sql error
      */
     public static int addPicture(int userID, String picture) throws SQLException {
