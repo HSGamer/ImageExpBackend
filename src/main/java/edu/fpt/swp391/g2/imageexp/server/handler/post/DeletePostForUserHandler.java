@@ -49,6 +49,7 @@ public class DeletePostForUserHandler extends SecuredJsonHandler {
                 }
             }
             response.set("response", message);
+            HandlerUtils.sendJsonResponse(httpExchange, 200, response);
         } catch (Exception e) {
             HandlerUtils.sendServerErrorResponse(httpExchange, e);
         }
