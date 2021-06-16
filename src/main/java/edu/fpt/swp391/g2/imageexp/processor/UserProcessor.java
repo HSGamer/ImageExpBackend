@@ -21,6 +21,22 @@ public class UserProcessor {
     }
 
     /**
+     * Get the user from the result set
+     *
+     * @param resultSet the result set
+     * @return the user
+     * @throws SQLException if there is an SQL error
+     */
+    private static User getUser(ResultSet resultSet) throws SQLException {
+        User user = new User(resultSet.getInt("userid"));
+        user.setUsername(resultSet.getString("username"));
+        user.setEmail(resultSet.getString("email"));
+        user.setAvatar(resultSet.getString("avatar"));
+        user.setStatus(resultSet.getString("status"));
+        return user;
+    }
+
+    /**
      * Check if the email exists
      *
      * @param email the email
@@ -51,12 +67,7 @@ public class UserProcessor {
             if (!resultSet.next()) {
                 return Optional.empty();
             }
-            User user = new User(id);
-            user.setUsername(resultSet.getString("username"));
-            user.setEmail(resultSet.getString("email"));
-            user.setAvatar(resultSet.getString("avatar"));
-            user.setStatus(resultSet.getString("status"));
-            return Optional.of(user);
+            return Optional.of(getUser(resultSet));
         }
     }
 
@@ -75,12 +86,7 @@ public class UserProcessor {
             if (!resultSet.next()) {
                 return Optional.empty();
             }
-            User user = new User(resultSet.getInt("userid"));
-            user.setUsername(resultSet.getString("username"));
-            user.setEmail(resultSet.getString("email"));
-            user.setAvatar(resultSet.getString("avatar"));
-            user.setStatus(resultSet.getString("status"));
-            return Optional.of(user);
+            return Optional.of(getUser(resultSet));
         }
     }
 
@@ -166,12 +172,7 @@ public class UserProcessor {
             if (!resultSet.next()) {
                 return Optional.empty();
             }
-            User user = new User(resultSet.getInt("userid"));
-            user.setUsername(resultSet.getString("username"));
-            user.setEmail(resultSet.getString("email"));
-            user.setAvatar(resultSet.getString("avatar"));
-            user.setStatus(resultSet.getString("status"));
-            return Optional.of(user);
+            return Optional.of(getUser(resultSet));
         }
     }
 
@@ -191,12 +192,7 @@ public class UserProcessor {
         ) {
             List<User> list = new ArrayList<>();
             while (resultSet.next()) {
-                User user = new User(resultSet.getInt("userid"));
-                user.setUsername(resultSet.getString("username"));
-                user.setEmail(resultSet.getString("email"));
-                user.setAvatar(resultSet.getString("avatar"));
-                user.setStatus(resultSet.getString("status"));
-                list.add(user);
+                list.add(getUser(resultSet));
             }
             return list;
         }
