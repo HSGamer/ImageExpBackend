@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class PostProcessor {
     private PostProcessor() {
@@ -75,6 +76,22 @@ public class PostProcessor {
                 posts.add(getPost(resultSet));
             }
             return posts;
+        }
+    }
+
+    public static Optional<Post> getPostById(int postId) throws SQLException {
+        try (
+                PreparedStatementContainer container = PreparedStatementContainer.of(
+                        DatabaseConnector.getConnection(),
+                        "select * from post where postId = ?",
+                        postId
+                );
+                ResultSet resultSet = container.query()
+        ) {
+            if (!resultSet.next()) {
+                return Optional.empty();
+            }
+            return Optional.of(getPost(resultSet));
         }
     }
 

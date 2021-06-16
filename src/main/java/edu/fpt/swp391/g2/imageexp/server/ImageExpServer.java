@@ -11,9 +11,7 @@ import edu.fpt.swp391.g2.imageexp.server.handler.category.GetAllCategoriesHandle
 import edu.fpt.swp391.g2.imageexp.server.handler.category.GetCategoryByIdHandler;
 import edu.fpt.swp391.g2.imageexp.server.handler.misc.ChangeableTextHandler;
 import edu.fpt.swp391.g2.imageexp.server.handler.misc.TestBodyHandler;
-import edu.fpt.swp391.g2.imageexp.server.handler.post.GetAllPostsHandler;
-import edu.fpt.swp391.g2.imageexp.server.handler.post.GetPostsByCategoryIdHandler;
-import edu.fpt.swp391.g2.imageexp.server.handler.post.GetPostsByUserIdHandler;
+import edu.fpt.swp391.g2.imageexp.server.handler.post.*;
 import edu.fpt.swp391.g2.imageexp.server.handler.user.*;
 import lombok.Getter;
 
@@ -68,6 +66,8 @@ public class ImageExpServer {
         registerHandler("/getallposts", new GetAllPostsHandler());
         registerHandler("/getpostsbyuserid", new GetPostsByUserIdHandler());
         registerHandler("/getpostsbycategoryid", new GetPostsByCategoryIdHandler());
+        registerHandler("/addpost", new AddPostHandler());
+        registerHandler("/updatepost", new UpdatePostHandler());
     }
 
     /**

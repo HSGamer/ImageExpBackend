@@ -44,12 +44,7 @@ public class UserProcessor {
      * @throws SQLException if there is an SQL error
      */
     public static boolean checkEmailExists(String email) throws SQLException {
-        try (
-                PreparedStatementContainer container = PreparedStatementContainer.of(DatabaseConnector.getConnection(), "select * from user where email = ? limit 1", email);
-                ResultSet resultSet = container.query()
-        ) {
-            return resultSet.next();
-        }
+        return getUserByEmail(email).isPresent();
     }
 
     /**
