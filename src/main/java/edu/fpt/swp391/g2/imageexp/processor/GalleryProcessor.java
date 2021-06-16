@@ -12,7 +12,12 @@ import java.util.Optional;
 import java.util.ArrayList;
 
 public class GalleryProcessor {
-
+    /**
+     *
+     * @param userID user's id
+     * @param picture picture as base_64
+     * @throws SQLException sql error
+     */
     public static void addPicture(int userID, String picture) throws SQLException {
         try (
                 PreparedStatementContainer container = PreparedStatementContainer.of(
@@ -24,6 +29,12 @@ public class GalleryProcessor {
             container.update();
         }
     }
+
+    /**
+     *
+     * @param picID picture's id
+     * @throws SQLException sql error
+     */
     public static void deletePicture(int picID) throws SQLException {
         try (
                 PreparedStatementContainer container = PreparedStatementContainer.of(
@@ -35,6 +46,13 @@ public class GalleryProcessor {
             container.update();
         }
     }
+
+    /**
+     *
+     * @param picID picture's id
+     * @return picture
+     * @throws SQLException sql error
+     */
     public static Optional<Picture> getPictureById(int picID) throws SQLException {
         try (
                 PreparedStatementContainer container = PreparedStatementContainer.of(
@@ -51,6 +69,12 @@ public class GalleryProcessor {
         }
     }
 
+    /**
+     *
+     * @param resultSet get picture as set
+     * @return picture
+     * @throws SQLException sql error
+     */
     private static Picture getPicture(ResultSet resultSet) throws SQLException {
         Picture picture = new Picture(resultSet.getInt("picID"));
         picture.setUserId(resultSet.getInt("userID"));
@@ -58,6 +82,11 @@ public class GalleryProcessor {
         return picture;
     }
 
+    /**
+     *
+     * @return list pictures
+     * @throws SQLException sql error
+     */
     public static List<Picture> getAllPicture() throws SQLException {
         try (
                 PreparedStatementContainer container = PreparedStatementContainer.of(
@@ -74,6 +103,12 @@ public class GalleryProcessor {
         }
     }
 
+    /**
+     *
+     * @param userId user's id
+     * @return list of pictures
+     * @throws SQLException sql error
+     */
     public static List<Picture> getPictureByUserId(int userId) throws SQLException {
         try (
                 PreparedStatementContainer container = PreparedStatementContainer.of(
