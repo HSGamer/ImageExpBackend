@@ -2,8 +2,14 @@ package edu.fpt.swp391.g2.imageexp;
 
 import edu.fpt.swp391.g2.imageexp.command.Command;
 import edu.fpt.swp391.g2.imageexp.command.HelpCommand;
+import edu.fpt.swp391.g2.imageexp.command.category.AddCategoryCommand;
+import edu.fpt.swp391.g2.imageexp.command.category.GetAllCategoriesCommand;
 import edu.fpt.swp391.g2.imageexp.command.misc.ChangeTextCommand;
 import edu.fpt.swp391.g2.imageexp.command.misc.EchoCommand;
+import edu.fpt.swp391.g2.imageexp.command.post.DeletePostCommand;
+import edu.fpt.swp391.g2.imageexp.command.post.GetAllPostsCommand;
+import edu.fpt.swp391.g2.imageexp.command.post.GetPostsByCategoryIdCommand;
+import edu.fpt.swp391.g2.imageexp.command.post.GetPostsByUserIdCommand;
 import edu.fpt.swp391.g2.imageexp.command.system.ReloadCommand;
 import edu.fpt.swp391.g2.imageexp.command.system.StopCommand;
 import edu.fpt.swp391.g2.imageexp.command.user.*;
@@ -36,6 +42,16 @@ public class ImageExpCommandManager {
         addCommand(new RegisterUserCommand());
         addCommand(new GetAllUsersCommand());
         addCommand(new GetUserByEmailCommand());
+
+        // Category
+        addCommand(new GetAllCategoriesCommand());
+        addCommand(new AddCategoryCommand());
+
+        // Post
+        addCommand(new DeletePostCommand());
+        addCommand(new GetAllPostsCommand());
+        addCommand(new GetPostsByUserIdCommand());
+        addCommand(new GetPostsByCategoryIdCommand());
     }
 
     /**

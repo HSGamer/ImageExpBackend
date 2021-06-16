@@ -28,6 +28,16 @@ public class ImageExpMain {
      */
     public void enable() {
         mainConfig.setup();
+        String port = System.getenv("PORT");
+        if (port != null) {
+            try {
+                int parsedPort = Integer.parseInt(port);
+                MainConfig.SERVER_PORT.setValue(parsedPort);
+                mainConfig.save();
+            } catch (NumberFormatException e) {
+                logger.warn("The port is not a valid number");
+            }
+        }
         if (!loadServer()) {
             shuttingDown = true;
             System.exit(1);
@@ -75,7 +85,7 @@ public class ImageExpMain {
     private boolean loadServer() {
         try {
             imageExpServer.init();
-            logger.info(() -> "Init the server at " + MainConfig.SERVER_IP.getValue() + ":" + MainConfig.SERVER_PORT.getValue());
+            logger.info(() -> "Init the server at port " + MainConfig.SERVER_PORT.getValue());
             return true;
         } catch (Exception e) {
             logger.error("Cannot create the server", e);

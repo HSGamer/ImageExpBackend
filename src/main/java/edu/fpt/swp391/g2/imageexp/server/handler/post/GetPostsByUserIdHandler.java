@@ -1,8 +1,10 @@
-package edu.fpt.swp391.g2.imageexp.server.handler.user;
+package edu.fpt.swp391.g2.imageexp.server.handler.post;
 
+import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
 import com.sun.net.httpserver.HttpExchange;
+import edu.fpt.swp391.g2.imageexp.processor.PostProcessor;
 import edu.fpt.swp391.g2.imageexp.processor.UserProcessor;
 import edu.fpt.swp391.g2.imageexp.server.handler.SecuredJsonHandler;
 import edu.fpt.swp391.g2.imageexp.utils.HandlerUtils;
@@ -10,33 +12,29 @@ import edu.fpt.swp391.g2.imageexp.utils.HandlerUtils;
 import java.io.IOException;
 import java.io.InvalidObjectException;
 
-public class UpdateUserHandler extends SecuredJsonHandler {
-
+public class GetPostsByUserIdHandler extends SecuredJsonHandler {
     @Override
     public void handleJsonRequest(HttpExchange httpExchange, JsonValue body) throws IOException {
         if (!body.isObject()) {
             HandlerUtils.sendServerErrorResponse(httpExchange, new InvalidObjectException("Only Json Object is allowed"));
+            return;
         }
         JsonObject jsonObject = body.asObject();
-        String email = jsonObject.getString("email", "");
-        String username = jsonObject.getString("username", "");
-        String avatar = jsonObject.getString("avatar", "");
+        int id = jsonObject.getInt("id", -1);
 
         JsonObject response = new JsonObject();
         try {
-            JsonObject message = new JsonObject();
-            if (email.isEmpty() || username.isEmpty() || avatar.isEmpty()) {
-                response.set("success", false);
-                message.set("message", "Invalid format");
-            } else if (!UserProcessor.checkEmailExists(email)) {
-                response.set("success", false);
-                message.set("message", "That email doesn't exist");
-            } else {
-                UserProcessor.updateUserInfo(email, username, avatar);
+            if (UserProcessor.getUserById(id).isPresent()) {
                 response.set("success", true);
-                message.set("message", "Successfully updated");
+                JsonArray jsonArray = new JsonArray();
+                PostProcessor.getPostsByUserId(id).forEach(post -> jsonArray.add(post.toJsonObject()));
+                response.set("response", jsonArray);
+            } else {
+                response.set("success", false);
+                JsonObject message = new JsonObject();
+                message.set("message", "That user id doesn't exist");
+                response.set("response", message);
             }
-            response.set("response", message);
             HandlerUtils.sendJsonResponse(httpExchange, 200, response);
         } catch (Exception e) {
             HandlerUtils.sendServerErrorResponse(httpExchange, e);

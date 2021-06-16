@@ -1,16 +1,18 @@
-package edu.fpt.swp391.g2.imageexp.server.handler.user;
+package edu.fpt.swp391.g2.imageexp.server.handler.category;
 
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
 import com.sun.net.httpserver.HttpExchange;
-import edu.fpt.swp391.g2.imageexp.processor.UserProcessor;
+import edu.fpt.swp391.g2.imageexp.entity.Category;
+import edu.fpt.swp391.g2.imageexp.processor.CategoryProcessor;
 import edu.fpt.swp391.g2.imageexp.server.handler.SecuredJsonHandler;
 import edu.fpt.swp391.g2.imageexp.utils.HandlerUtils;
 
 import java.io.IOException;
 import java.io.InvalidObjectException;
+import java.util.Optional;
 
-public class RegisterUserHandler extends SecuredJsonHandler {
+public class GetCategoryByIdHandler extends SecuredJsonHandler {
     @Override
     public void handleJsonRequest(HttpExchange httpExchange, JsonValue body) throws IOException {
         if (!body.isObject()) {
@@ -18,24 +20,21 @@ public class RegisterUserHandler extends SecuredJsonHandler {
             return;
         }
         JsonObject jsonObject = body.asObject();
-        String email = jsonObject.getString("email", "");
-        String password = jsonObject.getString("password", "");
+        int id = jsonObject.getInt("id", -1);
 
         JsonObject response = new JsonObject();
+        Optional<Category> optionalCategory;
         try {
-            JsonObject message = new JsonObject();
-            if (email.isEmpty() || password.isEmpty()) {
-                response.set("success", false);
-                message.set("message", "Invalid format");
-            } else if (UserProcessor.checkEmailExists(email)) {
-                response.set("success", false);
-                message.set("message", "That email already exists");
-            } else {
-                UserProcessor.registerUser(email, password);
+            optionalCategory = CategoryProcessor.getCategoryById(id);
+            if (optionalCategory.isPresent()) {
                 response.set("success", true);
-                message.set("message", "Successfully registered");
+                response.set("response", optionalCategory.get().toJsonObject());
+            } else {
+                response.set("success", false);
+                JsonObject message = new JsonObject();
+                message.set("message", "That category id doesn't exist");
+                response.set("response", message);
             }
-            response.set("response", message);
             HandlerUtils.sendJsonResponse(httpExchange, 200, response);
         } catch (Exception e) {
             HandlerUtils.sendServerErrorResponse(httpExchange, e);

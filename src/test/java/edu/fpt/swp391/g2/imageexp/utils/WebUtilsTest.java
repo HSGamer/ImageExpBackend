@@ -34,6 +34,11 @@ class WebUtilsTest {
         }).collect(Collectors.joining("&"));
     }
 
+    @AfterAll
+    static void clear() {
+        testMap.clear();
+    }
+
     @Test
     void testSimpleString() {
         try {
@@ -52,10 +57,5 @@ class WebUtilsTest {
         } catch (UnsupportedEncodingException e) {
             Assertions.fail(e);
         }
-    }
-
-    @AfterAll
-    static void clear() {
-        testMap.clear();
     }
 }

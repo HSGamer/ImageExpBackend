@@ -1,16 +1,18 @@
-package edu.fpt.swp391.g2.imageexp.server.handler.user;
+package edu.fpt.swp391.g2.imageexp.server.handler.post;
 
+import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
 import com.sun.net.httpserver.HttpExchange;
-import edu.fpt.swp391.g2.imageexp.processor.UserProcessor;
+import edu.fpt.swp391.g2.imageexp.processor.CategoryProcessor;
+import edu.fpt.swp391.g2.imageexp.processor.PostProcessor;
 import edu.fpt.swp391.g2.imageexp.server.handler.SecuredJsonHandler;
 import edu.fpt.swp391.g2.imageexp.utils.HandlerUtils;
 
 import java.io.IOException;
 import java.io.InvalidObjectException;
 
-public class RegisterUserHandler extends SecuredJsonHandler {
+public class GetPostsByCategoryIdHandler extends SecuredJsonHandler {
     @Override
     public void handleJsonRequest(HttpExchange httpExchange, JsonValue body) throws IOException {
         if (!body.isObject()) {
@@ -18,24 +20,21 @@ public class RegisterUserHandler extends SecuredJsonHandler {
             return;
         }
         JsonObject jsonObject = body.asObject();
-        String email = jsonObject.getString("email", "");
-        String password = jsonObject.getString("password", "");
+        int id = jsonObject.getInt("id", -1);
 
         JsonObject response = new JsonObject();
         try {
-            JsonObject message = new JsonObject();
-            if (email.isEmpty() || password.isEmpty()) {
-                response.set("success", false);
-                message.set("message", "Invalid format");
-            } else if (UserProcessor.checkEmailExists(email)) {
-                response.set("success", false);
-                message.set("message", "That email already exists");
-            } else {
-                UserProcessor.registerUser(email, password);
+            if (CategoryProcessor.getCategoryById(id).isPresent()) {
                 response.set("success", true);
-                message.set("message", "Successfully registered");
+                JsonArray jsonArray = new JsonArray();
+                PostProcessor.getPostsByCategoryId(id).forEach(post -> jsonArray.add(post.toJsonObject()));
+                response.set("response", jsonArray);
+            } else {
+                response.set("success", false);
+                JsonObject message = new JsonObject();
+                message.set("message", "That category id doesn't exist");
+                response.set("response", message);
             }
-            response.set("response", message);
             HandlerUtils.sendJsonResponse(httpExchange, 200, response);
         } catch (Exception e) {
             HandlerUtils.sendServerErrorResponse(httpExchange, e);
