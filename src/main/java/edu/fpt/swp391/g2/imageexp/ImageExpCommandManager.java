@@ -6,10 +6,7 @@ import edu.fpt.swp391.g2.imageexp.command.category.AddCategoryCommand;
 import edu.fpt.swp391.g2.imageexp.command.category.GetAllCategoriesCommand;
 import edu.fpt.swp391.g2.imageexp.command.misc.ChangeTextCommand;
 import edu.fpt.swp391.g2.imageexp.command.misc.EchoCommand;
-import edu.fpt.swp391.g2.imageexp.command.post.DeletePostCommand;
-import edu.fpt.swp391.g2.imageexp.command.post.GetAllPostsCommand;
-import edu.fpt.swp391.g2.imageexp.command.post.GetPostsByCategoryIdCommand;
-import edu.fpt.swp391.g2.imageexp.command.post.GetPostsByUserIdCommand;
+import edu.fpt.swp391.g2.imageexp.command.post.*;
 import edu.fpt.swp391.g2.imageexp.command.system.ReloadCommand;
 import edu.fpt.swp391.g2.imageexp.command.system.StopCommand;
 import edu.fpt.swp391.g2.imageexp.command.user.*;
@@ -52,6 +49,7 @@ public class ImageExpCommandManager {
         addCommand(new GetAllPostsCommand());
         addCommand(new GetPostsByUserIdCommand());
         addCommand(new GetPostsByCategoryIdCommand());
+        addCommand(new GetPostByIdCommand());
     }
 
     /**

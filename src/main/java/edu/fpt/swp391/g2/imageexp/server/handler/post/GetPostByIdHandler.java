@@ -3,15 +3,16 @@ package edu.fpt.swp391.g2.imageexp.server.handler.post;
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
 import com.sun.net.httpserver.HttpExchange;
-import edu.fpt.swp391.g2.imageexp.processor.CategoryProcessor;
+import edu.fpt.swp391.g2.imageexp.entity.Post;
 import edu.fpt.swp391.g2.imageexp.processor.PostProcessor;
 import edu.fpt.swp391.g2.imageexp.server.handler.SecuredJsonHandler;
 import edu.fpt.swp391.g2.imageexp.utils.HandlerUtils;
 
 import java.io.IOException;
 import java.io.InvalidObjectException;
+import java.util.Optional;
 
-public class UpdatePostHandler extends SecuredJsonHandler {
+public class GetPostByIdHandler extends SecuredJsonHandler {
     @Override
     public void handleJsonRequest(HttpExchange httpExchange, JsonValue body) throws IOException {
         if (!body.isObject()) {
@@ -19,25 +20,20 @@ public class UpdatePostHandler extends SecuredJsonHandler {
             return;
         }
         JsonObject jsonObject = body.asObject();
-        int postId = jsonObject.getInt("postId", -1);
-        int categoryId = jsonObject.getInt("categoryId", -1);
-        String keyword = jsonObject.getString("keyword", "");
+        int id = jsonObject.getInt("id", -1);
 
         JsonObject response = new JsonObject();
         try {
-            JsonObject message = new JsonObject();
-            if (!PostProcessor.getPostById(postId).isPresent()) {
-                response.set("success", false);
-                message.set("message", "The post id doesn't exist");
-            } else if (!CategoryProcessor.getCategoryById(categoryId).isPresent()) {
-                response.set("success", false);
-                message.set("message", "The category id doesn't exist");
+            Optional<Post> optionalPost = PostProcessor.getPostById(id);
+            if (optionalPost.isPresent()) {
+                response.set("success", true);
+                response.set("response", optionalPost.get().toJsonObject());
             } else {
-                PostProcessor.updatePost(postId, categoryId, keyword);
                 response.set("success", false);
-                message.set("message", "Successfully updated");
+                JsonObject message = new JsonObject();
+                message.set("message", "The post id doesn't exist");
+                response.set("response", message);
             }
-            response.set("response", message);
             HandlerUtils.sendJsonResponse(httpExchange, 200, response);
         } catch (Exception e) {
             HandlerUtils.sendServerErrorResponse(httpExchange, e);
