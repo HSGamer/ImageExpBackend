@@ -113,7 +113,7 @@ public class PostProcessor {
         try (
                 PreparedStatementContainer container = PreparedStatementContainer.of(
                         DatabaseConnector.getConnection(),
-                        "insert into post(userID, picID, categoryID, keyword, status, likes)",
+                        "insert into post(userID, picID, categoryID, keyword, status, likes) values (?, ?, ?, ?, ?, ?)",
                         userId, picId, categoryID, keyword, "", 0
                 )
         ) {
