@@ -73,6 +73,7 @@ public class GalleryProcessor {
             return pictures;
         }
     }
+
     public static List<Picture> getPictureByUserId(int userId) throws SQLException {
         try (
                 PreparedStatementContainer container = PreparedStatementContainer.of(
