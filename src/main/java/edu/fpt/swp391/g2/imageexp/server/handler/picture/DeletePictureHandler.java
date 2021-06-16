@@ -22,8 +22,8 @@ public class DeletePictureHandler extends SecuredJsonHandler {
             return;
         }
         JsonObject jsonObject = body.asObject();
-        int picId = jsonObject.getInt("pic_id", -1);
-        int userId = jsonObject.getInt("user_id", -1);
+        int picId = jsonObject.getInt("picId", -1);
+        int userId = jsonObject.getInt("userId", -1);
 
         JsonObject response = new JsonObject();
         try {
