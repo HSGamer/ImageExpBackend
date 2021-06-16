@@ -66,6 +66,7 @@ public class ImageExpServer {
         registerHandler("/getallposts", new GetAllPostsHandler());
         registerHandler("/getpostsbyuserid", new GetPostsByUserIdHandler());
         registerHandler("/getpostsbycategoryid", new GetPostsByCategoryIdHandler());
+        registerHandler("/getpostbyid", new GetPostByIdHandler());
         registerHandler("/addpost", new AddPostHandler());
         registerHandler("/updatepost", new UpdatePostHandler());
         registerHandler("/deletepostforuser", new DeletePostForUserHandler());

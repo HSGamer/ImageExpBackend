@@ -37,6 +37,6 @@ public class GetPostsByCategoryIdCommand extends Command {
 
     @Override
     public String getUsage() {
-        return super.getUsage() + " <category_id>";
+        return super.getUsage() + " <id>";
     }
 }
