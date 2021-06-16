@@ -14,6 +14,7 @@ public class PostProcessor {
     private PostProcessor() {
         // EMPTY
     }
+
     private static Post getPost(ResultSet resultSet) throws SQLException {
         Post post = new Post(resultSet.getInt("postID"));
         post.setUserId(resultSet.getInt("userID"));
@@ -33,7 +34,7 @@ public class PostProcessor {
                         DatabaseConnector.getConnection(),
                         "select * from post"
                 );
-                ResultSet resultSet = container.query();
+                ResultSet resultSet = container.query()
         ) {
             List<Post> posts = new ArrayList<>();
             while (resultSet.next()) {
@@ -50,7 +51,7 @@ public class PostProcessor {
                         "select * from post where userID = ?",
                         userId
                 );
-                ResultSet resultSet = container.query();
+                ResultSet resultSet = container.query()
         ) {
             List<Post> posts = new ArrayList<>();
             while (resultSet.next()) {
@@ -67,7 +68,7 @@ public class PostProcessor {
                         "select * from post where categoryID = ?",
                         categoryId
                 );
-                ResultSet resultSet = container.query();
+                ResultSet resultSet = container.query()
         ) {
             List<Post> posts = new ArrayList<>();
             while (resultSet.next()) {
@@ -84,7 +85,7 @@ public class PostProcessor {
                         "select * from post where picID = ? limit 1",
                         picID
                 );
-                ResultSet resultSet = container.query();
+                ResultSet resultSet = container.query()
         ) {
             return resultSet.next();
         }
@@ -108,6 +109,18 @@ public class PostProcessor {
                         DatabaseConnector.getConnection(),
                         "update post set categoryID = ?, keyword = ?, updated_at = ? where postID = ?",
                         categoryId, keyword, new Date(System.currentTimeMillis()), postId
+                )
+        ) {
+            container.update();
+        }
+    }
+
+    public static void deletePost(int postId) throws SQLException {
+        try (
+                PreparedStatementContainer container = PreparedStatementContainer.of(
+                        DatabaseConnector.getConnection(),
+                        "delete from post where postID = ?",
+                        postId
                 )
         ) {
             container.update();
