@@ -29,7 +29,10 @@ public class ChangeUserPasswordHandler extends SecuredJsonHandler {
         try {
             JsonObject message = new JsonObject();
             optionalUser = UserProcessor.loginUser(email, password);
-            if (optionalUser.isPresent()) {
+            if (email.isEmpty() || password.isEmpty() || newpassword.isEmpty()) {
+                response.set("success", false);
+                message.set("message", "Invalid format");
+            } else if (optionalUser.isPresent()) {
                 response.set("success", true);
                 UserProcessor.changePassword(email, newpassword);
                 message.set("message", "Password Changed Successfully!");

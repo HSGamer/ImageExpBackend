@@ -6,6 +6,9 @@ import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 import edu.fpt.swp391.g2.imageexp.config.MainConfig;
 import edu.fpt.swp391.g2.imageexp.server.handler.DefaultHandler;
+import edu.fpt.swp391.g2.imageexp.server.handler.category.AddCategoryHandler;
+import edu.fpt.swp391.g2.imageexp.server.handler.category.GetAllCategoriesHandler;
+import edu.fpt.swp391.g2.imageexp.server.handler.category.GetCategoryByIdHandler;
 import edu.fpt.swp391.g2.imageexp.server.handler.misc.ChangeableTextHandler;
 import edu.fpt.swp391.g2.imageexp.server.handler.misc.TestBodyHandler;
 import edu.fpt.swp391.g2.imageexp.server.handler.user.*;
@@ -52,6 +55,11 @@ public class ImageExpServer {
         registerHandler("/updateuser", new UpdateUserHandler());
         registerHandler("/changeuserpassword", new ChangeUserPasswordHandler());
         registerHandler("/getuserbyemail", new GetUserByEmailHandler());
+
+        // Category
+        registerHandler("/addcategory", new AddCategoryHandler());
+        registerHandler("/getallcatergories", new GetAllCategoriesHandler());
+        registerHandler("/getcategorybyid", new GetCategoryByIdHandler());
     }
 
     /**
