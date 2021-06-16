@@ -16,15 +16,25 @@ public class GalleryProcessor {
      * @param picture picture as base_64
      * @throws SQLException sql error
      */
-    public static void addPicture(int userID, String picture) throws SQLException {
+    public static int addPicture(int userID, String picture) throws SQLException {
         try (
-                PreparedStatementContainer container = PreparedStatementContainer.of(
+                PreparedStatementContainer insertContainer = PreparedStatementContainer.of(
                         DatabaseConnector.getConnection(),
                         "insert into picture(userID, picture) values (?, ?)",
                         userID, picture
+                );
+                PreparedStatementContainer selectContainer = PreparedStatementContainer.of(
+                        DatabaseConnector.getConnection(),
+                        "select picID from where userID = ? and picture = ? limit 1",
+                        userID, picture
                 )
         ) {
-            container.update();
+            insertContainer.update();
+            ResultSet resultSet = selectContainer.query();
+            if (!resultSet.next()) {
+                return -1;
+            }
+            return resultSet.getInt("picID");
         }
     }
 

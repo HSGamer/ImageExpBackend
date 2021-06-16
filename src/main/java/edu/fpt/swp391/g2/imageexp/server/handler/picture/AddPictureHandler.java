@@ -29,9 +29,9 @@ public class AddPictureHandler extends SecuredJsonHandler {
                 response.set("success", false);
                 message.set("message", "The user id doesn't exist");
             } else {
-                GalleryProcessor.addPicture(userId, picture);
+                int picId = GalleryProcessor.addPicture(userId, picture);
                 response.set("success", false);
-                message.set("message", "Successfully added to gallery");
+                message.set("picId", picId);
             }
             response.set("response", message);
             HandlerUtils.sendJsonResponse(httpExchange, 200, response);
