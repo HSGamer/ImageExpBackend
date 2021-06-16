@@ -2,13 +2,13 @@ package edu.fpt.swp391.g2.imageexp.processor;
 
 import edu.fpt.swp391.g2.imageexp.database.DatabaseConnector;
 import edu.fpt.swp391.g2.imageexp.entity.Post;
+import edu.fpt.swp391.g2.imageexp.utils.Utils;
 import me.hsgamer.hscore.database.client.sql.PreparedStatementContainer;
 
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,8 +22,8 @@ public class PostProcessor {
         post.setUserId(resultSet.getInt("userID"));
         post.setPicId(resultSet.getInt("picID"));
         post.setCategoryId(resultSet.getInt("categoryID"));
-        post.setCreatedAt(resultSet.getTimestamp("created_at"));
-        post.setUpdatedAt(resultSet.getTimestamp("updated_at"));
+        post.setCreatedAt(Utils.getDate(resultSet.getString("created_at")));
+        post.setUpdatedAt(Utils.getDate(resultSet.getString("updated_at")));
         post.setKeyword(resultSet.getString("keyword"));
         post.setStatus(resultSet.getString("status"));
         post.setLikes(resultSet.getInt("likes"));
@@ -126,7 +126,7 @@ public class PostProcessor {
                 PreparedStatementContainer container = PreparedStatementContainer.of(
                         DatabaseConnector.getConnection(),
                         "update post set categoryID = ?, keyword = ?, updated_at = ? where postID = ?",
-                        categoryId, keyword, new Timestamp(System.currentTimeMillis()), postId
+                        categoryId, keyword, Utils.convertDateToString(new Date()), postId
                 )
         ) {
             container.update();
