@@ -20,7 +20,7 @@ public class GalleryProcessor {
         try (
                 PreparedStatementContainer container = PreparedStatementContainer.of(
                         DatabaseConnector.getConnection(),
-                        "insert into picture(userID, picture)",
+                        "insert into picture(userID, picture) values (?, ?)",
                         userID, picture
                 )
         ) {
