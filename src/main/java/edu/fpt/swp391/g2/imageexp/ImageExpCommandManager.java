@@ -2,6 +2,8 @@ package edu.fpt.swp391.g2.imageexp;
 
 import edu.fpt.swp391.g2.imageexp.command.Command;
 import edu.fpt.swp391.g2.imageexp.command.HelpCommand;
+import edu.fpt.swp391.g2.imageexp.command.category.AddCategoryCommand;
+import edu.fpt.swp391.g2.imageexp.command.category.GetAllCategoriesCommand;
 import edu.fpt.swp391.g2.imageexp.command.misc.ChangeTextCommand;
 import edu.fpt.swp391.g2.imageexp.command.misc.EchoCommand;
 import edu.fpt.swp391.g2.imageexp.command.system.ReloadCommand;
@@ -36,6 +38,10 @@ public class ImageExpCommandManager {
         addCommand(new RegisterUserCommand());
         addCommand(new GetAllUsersCommand());
         addCommand(new GetUserByEmailCommand());
+
+        // Category
+        addCommand(new GetAllCategoriesCommand());
+        addCommand(new AddCategoryCommand());
     }
 
     /**
