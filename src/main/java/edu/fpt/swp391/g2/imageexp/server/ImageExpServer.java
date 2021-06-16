@@ -6,8 +6,13 @@ import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 import edu.fpt.swp391.g2.imageexp.config.MainConfig;
 import edu.fpt.swp391.g2.imageexp.server.handler.DefaultHandler;
+import edu.fpt.swp391.g2.imageexp.server.handler.category.AddCategoryHandler;
+import edu.fpt.swp391.g2.imageexp.server.handler.category.GetAllCategoriesHandler;
+import edu.fpt.swp391.g2.imageexp.server.handler.category.GetCategoryByIdHandler;
 import edu.fpt.swp391.g2.imageexp.server.handler.misc.ChangeableTextHandler;
 import edu.fpt.swp391.g2.imageexp.server.handler.misc.TestBodyHandler;
+import edu.fpt.swp391.g2.imageexp.server.handler.picture.*;
+import edu.fpt.swp391.g2.imageexp.server.handler.post.*;
 import edu.fpt.swp391.g2.imageexp.server.handler.user.*;
 import lombok.Getter;
 
@@ -35,7 +40,7 @@ public class ImageExpServer {
      * @throws IOException if the server can not be started
      */
     public void init() throws IOException {
-        server = HttpServer.create(new InetSocketAddress(MainConfig.SERVER_IP.getValue(), MainConfig.SERVER_PORT.getValue()), 0);
+        server = HttpServer.create(new InetSocketAddress(MainConfig.SERVER_PORT.getValue()), 0);
         server.setExecutor(Executors.newFixedThreadPool(10));
 
         // Default
@@ -52,6 +57,27 @@ public class ImageExpServer {
         registerHandler("/updateuser", new UpdateUserHandler());
         registerHandler("/changeuserpassword", new ChangeUserPasswordHandler());
         registerHandler("/getuserbyemail", new GetUserByEmailHandler());
+
+        // Category
+        registerHandler("/addcategory", new AddCategoryHandler());
+        registerHandler("/getallcategories", new GetAllCategoriesHandler());
+        registerHandler("/getcategorybyid", new GetCategoryByIdHandler());
+
+        // Post
+        registerHandler("/getallposts", new GetAllPostsHandler());
+        registerHandler("/getpostsbyuserid", new GetPostsByUserIdHandler());
+        registerHandler("/getpostsbycategoryid", new GetPostsByCategoryIdHandler());
+        registerHandler("/getpostbyid", new GetPostByIdHandler());
+        registerHandler("/addpost", new AddPostHandler());
+        registerHandler("/updatepost", new UpdatePostHandler());
+        registerHandler("/deletepostforuser", new DeletePostForUserHandler());
+
+        //Picture
+        registerHandler("/getallpictures", new GetAllPictureHandler());
+        registerHandler("/getpicturebyuserid", new GetPictureByUserIdHandler());
+        registerHandler("/getpicturebyid", new GetPictureByIdHandler());
+        registerHandler("/addpicture", new AddPictureHandler());
+        registerHandler("/deletepicture", new DeletePictureHandler());
     }
 
     /**

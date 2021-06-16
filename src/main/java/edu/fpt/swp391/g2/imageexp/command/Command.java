@@ -55,6 +55,7 @@ public abstract class Command {
         return ImageExpBoostrap.INSTANCE;
     }
 
+
     /**
      * Get the format string which tells how to use the command
      *
