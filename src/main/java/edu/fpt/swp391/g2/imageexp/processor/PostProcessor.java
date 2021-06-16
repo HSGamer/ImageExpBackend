@@ -12,11 +12,21 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The processor for working with {@link Post}
+ */
 public class PostProcessor {
     private PostProcessor() {
         // EMPTY
     }
 
+    /**
+     * Get post from result set
+     *
+     * @param resultSet the result set
+     * @return the post
+     * @throws SQLException if there is an SQL error
+     */
     private static Post getPost(ResultSet resultSet) throws SQLException {
         Post post = new Post(resultSet.getInt("postID"));
         post.setUserId(resultSet.getInt("userID"));
@@ -30,6 +40,12 @@ public class PostProcessor {
         return post;
     }
 
+    /**
+     * Get all posts
+     *
+     * @return the posts
+     * @throws SQLException if there is an SQL error
+     */
     public static List<Post> getAllPosts() throws SQLException {
         try (
                 PreparedStatementContainer container = PreparedStatementContainer.of(
@@ -46,6 +62,13 @@ public class PostProcessor {
         }
     }
 
+    /**
+     * Get posts by user
+     *
+     * @param userId the user id
+     * @return the posts
+     * @throws SQLException if there is an SQL error
+     */
     public static List<Post> getPostsByUserId(int userId) throws SQLException {
         try (
                 PreparedStatementContainer container = PreparedStatementContainer.of(
@@ -63,6 +86,13 @@ public class PostProcessor {
         }
     }
 
+    /**
+     * Get posts by category
+     *
+     * @param categoryId the category id
+     * @return the posts
+     * @throws SQLException if there is an SQL error
+     */
     public static List<Post> getPostsByCategoryId(int categoryId) throws SQLException {
         try (
                 PreparedStatementContainer container = PreparedStatementContainer.of(
@@ -80,6 +110,13 @@ public class PostProcessor {
         }
     }
 
+    /**
+     * Get post by its id
+     *
+     * @param postId the id
+     * @return the post
+     * @throws SQLException if there is an SQL error
+     */
     public static Optional<Post> getPostById(int postId) throws SQLException {
         try (
                 PreparedStatementContainer container = PreparedStatementContainer.of(
@@ -96,6 +133,13 @@ public class PostProcessor {
         }
     }
 
+    /**
+     * Check if the picture is posted
+     *
+     * @param picID the picture id
+     * @return true if it is
+     * @throws SQLException if there is an SQL error
+     */
     public static boolean checkPicturePosted(int picID) throws SQLException {
         try (
                 PreparedStatementContainer container = PreparedStatementContainer.of(
@@ -109,6 +153,15 @@ public class PostProcessor {
         }
     }
 
+    /**
+     * Post the picture
+     *
+     * @param userId     the user id
+     * @param picId      the picture id
+     * @param categoryID the category id
+     * @param keyword    the keyword
+     * @throws SQLException if there is an SQL error
+     */
     public static void postPicture(int userId, int picId, int categoryID, String keyword) throws SQLException {
         try (
                 PreparedStatementContainer container = PreparedStatementContainer.of(
@@ -121,6 +174,14 @@ public class PostProcessor {
         }
     }
 
+    /**
+     * Update post
+     *
+     * @param postId     the post id
+     * @param categoryId the category id
+     * @param keyword    the keyword
+     * @throws SQLException if there is an SQL error
+     */
     public static void updatePost(int postId, int categoryId, String keyword) throws SQLException {
         try (
                 PreparedStatementContainer container = PreparedStatementContainer.of(
@@ -133,6 +194,12 @@ public class PostProcessor {
         }
     }
 
+    /**
+     * Delete the post
+     *
+     * @param postId the post id
+     * @throws SQLException if there is an SQL error
+     */
     public static void deletePost(int postId) throws SQLException {
         try (
                 PreparedStatementContainer container = PreparedStatementContainer.of(
