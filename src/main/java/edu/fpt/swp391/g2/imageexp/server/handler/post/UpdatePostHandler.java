@@ -40,7 +40,7 @@ public class UpdatePostHandler extends SecuredJsonHandler {
                 message.set("message", "The category id doesn't exist");
             } else {
                 PostProcessor.updatePost(postId, title, description, categoryIds, keyword);
-                response.set("success", false);
+                response.set("success", true);
                 message.set("message", "Successfully updated");
             }
             response.set("response", message);

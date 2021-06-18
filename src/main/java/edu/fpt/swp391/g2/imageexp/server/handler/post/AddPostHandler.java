@@ -45,7 +45,7 @@ public class AddPostHandler extends SecuredJsonHandler {
                 message.set("message", "The category id doesn't exist");
             } else {
                 PostProcessor.postPicture(userId, picId, title, description, categoryIds, keyword);
-                response.set("success", false);
+                response.set("success", true);
                 message.set("message", "Successfully posted");
             }
             response.set("response", message);
