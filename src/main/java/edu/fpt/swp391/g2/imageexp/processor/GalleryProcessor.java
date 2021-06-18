@@ -26,7 +26,7 @@ public class GalleryProcessor {
                 );
                 PreparedStatementContainer selectContainer = PreparedStatementContainer.of(
                         DatabaseConnector.getConnection(),
-                        "select picID from where userID = ? and picture = ? limit 1",
+                        "select picID from picture where userID = ? and picture = ? limit 1",
                         userID, picture
                 )
         ) {
