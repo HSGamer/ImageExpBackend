@@ -77,8 +77,12 @@ public class DatabaseConnector {
      * Get the database connection
      *
      * @return the database connection
+     * @throws SQLException if there is an SQL error
      */
-    public static Connection getConnection() {
+    public static Connection getConnection() throws SQLException {
+        if (connection == null || connection.isClosed()) {
+            connection = client.getConnection();
+        }
         return connection;
     }
 }

@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.sql.SQLException;
 
 class DatabaseConnectorTest {
 
@@ -23,6 +24,10 @@ class DatabaseConnectorTest {
 
     @Test
     void getConnection() {
-        Assertions.assertNotNull(DatabaseConnector.getConnection());
+        try {
+            Assertions.assertNotNull(DatabaseConnector.getConnection());
+        } catch (SQLException throwables) {
+            Assertions.fail(throwables);
+        }
     }
 }
