@@ -30,7 +30,7 @@ public class AddPictureHandler extends SecuredJsonHandler {
                 message.set("message", "The user id doesn't exist");
             } else {
                 int picId = GalleryProcessor.addPicture(userId, picture);
-                response.set("success", false);
+                response.set("success", true);
                 message.set("picId", picId);
             }
             response.set("response", message);
