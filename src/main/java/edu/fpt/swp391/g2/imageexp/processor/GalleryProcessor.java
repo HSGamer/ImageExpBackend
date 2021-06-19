@@ -2,6 +2,7 @@ package edu.fpt.swp391.g2.imageexp.processor;
 
 import edu.fpt.swp391.g2.imageexp.database.DatabaseConnector;
 import edu.fpt.swp391.g2.imageexp.entity.Picture;
+import me.hsgamer.hscore.database.client.sql.BatchBuilder;
 import me.hsgamer.hscore.database.client.sql.PreparedStatementContainer;
 
 import java.sql.ResultSet;
@@ -36,6 +37,20 @@ public class GalleryProcessor {
                 return -1;
             }
             return resultSet.getInt("picID");
+        }
+    }
+
+    /**
+     * @param userID   user's id
+     * @param pictures pictures as base_64
+     * @throws Exception sql error
+     */
+    public static void addMorePictures(int userID, List<String> pictures) throws Exception {
+        try (BatchBuilder batchBuilder = new BatchBuilder(DatabaseConnector.getConnection())) {
+            for (String picture : pictures) {
+                batchBuilder.addBatch("insert into picture(userID, picture) values (?, ?)", userID, picture);
+            }
+            batchBuilder.execute();
         }
     }
 
