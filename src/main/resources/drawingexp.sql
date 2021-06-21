@@ -34,8 +34,8 @@ CREATE TABLE `post`
     `updated_at`  datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `keyword`     varchar(128) NOT NULL,
     `status`      varchar(32)  NOT NULL,
-    FOREIGN KEY (`picID`) REFERENCES `picture` (`picID`),
-    FOREIGN KEY (`userID`) REFERENCES `user` (`userid`)
+    FOREIGN KEY (`picID`) REFERENCES `picture` (`picID`) ON DELETE CASCADE,
+    FOREIGN KEY (`userID`) REFERENCES `user` (`userid`) ON DELETE CASCADE
 );
 
 CREATE TABLE `postcategory`
@@ -43,8 +43,8 @@ CREATE TABLE `postcategory`
     `postcatID`  INTEGER NOT NULL PRIMARY KEY,
     `postID`     INTEGER NOT NULL,
     `categoryID` INTEGER NOT NULL,
-    FOREIGN KEY (`categoryID`) REFERENCES `category` (`categoryID`),
-    FOREIGN KEY (`postID`) REFERENCES `post` (`postID`)
+    FOREIGN KEY (`categoryID`) REFERENCES `category` (`categoryID`) ON DELETE CASCADE,
+    FOREIGN KEY (`postID`) REFERENCES `post` (`postID`) ON DELETE CASCADE
 );
 
 CREATE TABLE `comment`
@@ -55,8 +55,8 @@ CREATE TABLE `comment`
     `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `comment`    text     NOT NULL,
-    FOREIGN KEY (`postID`) REFERENCES `post` (`postID`),
-    FOREIGN KEY (`userID`) REFERENCES `user` (`userid`)
+    FOREIGN KEY (`postID`) REFERENCES `post` (`postID`) ON DELETE CASCADE,
+    FOREIGN KEY (`userID`) REFERENCES `user` (`userid`) ON DELETE CASCADE
 );
 
 CREATE TABLE `likes`
@@ -64,6 +64,6 @@ CREATE TABLE `likes`
     `likesID` INTEGER NOT NULL PRIMARY KEY,
     `postID`  INTEGER NOT NULL,
     `userID`  INTEGER NOT NULL,
-    FOREIGN KEY (`postID`) REFERENCES `post` (`postID`),
-    FOREIGN KEY (`userID`) REFERENCES `user` (`userid`)
+    FOREIGN KEY (`postID`) REFERENCES `post` (`postID`) ON DELETE CASCADE,
+    FOREIGN KEY (`userID`) REFERENCES `user` (`userid`) ON DELETE CASCADE
 );
