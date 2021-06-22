@@ -67,3 +67,32 @@ CREATE TABLE `likes`
     FOREIGN KEY (`postID`) REFERENCES `post` (`postID`) ON DELETE CASCADE,
     FOREIGN KEY (`userID`) REFERENCES `user` (`userid`) ON DELETE CASCADE
 );
+
+INSERT INTO `category` (`categoryID`, `category_name`)
+VALUES (1, 'action'),
+       (2, 'adventure'),
+       (3, 'comedy'),
+       (4, 'demons'),
+       (5, 'drama'),
+       (6, 'slice of life'),
+       (7, 'fantasy'),
+       (8, 'game'),
+       (9, 'historical'),
+       (10, 'isekai'),
+       (11, 'magic'),
+       (12, 'military'),
+       (13, 'mecha'),
+       (14, 'music'),
+       (15, 'school'),
+       (16, 'shoujo'),
+       (17, 'shounen'),
+       (18, 'super power'),
+       (19, 'sports'),
+       (20, 'space'),
+       (21, 'tragedy'),
+       (22, 'supernatural'),
+       (23, 'horror'),
+       (24, 'mystery'),
+       (25, 'psychological'),
+       (26, 'romance'),
+       (27, 'sci-fi');
