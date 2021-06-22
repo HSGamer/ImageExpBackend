@@ -6,7 +6,7 @@ import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * The email verification handler
@@ -19,8 +19,7 @@ public class VerifyEmailHandler {
      * @return the verify code
      */
     public String getRandom() {
-        Random rand = new Random();
-        int number = rand.nextInt(999999);
+        int number = ThreadLocalRandom.current().nextInt(999999);
         return String.format("%06d", number);
     }
 
