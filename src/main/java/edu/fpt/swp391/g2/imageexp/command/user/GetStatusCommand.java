@@ -15,11 +15,9 @@ public class GetStatusCommand extends Command {
 
     @Override
     public void runCommand(String argument) {
-        String status;
         Optional<User> optionalUser;
         try {
             optionalUser = UserProcessor.getUserByEmail(argument);
-            status = UserProcessor.getStatus(argument);
         } catch (SQLException e) {
             getLogger().log(Level.WARN, "There is an SQL exception when getting data", e);
             return;
@@ -28,7 +26,7 @@ public class GetStatusCommand extends Command {
             getLogger().warn("That email doesn't exist");
             return;
         }
-        getLogger().info(status);
+        getLogger().info(optionalUser.get().getStatus());
     }
 
     @Override
