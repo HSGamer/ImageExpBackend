@@ -148,6 +148,24 @@ public class UserProcessor {
     }
 
     /**
+     *
+     * @param email user email
+     * @param status Online/Offline
+     * @throws SQLException if there is SQL error
+     */
+    public static void changeStatus(String email, String status) throws SQLException {
+        try (
+                PreparedStatementContainer container = PreparedStatementContainer.of(
+                        DatabaseConnector.getConnection(),
+                        "UPDATE user SET status = ? WHERE email = ?",
+                        status, email
+                )
+        ) {
+            container.update();
+        }
+    }
+
+    /**
      * Get the user with the login info
      *
      * @param email    the email
@@ -190,6 +208,23 @@ public class UserProcessor {
                 list.add(getUser(resultSet));
             }
             return list;
+        }
+    }
+
+    public static String getStatus(String email) throws SQLException {
+        String status="";
+        try (
+                PreparedStatementContainer container = PreparedStatementContainer.of(
+                        DatabaseConnector.getConnection(),
+                        "select status from category where email = ? limit 1",
+                        status, email
+                );
+                ResultSet resultSet = container.query()
+        ) {
+            if (!resultSet.next()) {
+                return status;
+            }
+            return status;
         }
     }
 }
