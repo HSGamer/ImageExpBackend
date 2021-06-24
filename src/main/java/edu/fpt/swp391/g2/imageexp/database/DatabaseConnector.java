@@ -35,7 +35,9 @@ public class DatabaseConnector {
                 .setPort(MainConfig.DATABASE_PORT.getValue())
                 .setDatabaseName(MainConfig.DATABASE_DB_NAME.getValue())
                 .setUsername(MainConfig.DATABASE_USERNAME.getValue())
-                .setPassword(MainConfig.DATABASE_PASSWORD.getValue());
+                .setPassword(MainConfig.DATABASE_PASSWORD.getValue())
+                .setProperty("useUnicode", "yes")
+                .setProperty("characterEncoding", "UTF-8");
         try {
             Driver driver;
             if (MainConfig.DATABASE_MYSQL.getValue()) {
