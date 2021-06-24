@@ -5,7 +5,8 @@ import com.sun.net.httpserver.HttpHandler;
 import edu.fpt.swp391.g2.imageexp.utils.HandlerUtils;
 
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 
 /**
  * A simple web handler with support for formatting query parameters
@@ -19,9 +20,9 @@ public interface SimpleHttpHandler extends HttpHandler {
             handleGetRequest(httpExchange, query != null ? query : "");
         } else if ("POST".equalsIgnoreCase(method)) {
             StringBuilder sb = new StringBuilder();
-            InputStream ios = httpExchange.getRequestBody();
+            InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), StandardCharsets.UTF_8);
             int i;
-            while ((i = ios.read()) != -1) {
+            while ((i = isr.read()) != -1) {
                 sb.append((char) i);
             }
             handlePostRequest(httpExchange, sb.toString());
