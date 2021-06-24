@@ -34,7 +34,9 @@ public class ChangeUserPasswordHandler extends SecuredJsonHandler {
                 message.set("message", "Invalid format");
             } else if (optionalUser.isPresent()) {
                 response.set("success", true);
-                UserProcessor.changePassword(email, newpassword);
+                if (!password.equals(newpassword)) {
+                    UserProcessor.changePassword(email, newpassword);
+                }
                 message.set("message", "Password Changed Successfully!");
                 response.set("response", message);
             } else {
