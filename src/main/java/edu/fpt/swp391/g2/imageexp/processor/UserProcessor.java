@@ -148,10 +148,11 @@ public class UserProcessor {
     }
 
     /**
+     * Change user status
      *
-     * @param email user email
-     * @param status Online/Offline
-     * @throws SQLException if there is SQL error
+     * @param email  user email
+     * @param status the status
+     * @throws SQLException if there is an SQL error
      */
     public static void changeStatus(String email, String status) throws SQLException {
         try (
@@ -208,23 +209,6 @@ public class UserProcessor {
                 list.add(getUser(resultSet));
             }
             return list;
-        }
-    }
-
-    public static String getStatus(String email) throws SQLException {
-        String status= "";
-        try (
-                PreparedStatementContainer container = PreparedStatementContainer.of(
-                        DatabaseConnector.getConnection(),
-                        "select status from user where email = ? limit 1",
-                        status, email
-                );
-                ResultSet resultSet = container.query()
-        ) {
-            if (!resultSet.next()) {
-                return status;
-            }
-            return status;
         }
     }
 }

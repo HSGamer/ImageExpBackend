@@ -3,14 +3,12 @@ package edu.fpt.swp391.g2.imageexp.server.handler.user;
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
 import com.sun.net.httpserver.HttpExchange;
-import edu.fpt.swp391.g2.imageexp.entity.User;
 import edu.fpt.swp391.g2.imageexp.processor.UserProcessor;
 import edu.fpt.swp391.g2.imageexp.server.handler.SecuredJsonHandler;
 import edu.fpt.swp391.g2.imageexp.utils.HandlerUtils;
 
 import java.io.IOException;
 import java.io.InvalidObjectException;
-import java.util.Optional;
 
 public class ChangeUserStatusHandler extends SecuredJsonHandler {
 
@@ -24,7 +22,6 @@ public class ChangeUserStatusHandler extends SecuredJsonHandler {
         String status = jsonObject.getString("status", "");
 
         JsonObject response = new JsonObject();
-        Optional<User> optionalUser;
         try {
             JsonObject message = new JsonObject();
             if (email.isEmpty() || status.isEmpty()) {

@@ -3,7 +3,6 @@ package edu.fpt.swp391.g2.imageexp.server.handler.user;
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
 import com.sun.net.httpserver.HttpExchange;
-import edu.fpt.swp391.g2.imageexp.entity.Category;
 import edu.fpt.swp391.g2.imageexp.entity.User;
 import edu.fpt.swp391.g2.imageexp.processor.UserProcessor;
 import edu.fpt.swp391.g2.imageexp.server.handler.SecuredJsonHandler;
@@ -24,18 +23,16 @@ public class GetUserStatusHandler extends SecuredJsonHandler {
         String email = jsonObject.getString("email", "");
 
         JsonObject response = new JsonObject();
-        Optional<User> optionalUser ;
+        Optional<User> optionalUser;
         try {
-            String status = UserProcessor.getStatus(email);
             optionalUser = UserProcessor.getUserByEmail(email);
             if (optionalUser.isPresent()) {
                 response.set("success", true);
-                response.set("status", status);
-
+                response.set("status", optionalUser.get().getStatus());
             } else {
                 response.set("success", false);
                 JsonObject message = new JsonObject();
-                message.set("message", "That user id doesn't exist");
+                message.set("message", "That email doesn't exist");
                 response.set("response", message);
             }
             HandlerUtils.sendJsonResponse(httpExchange, 200, response);
