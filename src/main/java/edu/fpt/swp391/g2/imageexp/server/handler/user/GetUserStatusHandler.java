@@ -26,15 +26,15 @@ public class GetUserStatusHandler extends SecuredJsonHandler {
         Optional<User> optionalUser;
         try {
             optionalUser = UserProcessor.getUserByEmail(email);
+            JsonObject message = new JsonObject();
             if (optionalUser.isPresent()) {
                 response.set("success", true);
-                response.set("status", optionalUser.get().getStatus());
+                message.set("status", optionalUser.get().getStatus());
             } else {
                 response.set("success", false);
-                JsonObject message = new JsonObject();
                 message.set("message", "That email doesn't exist");
-                response.set("response", message);
             }
+            response.set("response", message);
             HandlerUtils.sendJsonResponse(httpExchange, 200, response);
         } catch (Exception e) {
             HandlerUtils.sendServerErrorResponse(httpExchange, e);
