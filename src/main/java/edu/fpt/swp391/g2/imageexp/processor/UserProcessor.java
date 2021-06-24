@@ -148,6 +148,25 @@ public class UserProcessor {
     }
 
     /**
+     * Change user status
+     *
+     * @param email  user email
+     * @param status the status
+     * @throws SQLException if there is an SQL error
+     */
+    public static void changeStatus(String email, String status) throws SQLException {
+        try (
+                PreparedStatementContainer container = PreparedStatementContainer.of(
+                        DatabaseConnector.getConnection(),
+                        "UPDATE user SET status = ? WHERE email = ?",
+                        status, email
+                )
+        ) {
+            container.update();
+        }
+    }
+
+    /**
      * Get the user with the login info
      *
      * @param email    the email

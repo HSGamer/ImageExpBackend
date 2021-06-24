@@ -20,4 +20,5 @@ public class User {
         jsonUser.set("status", status);
         return jsonUser;
     }
+
 }
