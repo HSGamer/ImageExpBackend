@@ -212,11 +212,11 @@ public class UserProcessor {
     }
 
     public static String getStatus(String email) throws SQLException {
-        String status="";
+        String status= "";
         try (
                 PreparedStatementContainer container = PreparedStatementContainer.of(
                         DatabaseConnector.getConnection(),
-                        "select status from category where email = ? limit 1",
+                        "select status from user where email = ? limit 1",
                         status, email
                 );
                 ResultSet resultSet = container.query()

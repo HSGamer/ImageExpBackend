@@ -22,18 +22,16 @@ public class GetUserStatusHandler extends SecuredJsonHandler {
         }
         JsonObject jsonObject = body.asObject();
         String email = jsonObject.getString("email", "");
-        String status = jsonObject.getString("status", "");
 
         JsonObject response = new JsonObject();
-        //String status;
         Optional<User> optionalUser ;
         try {
-            //status = UserProcessor.getStatus(email);
+            String status = UserProcessor.getStatus(email);
             optionalUser = UserProcessor.getUserByEmail(email);
             if (optionalUser.isPresent()) {
                 response.set("success", true);
-                response.set("response", optionalUser.get().toJsonObject());
-                //response.set("response", status.get().toJsonObject());
+                response.set("status", status);
+
             } else {
                 response.set("success", false);
                 JsonObject message = new JsonObject();
