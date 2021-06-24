@@ -2,36 +2,59 @@ package edu.fpt.swp391.g2.imageexp.processor;
 
 import edu.fpt.swp391.g2.imageexp.database.DatabaseConnector;
 import edu.fpt.swp391.g2.imageexp.entity.Picture;
-import edu.fpt.swp391.g2.imageexp.entity.Post;
+import me.hsgamer.hscore.database.client.sql.BatchBuilder;
 import me.hsgamer.hscore.database.client.sql.PreparedStatementContainer;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.ArrayList;
 
 public class GalleryProcessor {
     /**
-     *
-     * @param userID user's id
+     * @param userID  user's id
      * @param picture picture as base_64
+     * @return the picture id
      * @throws SQLException sql error
      */
-    public static void addPicture(int userID, String picture) throws SQLException {
+    public static int addPicture(int userID, String picture) throws SQLException {
         try (
-                PreparedStatementContainer container = PreparedStatementContainer.of(
+                PreparedStatementContainer insertContainer = PreparedStatementContainer.of(
                         DatabaseConnector.getConnection(),
-                        "insert into picture(userID, picture)",
+                        "insert into picture(userID, picture) values (?, ?)",
+                        userID, picture
+                );
+                PreparedStatementContainer selectContainer = PreparedStatementContainer.of(
+                        DatabaseConnector.getConnection(),
+                        "select picID from picture where userID = ? and picture = ? limit 1",
                         userID, picture
                 )
         ) {
-            container.update();
+            insertContainer.update();
+            ResultSet resultSet = selectContainer.query();
+            if (!resultSet.next()) {
+                return -1;
+            }
+            return resultSet.getInt("picID");
         }
     }
 
     /**
-     *
+     * @param userID   user's id
+     * @param pictures pictures as base_64
+     * @throws Exception sql error
+     */
+    public static void addMorePictures(int userID, List<String> pictures) throws Exception {
+        try (BatchBuilder batchBuilder = new BatchBuilder(DatabaseConnector.getConnection())) {
+            for (String picture : pictures) {
+                batchBuilder.addBatch("insert into picture(userID, picture) values (?, ?)", userID, picture);
+            }
+            batchBuilder.execute();
+        }
+    }
+
+    /**
      * @param picID picture's id
      * @throws SQLException sql error
      */
@@ -48,7 +71,6 @@ public class GalleryProcessor {
     }
 
     /**
-     *
      * @param picID picture's id
      * @return picture
      * @throws SQLException sql error
@@ -70,7 +92,6 @@ public class GalleryProcessor {
     }
 
     /**
-     *
      * @param resultSet get picture as set
      * @return picture
      * @throws SQLException sql error
@@ -83,11 +104,10 @@ public class GalleryProcessor {
     }
 
     /**
-     *
      * @return list pictures
      * @throws SQLException sql error
      */
-    public static List<Picture> getAllPicture() throws SQLException {
+    public static List<Picture> getAllPictures() throws SQLException {
         try (
                 PreparedStatementContainer container = PreparedStatementContainer.of(
                         DatabaseConnector.getConnection(),
@@ -104,12 +124,11 @@ public class GalleryProcessor {
     }
 
     /**
-     *
      * @param userId user's id
      * @return list of pictures
      * @throws SQLException sql error
      */
-    public static List<Picture> getPictureByUserId(int userId) throws SQLException {
+    public static List<Picture> getPicturesByUserId(int userId) throws SQLException {
         try (
                 PreparedStatementContainer container = PreparedStatementContainer.of(
                         DatabaseConnector.getConnection(),

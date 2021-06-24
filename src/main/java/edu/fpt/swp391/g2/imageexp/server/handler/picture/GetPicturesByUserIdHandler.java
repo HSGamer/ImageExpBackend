@@ -1,5 +1,6 @@
 package edu.fpt.swp391.g2.imageexp.server.handler.picture;
 
+import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
 import com.sun.net.httpserver.HttpExchange;
@@ -11,7 +12,7 @@ import edu.fpt.swp391.g2.imageexp.utils.HandlerUtils;
 import java.io.IOException;
 import java.io.InvalidObjectException;
 
-public class AddPictureHandler extends SecuredJsonHandler {
+public class GetPicturesByUserIdHandler extends SecuredJsonHandler {
     @Override
     public void handleJsonRequest(HttpExchange httpExchange, JsonValue body) throws IOException {
         if (!body.isObject()) {
@@ -19,21 +20,21 @@ public class AddPictureHandler extends SecuredJsonHandler {
             return;
         }
         JsonObject jsonObject = body.asObject();
-        int userId = jsonObject.getInt("userId", -1);
-        String picture = jsonObject.getString("picture", "");
+        int id = jsonObject.getInt("id", -1);
 
         JsonObject response = new JsonObject();
         try {
-            JsonObject message = new JsonObject();
-            if (!UserProcessor.getUserById(userId).isPresent()) {
-                response.set("success", false);
-                message.set("message", "The user id doesn't exist");
-            } else {
-                int picId = GalleryProcessor.addPicture(userId, picture);
+            if (UserProcessor.getUserById(id).isPresent()) {
                 response.set("success", true);
-                message.set("picId", picId);
+                JsonArray jsonArray = new JsonArray();
+                GalleryProcessor.getPicturesByUserId(id).forEach(picture -> jsonArray.add(picture.toJsonObject()));
+                response.set("response", jsonArray);
+            } else {
+                response.set("success", false);
+                JsonObject message = new JsonObject();
+                message.set("message", "That user id doesn't exist");
+                response.set("response", message);
             }
-            response.set("response", message);
             HandlerUtils.sendJsonResponse(httpExchange, 200, response);
         } catch (Exception e) {
             HandlerUtils.sendServerErrorResponse(httpExchange, e);

@@ -1,5 +1,6 @@
 package edu.fpt.swp391.g2.imageexp.server.handler.post;
 
+import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
 import com.sun.net.httpserver.HttpExchange;
@@ -8,9 +9,12 @@ import edu.fpt.swp391.g2.imageexp.processor.PostProcessor;
 import edu.fpt.swp391.g2.imageexp.processor.UserProcessor;
 import edu.fpt.swp391.g2.imageexp.server.handler.SecuredJsonHandler;
 import edu.fpt.swp391.g2.imageexp.utils.HandlerUtils;
+import edu.fpt.swp391.g2.imageexp.utils.Utils;
 
 import java.io.IOException;
 import java.io.InvalidObjectException;
+import java.util.List;
+import java.util.Optional;
 
 public class AddPostHandler extends SecuredJsonHandler {
     @Override
@@ -22,7 +26,9 @@ public class AddPostHandler extends SecuredJsonHandler {
         JsonObject jsonObject = body.asObject();
         int userId = jsonObject.getInt("userId", -1);
         int picId = jsonObject.getInt("picId", -1);
-        int categoryId = jsonObject.getInt("categoryId", -1);
+        String title = jsonObject.getString("title", "");
+        String description = jsonObject.getString("description", "");
+        List<Integer> categoryIds = Utils.getIntListFromJsonValue(Optional.ofNullable(jsonObject.get("categoryId")).orElse(new JsonArray()));
         String keyword = jsonObject.getString("keyword", "");
 
         JsonObject response = new JsonObject();
@@ -34,12 +40,12 @@ public class AddPostHandler extends SecuredJsonHandler {
             } else if (PostProcessor.checkPicturePosted(picId)) {
                 response.set("success", false);
                 message.set("message", "The picture was already posted");
-            } else if (!CategoryProcessor.getCategoryById(categoryId).isPresent()) {
+            } else if (!CategoryProcessor.checkAllCategoriesExists(categoryIds)) {
                 response.set("success", false);
                 message.set("message", "The category id doesn't exist");
             } else {
-                PostProcessor.postPicture(userId, picId, categoryId, keyword);
-                response.set("success", false);
+                PostProcessor.postPicture(userId, picId, title, description, categoryIds, keyword);
+                response.set("success", true);
                 message.set("message", "Successfully posted");
             }
             response.set("response", message);

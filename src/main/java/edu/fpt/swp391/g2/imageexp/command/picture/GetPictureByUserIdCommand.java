@@ -28,7 +28,7 @@ public class GetPictureByUserIdCommand extends Command {
                 getLogger().warn("The user id doesn't exist");
                 return;
             }
-            List<Picture> pictureList = GalleryProcessor.getPictureByUserId(id);
+            List<Picture> pictureList = GalleryProcessor.getPicturesByUserId(id);
             pictureList.forEach(getLogger()::info);
         } catch (SQLException e) {
             getLogger().log(Level.WARN, "There is an SQL exception when getting data", e);
