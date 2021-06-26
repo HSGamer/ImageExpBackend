@@ -12,13 +12,16 @@ import java.util.concurrent.ThreadLocalRandom;
  * The email verification handler
  */
 public class VerifyEmailHandler {
+    private VerifyEmailHandler() {
+        // EMPTY
+    }
 
     /**
      * Get the random verify code
      *
      * @return the verify code
      */
-    public String getRandom() {
+    public static String getRandom() {
         int number = ThreadLocalRandom.current().nextInt(999999);
         return String.format("%06d", number);
     }
@@ -30,7 +33,7 @@ public class VerifyEmailHandler {
      * @param code the verify code
      * @throws MessagingException if there is an error when sending the email
      */
-    public void sendEmail(User user, String code) throws MessagingException {
+    public static void sendEmail(User user, String code) throws MessagingException {
         String toEmail = user.getEmail();
         String fromEmail = "LATER@gmail.com";
         String password = "LATER";
