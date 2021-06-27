@@ -25,7 +25,7 @@ public class UpdateUserHandler extends SecuredJsonHandler {
         JsonObject response = new JsonObject();
         try {
             JsonObject message = new JsonObject();
-            if (email.isEmpty() || username.isEmpty() || avatar.isEmpty()) {
+            if (avatar.isEmpty()) {
                 response.set("success", false);
                 message.set("message", "Invalid format");
             } else if (!UserProcessor.checkEmailExists(email)) {

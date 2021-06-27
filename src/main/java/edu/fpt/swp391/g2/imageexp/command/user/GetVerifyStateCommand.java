@@ -26,7 +26,7 @@ public class GetVerifyStateCommand extends Command {
             getLogger().warn("That email doesn't exist");
             return;
         }
-        getLogger().info(optionalUser.get().getVerified());
+        getLogger().info(optionalUser.get().isVerified());
     }
 
     @Override

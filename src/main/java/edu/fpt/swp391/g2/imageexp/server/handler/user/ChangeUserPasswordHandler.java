@@ -29,7 +29,7 @@ public class ChangeUserPasswordHandler extends SecuredJsonHandler {
         try {
             JsonObject message = new JsonObject();
             optionalUser = UserProcessor.loginUser(email, password);
-            if (email.isEmpty() || password.isEmpty() || newpassword.isEmpty()) {
+            if (newpassword.isEmpty()) {
                 response.set("success", false);
                 message.set("message", "Invalid format");
             } else if (optionalUser.isPresent()) {
@@ -38,12 +38,11 @@ public class ChangeUserPasswordHandler extends SecuredJsonHandler {
                     UserProcessor.changePassword(email, newpassword);
                 }
                 message.set("message", "Password Changed Successfully!");
-                response.set("response", message);
             } else {
                 response.set("success", false);
                 message.set("message", "Incorrect old password");
-                response.set("response", message);
             }
+            response.set("response", message);
             HandlerUtils.sendJsonResponse(httpExchange, 200, response);
         } catch (Exception e) {
             HandlerUtils.sendServerErrorResponse(httpExchange, e);

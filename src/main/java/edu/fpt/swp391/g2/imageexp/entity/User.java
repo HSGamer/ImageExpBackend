@@ -10,7 +10,7 @@ public class User {
     private String username;
     private String avatar;
     private String status;
-    private int verified;
+    private boolean verified;
 
     public JsonObject toJsonObject() {
         JsonObject jsonUser = new JsonObject();
