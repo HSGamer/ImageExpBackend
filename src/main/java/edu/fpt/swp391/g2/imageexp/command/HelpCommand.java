@@ -21,7 +21,7 @@ public class HelpCommand extends Command {
             usageLength = Math.max(usageLength, command.getUsage().length());
             descLength = Math.max(descLength, command.getDescription().length());
         }
-        String format = "%" + usageLength + "s\t%-" + descLength + "s";
+        String format = "%-" + usageLength + "s\t%-" + descLength + "s";
         for (Command command : commands) {
             getLogger().info(() -> String.format(format, command.getUsage(), command.getDescription()));
         }
