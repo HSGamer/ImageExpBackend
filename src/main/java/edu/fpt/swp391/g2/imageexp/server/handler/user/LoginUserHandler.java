@@ -27,12 +27,7 @@ public class LoginUserHandler extends SecuredJsonHandler {
         Optional<User> optionalUser;
         try {
             optionalUser = UserProcessor.loginUser(email, password);
-            if (email.isEmpty() || password.isEmpty()) {
-                response.set("success", false);
-                JsonObject message = new JsonObject();
-                message.set("message", "Invalid format");
-                response.set("response", message);
-            } else if (optionalUser.isPresent()) {
+            if (optionalUser.isPresent()) {
                 response.set("success", true);
                 response.set("response", optionalUser.get().toJsonObject());
             } else {

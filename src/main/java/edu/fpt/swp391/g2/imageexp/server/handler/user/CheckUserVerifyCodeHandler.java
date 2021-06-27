@@ -22,14 +22,13 @@ public class CheckUserVerifyCodeHandler extends SecuredJsonHandler {
         }
         JsonObject jsonObject = body.asObject();
         String email = jsonObject.getString("email", "");
-        String password = jsonObject.getString("password", "");
         String code = jsonObject.getString("code", "");
 
         JsonObject response = new JsonObject();
         Optional<User> optionalUser;
         try {
-            optionalUser = UserProcessor.loginUser(email, password);
-            if (email.isEmpty() || password.isEmpty() || code.isEmpty()) {
+            optionalUser = UserProcessor.getUserByEmail(email);
+            if (code.isEmpty()) {
                 response.set("success", false);
                 JsonObject message = new JsonObject();
                 message.set("message", "Invalid format");
