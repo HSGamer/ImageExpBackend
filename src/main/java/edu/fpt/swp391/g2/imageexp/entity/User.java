@@ -10,6 +10,7 @@ public class User {
     private String username;
     private String avatar;
     private String status;
+    private int verified;
 
     public JsonObject toJsonObject() {
         JsonObject jsonUser = new JsonObject();
@@ -18,6 +19,7 @@ public class User {
         jsonUser.set("email", email);
         jsonUser.set("avatar", avatar);
         jsonUser.set("status", status);
+        jsonUser.set("verified", verified);
         return jsonUser;
     }
 
