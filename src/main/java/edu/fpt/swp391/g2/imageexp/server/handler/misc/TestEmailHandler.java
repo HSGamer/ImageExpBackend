@@ -30,5 +30,7 @@ public class TestEmailHandler extends SecuredJsonHandler {
             response.set("success", true);
             message.set("message", "Sent test email");
         }
+        response.set("response", message);
+        HandlerUtils.sendJsonResponse(httpExchange, 200, response);
     }
 }
