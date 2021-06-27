@@ -64,6 +64,7 @@ public class ImageExpServer {
         registerHandler("/setverifystate", new SetUserVerifyStateHandler());
         registerHandler("/getverifystate", new GetVerifyStateFromEmailHandler());
         registerHandler("/checkverifycode", new CheckUserVerifyCodeHandler());
+        registerHandler("/sendverifycode", new SendVerifyCodeHandler());
 
         // Category
         registerHandler("/addcategory", new AddCategoryHandler());
