@@ -1,7 +1,7 @@
 package edu.fpt.swp391.g2.imageexp.command.misc;
 
 import edu.fpt.swp391.g2.imageexp.command.Command;
-import edu.fpt.swp391.g2.imageexp.email.VerifyEmailHandler;
+import edu.fpt.swp391.g2.imageexp.email.EmailHandler;
 
 public class TestEmailCommand extends Command {
     public TestEmailCommand() {
@@ -14,7 +14,8 @@ public class TestEmailCommand extends Command {
             getLogger().warn("You should give a email to send");
             return;
         }
-        VerifyEmailHandler.sendEmailAsync(argument, "TestCode").thenAccept(unused -> getLogger().info("Finished sending email"));
+        EmailHandler.sendEmailAsync(argument, "Test Email", "<h1>This is a test email</h1><p>If you see this then your email system is working properly</p>")
+                .thenAccept(unused -> getLogger().info("Finished sending email"));
         getLogger().info("Successfully Called");
     }
 

@@ -10,22 +10,23 @@ import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.io.InputStream;
-import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * The email verification handler
+ * The email handler
  */
-public class VerifyEmailHandler {
-    private static final Logger logger = LogManager.getLogger(VerifyEmailHandler.class);
+public class EmailHandler {
+    private static final Logger logger = LogManager.getLogger(EmailHandler.class);
     private static final Properties properties = new Properties();
 
-    private VerifyEmailHandler() {
+    private EmailHandler() {
         // EMPTY
     }
 
+    /**
+     * Init the settings
+     */
     public static void init() {
         properties.clear();
         if (MainConfig.EMAIL_CHECK_ENV.getValue()) {
@@ -39,7 +40,7 @@ public class VerifyEmailHandler {
             }
             ImageExpBoostrap.INSTANCE.getMainConfig().save();
         }
-        try (InputStream inputStream = VerifyEmailHandler.class.getResourceAsStream("/email-host.properties")) {
+        try (InputStream inputStream = EmailHandler.class.getResourceAsStream("/email-host.properties")) {
             properties.load(inputStream);
         } catch (Exception e) {
             logger.error("Error when loading email properties", e);
@@ -47,30 +48,16 @@ public class VerifyEmailHandler {
     }
 
     /**
-     * Get the random verify code
-     *
-     * @return the verify code
-     */
-    public static String getRandom() {
-        int number = ThreadLocalRandom.current().nextInt(999999);
-        return String.format("%06d", number);
-    }
-
-    /**
-     * Send the verification email
+     * Send the content to the email
      *
      * @param toEmail the email
-     * @param code    the verify code
+     * @param title   the title
+     * @param content the content
      * @throws MessagingException if there is an error when sending the email
      */
-    public static void sendEmail(String toEmail, String code) throws MessagingException {
+    public static void sendEmail(String toEmail, String title, String content) throws MessagingException {
         String fromEmail = MainConfig.EMAIL_USERNAME.getValue();
         String password = MainConfig.EMAIL_PASSWORD.getValue();
-
-        String title = MainConfig.EMAIL_CONTENT_TITLE.getValue();
-        List<String> content = MainConfig.EMAIL_CONTENT_BODY.getValue();
-        content.replaceAll(s -> s.replace("{code}", code));
-        String contentString = String.join("", content);
 
         Session session = Session.getInstance(properties, new Authenticator() {
             @Override
@@ -83,21 +70,22 @@ public class VerifyEmailHandler {
         mimeMessage.setFrom(new InternetAddress(fromEmail));
         mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
         mimeMessage.setSubject(title);
-        mimeMessage.setContent(contentString, "text/html");
+        mimeMessage.setContent(content, "text/html");
         Transport.send(mimeMessage);
     }
 
     /**
-     * Send the verification email asynchronously
+     * Send the content to the email asynchronously
      *
      * @param toEmail the email
-     * @param code    the verify code
+     * @param title   the title
+     * @param content the content
      * @return the sending task
      */
-    public static CompletableFuture<Void> sendEmailAsync(String toEmail, String code) {
+    public static CompletableFuture<Void> sendEmailAsync(String toEmail, String title, String content) {
         return CompletableFuture.runAsync(() -> {
             try {
-                sendEmail(toEmail, code);
+                sendEmail(toEmail, title, content);
             } catch (MessagingException e) {
                 throw new RuntimeException(e);
             }

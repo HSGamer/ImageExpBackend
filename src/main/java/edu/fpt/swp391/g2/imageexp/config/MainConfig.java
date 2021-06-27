@@ -30,9 +30,9 @@ public class MainConfig extends PathableConfig {
     public static final BooleanConfigPath EMAIL_CHECK_ENV = new BooleanConfigPath("email.check-env", true);
     public static final StringConfigPath EMAIL_USERNAME = new StringConfigPath("email.username", "");
     public static final StringConfigPath EMAIL_PASSWORD = new StringConfigPath("email.password", "");
-    public static final StringConfigPath EMAIL_CONTENT_TITLE = new StringConfigPath("email.content.title", "Verify Code For ImageExp");
-    public static final BaseConfigPath<List<String>> EMAIL_CONTENT_BODY = new BaseConfigPath<>(
-            "email.content.body",
+    public static final StringConfigPath EMAIL_VERIFICATION_TITLE = new StringConfigPath("email.verification.title", "Verify Code For ImageExp");
+    public static final BaseConfigPath<List<String>> EMAIL_VERIFICATION_BODY = new BaseConfigPath<>(
+            "email.verification.body",
             Collections.singletonList("Registered successfully. Please verify your account using this code: {code}"),
             o -> CollectionUtils.createStringListFromObject(o, false)
     );
