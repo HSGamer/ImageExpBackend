@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -103,4 +104,13 @@ public class Utils {
         return getListFromJsonValue(jsonValue, JsonValue::isString, JsonValue::asString);
     }
 
+    /**
+     * Get the random verify code
+     *
+     * @return the verify code
+     */
+    public String getRandom() {
+        int number = ThreadLocalRandom.current().nextInt(999999);
+        return String.format("%06d", number);
+    }
 }
