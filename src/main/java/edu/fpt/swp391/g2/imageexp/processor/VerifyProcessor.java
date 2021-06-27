@@ -41,8 +41,7 @@ public class VerifyProcessor {
         }
     }
 
-    public static String checkVerifyCode(int id) throws SQLException {
-        String code = "";
+    public static boolean checkVerifyCode(int id, String code) throws SQLException {
         try (
                 PreparedStatementContainer container = PreparedStatementContainer.of(
                         DatabaseConnector.getConnection(),
@@ -52,9 +51,9 @@ public class VerifyProcessor {
                 ResultSet resultSet = container.query()
         ) {
             if (!resultSet.next()) {
-                return null;
+                return false;
             }
-            return code;
+            return code.equals(resultSet.getString("code"));
         }
     }
 

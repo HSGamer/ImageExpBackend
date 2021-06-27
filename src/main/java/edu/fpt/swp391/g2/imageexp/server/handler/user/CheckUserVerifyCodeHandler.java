@@ -27,27 +27,29 @@ public class CheckUserVerifyCodeHandler extends SecuredJsonHandler {
         JsonObject response = new JsonObject();
         Optional<User> optionalUser;
         try {
+            JsonObject message = new JsonObject();
             optionalUser = UserProcessor.getUserByEmail(email);
             if (code.isEmpty()) {
                 response.set("success", false);
-                JsonObject message = new JsonObject();
                 message.set("message", "Invalid format");
-                response.set("response", message);
-            } else if (optionalUser.isPresent()) {
-                int userId = optionalUser.get().getUserId();
-                String checkCode = VerifyProcessor.checkVerifyCode(userId);
-                if (checkCode != null && code.compareTo(checkCode) == 0) {
-                    response.set("success", true);
-                    JsonObject message = new JsonObject();
-                    message.set("message", "Successfully verified");
-                    response.set("response", message);
-                }
-            } else {
+            } else if (!optionalUser.isPresent()) {
                 response.set("success", false);
-                JsonObject message = new JsonObject();
-                message.set("message", "That email,password or code is incorrect");
-                response.set("response", message);
+                message.set("message", "That email doesn't exist");
+            } else {
+                User user = optionalUser.get();
+                if (user.isVerified()) {
+                    response.set("success", true);
+                    message.set("message", "Already verified");
+                } else if (VerifyProcessor.checkVerifyCode(user.getUserId(), code)) {
+                    VerifyProcessor.setVerifyState(email, true);
+                    response.set("success", true);
+                    message.set("message", "Successfully verified");
+                } else {
+                    response.set("success", false);
+                    message.set("message", "The code is incorrect");
+                }
             }
+            response.set("response", message);
             HandlerUtils.sendJsonResponse(httpExchange, 200, response);
         } catch (Exception e) {
             HandlerUtils.sendServerErrorResponse(httpExchange, e);
