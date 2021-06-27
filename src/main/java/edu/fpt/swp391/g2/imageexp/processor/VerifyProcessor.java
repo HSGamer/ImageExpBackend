@@ -3,6 +3,8 @@ package edu.fpt.swp391.g2.imageexp.processor;
 import edu.fpt.swp391.g2.imageexp.config.MainConfig;
 import edu.fpt.swp391.g2.imageexp.database.DatabaseConnector;
 import edu.fpt.swp391.g2.imageexp.email.EmailHandler;
+import edu.fpt.swp391.g2.imageexp.entity.User;
+import edu.fpt.swp391.g2.imageexp.utils.Utils;
 import me.hsgamer.hscore.database.client.sql.PreparedStatementContainer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,6 +21,12 @@ public class VerifyProcessor {
 
     private VerifyProcessor() {
         // EMPTY
+    }
+
+    public static void createAndSendVerifyCode(User user) throws SQLException {
+        String code = Utils.getRandomDigitString();
+        insertVerifyCode(user.getUserId(), code);
+        sendVerifyCodeAsync(user.getEmail(), code);
     }
 
     public static void sendVerifyCodeAsync(String email, String code) {
@@ -57,5 +65,15 @@ public class VerifyProcessor {
         }
     }
 
-
+    public static void insertVerifyCode(int id, String code) throws SQLException{
+        try (
+                PreparedStatementContainer container = PreparedStatementContainer.of(
+                        DatabaseConnector.getConnection(),
+                        "replace into code(userID, code) values (?, ?)",
+                        id, code
+                )
+        ) {
+            container.update();
+        }
+    }
 }

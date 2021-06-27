@@ -105,11 +105,11 @@ public class Utils {
     }
 
     /**
-     * Get the random verify code
+     * Get the random 6-digit string
      *
-     * @return the verify code
+     * @return the string
      */
-    public String getRandom() {
+    public static String getRandomDigitString() {
         int number = ThreadLocalRandom.current().nextInt(999999);
         return String.format("%06d", number);
     }
