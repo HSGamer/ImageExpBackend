@@ -1,7 +1,6 @@
 package edu.fpt.swp391.g2.imageexp.command;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 
