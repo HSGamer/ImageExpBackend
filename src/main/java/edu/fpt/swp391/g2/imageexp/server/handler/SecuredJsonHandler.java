@@ -18,7 +18,7 @@ public abstract class SecuredJsonHandler implements SimpleHttpHandler {
     public void handlePostRequest(HttpExchange httpExchange, String parameters) throws IOException {
         Headers headers = httpExchange.getRequestHeaders();
         List<String> contentTypes = headers.getOrDefault("Content-Type", Collections.emptyList());
-        if (!contentTypes.contains("application/json")) {
+        if (contentTypes.stream().noneMatch(s -> s.contains("application/json"))) {
             HandlerUtils.sendServerErrorResponse(httpExchange, new InvalidObjectException("Only Json is allowed"));
             return;
         }

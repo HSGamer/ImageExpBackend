@@ -12,7 +12,8 @@ CREATE TABLE `user`
     `password`   text        NOT NULL,
     `created_at` datetime    NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `avatar`     text        NOT NULL,
-    `status`     varchar(30) NOT NULL
+    `status`     varchar(30) NOT NULL,
+    `verified`   tinyint(1) NOT NULL DEFAULT FALSE
 );
 
 CREATE TABLE `picture`
@@ -65,6 +66,13 @@ CREATE TABLE `likes`
     `postID`  INTEGER NOT NULL,
     `userID`  INTEGER NOT NULL,
     FOREIGN KEY (`postID`) REFERENCES `post` (`postID`) ON DELETE CASCADE,
+    FOREIGN KEY (`userID`) REFERENCES `user` (`userid`) ON DELETE CASCADE
+);
+
+CREATE TABLE `code`
+(
+    `userID` INTEGER    NOT NULL PRIMARY KEY,
+    `code`   varchar(6) NOT NULL,
     FOREIGN KEY (`userID`) REFERENCES `user` (`userid`) ON DELETE CASCADE
 );
 

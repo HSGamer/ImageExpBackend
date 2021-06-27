@@ -2,7 +2,7 @@ package edu.fpt.swp391.g2.imageexp;
 
 import edu.fpt.swp391.g2.imageexp.config.MainConfig;
 import edu.fpt.swp391.g2.imageexp.database.DatabaseConnector;
-import edu.fpt.swp391.g2.imageexp.email.VerifyEmailHandler;
+import edu.fpt.swp391.g2.imageexp.email.EmailHandler;
 import edu.fpt.swp391.g2.imageexp.server.ImageExpServer;
 import edu.fpt.swp391.g2.imageexp.terminal.ImageExpTerminal;
 import lombok.Getter;
@@ -21,7 +21,6 @@ public class ImageExpMain {
     private final Logger logger = LogManager.getLogger(this.getClass());
     private final ImageExpServer imageExpServer = new ImageExpServer();
     private final MainConfig mainConfig = new MainConfig();
-    private final VerifyEmailHandler verifyEmailHandler = new VerifyEmailHandler();
     @Setter
     private boolean shuttingDown = false;
 
@@ -47,6 +46,8 @@ public class ImageExpMain {
         }
         logger.info("Connect to the database");
         DatabaseConnector.init();
+        logger.info("Get the email information");
+        EmailHandler.init();
         logger.info("Start the server");
         imageExpServer.enable();
         logger.info("For help, please type 'help'");
@@ -76,6 +77,7 @@ public class ImageExpMain {
             return;
         }
         DatabaseConnector.init();
+        EmailHandler.init();
         imageExpServer.enable();
     }
 
