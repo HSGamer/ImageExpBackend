@@ -1,5 +1,7 @@
 package edu.fpt.swp391.g2.imageexp.config;
 
+import me.hsgamer.hscore.common.CollectionUtils;
+import me.hsgamer.hscore.config.BaseConfigPath;
 import me.hsgamer.hscore.config.PathableConfig;
 import me.hsgamer.hscore.config.path.BooleanConfigPath;
 import me.hsgamer.hscore.config.path.IntegerConfigPath;
@@ -8,6 +10,8 @@ import me.hsgamer.hscore.config.simpleconfiguration.SimpleConfig;
 import org.simpleyaml.configuration.file.YamlConfiguration;
 
 import java.io.File;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * The main config, which creates the "config.yml" file
@@ -23,6 +27,15 @@ public class MainConfig extends PathableConfig {
     public static final StringConfigPath DATABASE_USERNAME = new StringConfigPath("database.username", "root");
     public static final StringConfigPath DATABASE_PASSWORD = new StringConfigPath("database.password", "");
     public static final BooleanConfigPath OPTION_AUTO_ASSIGN_NAME = new BooleanConfigPath("option.auto-assign-name-to-new-user", false);
+    public static final BooleanConfigPath EMAIL_CHECK_ENV = new BooleanConfigPath("email.check-env", true);
+    public static final StringConfigPath EMAIL_USERNAME = new StringConfigPath("email.username", "");
+    public static final StringConfigPath EMAIL_PASSWORD = new StringConfigPath("email.password", "");
+    public static final StringConfigPath EMAIL_CONTENT_TITLE = new StringConfigPath("email.content.title", "Verify Code For ImageExp");
+    public static final BaseConfigPath<List<String>> EMAIL_CONTENT_BODY = new BaseConfigPath<>(
+            "email.content.body",
+            Collections.singletonList("Registered successfully. Please verify your account using this code: {code}"),
+            o -> CollectionUtils.createStringListFromObject(o, false)
+    );
 
     public MainConfig() {
         super(new SimpleConfig(new File("config.yml"), YamlConfiguration::loadConfiguration));

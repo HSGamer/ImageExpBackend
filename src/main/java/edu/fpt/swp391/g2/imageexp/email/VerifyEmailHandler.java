@@ -1,19 +1,49 @@
 package edu.fpt.swp391.g2.imageexp.email;
 
-import edu.fpt.swp391.g2.imageexp.entity.User;
+import edu.fpt.swp391.g2.imageexp.ImageExpBoostrap;
+import edu.fpt.swp391.g2.imageexp.config.MainConfig;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.io.InputStream;
+import java.util.List;
 import java.util.Properties;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * The email verification handler
  */
 public class VerifyEmailHandler {
+    private static final Logger logger = LogManager.getLogger(VerifyEmailHandler.class);
+    private static final Properties properties = new Properties();
+
     private VerifyEmailHandler() {
         // EMPTY
+    }
+
+    public static void init() {
+        properties.clear();
+        if (MainConfig.EMAIL_CHECK_ENV.getValue()) {
+            String username = System.getenv("EMAIL_USERNAME");
+            String password = System.getenv("EMAIL_PASSWORD");
+            if (username != null) {
+                MainConfig.EMAIL_USERNAME.setValue(username);
+            }
+            if (password != null) {
+                MainConfig.EMAIL_PASSWORD.setValue(password);
+            }
+            ImageExpBoostrap.INSTANCE.getMainConfig().save();
+        }
+        try (InputStream inputStream = VerifyEmailHandler.class.getResourceAsStream("/email-host.properties")) {
+            properties.load(inputStream);
+        } catch (Exception e) {
+            logger.error("Error when loading email properties", e);
+        }
     }
 
     /**
@@ -27,49 +57,55 @@ public class VerifyEmailHandler {
     }
 
     /**
-     * Send the verification email to the user
+     * Send the verification email
      *
-     * @param user the user
-     * @param code the verify code
+     * @param toEmail the email
+     * @param code    the verify code
      * @throws MessagingException if there is an error when sending the email
      */
-    public static void sendEmail(User user, String code) throws MessagingException {
-        String toEmail = user.getEmail();
-        String fromEmail = "LATER@gmail.com";
-        String password = "LATER";
+    public static void sendEmail(String toEmail, String code) throws MessagingException {
+        String fromEmail = MainConfig.EMAIL_USERNAME.getValue();
+        String password = MainConfig.EMAIL_PASSWORD.getValue();
 
-        Properties pr = new Properties();
-        pr.setProperty("mail.smtp.host", "smtp.gmail.com");
-        pr.setProperty("mail.smtp.port", "587");
-        pr.setProperty("mail.smtp.auth", "true");
-        pr.setProperty("mail.smtp.starttls.enable", "true");
-        pr.put("mail.smtp.socketFactory.port", "587");
-        pr.put("mail.smtp.ssl.checkserveridentity", "true");
-        pr.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        String title = MainConfig.EMAIL_CONTENT_TITLE.getValue();
+        List<String> content = MainConfig.EMAIL_CONTENT_BODY.getValue();
+        content.replaceAll(s -> s.replace("{code}", code));
+        String contentString = String.join("", content);
 
-        //get session to authenticate the host email address and password
-        Session session = Session.getInstance(pr, new Authenticator() {
+        Session session = Session.getInstance(properties, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(fromEmail, password);
             }
         });
 
-        //set email message details
-        Message mess = new MimeMessage(session);
-
-        //set from email address
-        mess.setFrom(new InternetAddress(fromEmail));
-        //set to email address or destination email address
-        mess.setRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
-
-        //set email subject
-        mess.setSubject("User Email Verification");
-
-        //set message text
-        mess.setText("Registered successfully.Please verify your account using this code: " + code);
-        //send the message
-        Transport.send(mess);
+        Message mimeMessage = new MimeMessage(session);
+        mimeMessage.setFrom(new InternetAddress(fromEmail));
+        mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
+        mimeMessage.setSubject(title);
+        mimeMessage.setContent(contentString, "text/html");
+        Transport.send(mimeMessage);
     }
 
+    /**
+     * Send the verification email asynchronously
+     *
+     * @param toEmail the email
+     * @param code    the verify code
+     * @return the sending task
+     */
+    public static CompletableFuture<Void> sendEmailAsync(String toEmail, String code) {
+        return CompletableFuture.runAsync(() -> {
+            try {
+                sendEmail(toEmail, code);
+            } catch (MessagingException e) {
+                throw new RuntimeException(e);
+            }
+        }).exceptionally(throwable -> {
+            if (throwable != null) {
+                logger.log(Level.WARN, () -> "Error when sending email to " + toEmail, throwable);
+            }
+            return null;
+        });
+    }
 }

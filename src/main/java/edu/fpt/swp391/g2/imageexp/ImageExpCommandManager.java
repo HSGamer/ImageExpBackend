@@ -6,6 +6,7 @@ import edu.fpt.swp391.g2.imageexp.command.category.AddCategoryCommand;
 import edu.fpt.swp391.g2.imageexp.command.category.GetAllCategoriesCommand;
 import edu.fpt.swp391.g2.imageexp.command.misc.ChangeTextCommand;
 import edu.fpt.swp391.g2.imageexp.command.misc.EchoCommand;
+import edu.fpt.swp391.g2.imageexp.command.misc.TestEmailCommand;
 import edu.fpt.swp391.g2.imageexp.command.picture.DeletePictureCommand;
 import edu.fpt.swp391.g2.imageexp.command.picture.GetAllPictureCommand;
 import edu.fpt.swp391.g2.imageexp.command.picture.GetPictureByUserIdCommand;
@@ -35,6 +36,7 @@ public class ImageExpCommandManager {
         // Misc
         addCommand(new EchoCommand());
         addCommand(new ChangeTextCommand());
+        addCommand(new TestEmailCommand());
 
         // User
         addCommand(new GetUserByIdCommand());
