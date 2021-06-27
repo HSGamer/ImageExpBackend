@@ -33,6 +33,7 @@ public class UserProcessor {
         user.setEmail(resultSet.getString("email"));
         user.setAvatar(resultSet.getString("avatar"));
         user.setStatus(resultSet.getString("status"));
+        user.setVerified(resultSet.getBoolean("verified"));
         return user;
     }
 
