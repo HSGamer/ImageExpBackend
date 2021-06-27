@@ -29,19 +29,20 @@ public class VerifyProcessor {
                 .thenAccept(logger::info);
     }
 
-    public static void setVerifyState(String email) throws SQLException {
+    public static void setVerifyState(String email, boolean state) throws SQLException {
         try (
                 PreparedStatementContainer container = PreparedStatementContainer.of(
                         DatabaseConnector.getConnection(),
                         "UPDATE user SET verified = ? WHERE email = ?",
-                        0, email
+                        state, email
                 )
         ) {
             container.update();
         }
     }
+
     public static String checkVerifyCode(int id) throws SQLException {
-        String code="";
+        String code = "";
         try (
                 PreparedStatementContainer container = PreparedStatementContainer.of(
                         DatabaseConnector.getConnection(),
@@ -56,7 +57,6 @@ public class VerifyProcessor {
             return code;
         }
     }
-
 
 
 }

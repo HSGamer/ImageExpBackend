@@ -28,7 +28,7 @@ public class CheckUserVerifyCodeHandler extends SecuredJsonHandler {
         JsonObject response = new JsonObject();
         Optional<User> optionalUser;
         try {
-            optionalUser = UserProcessor.loginUser(email,password);
+            optionalUser = UserProcessor.loginUser(email, password);
             if (email.isEmpty() || password.isEmpty() || code.isEmpty()) {
                 response.set("success", false);
                 JsonObject message = new JsonObject();
@@ -37,7 +37,7 @@ public class CheckUserVerifyCodeHandler extends SecuredJsonHandler {
             } else if (optionalUser.isPresent()) {
                 int userId = optionalUser.get().getUserId();
                 String checkCode = VerifyProcessor.checkVerifyCode(userId);
-                if(checkCode != null && code.compareTo(checkCode)== 0){
+                if (checkCode != null && code.compareTo(checkCode) == 0) {
                     response.set("success", true);
                     JsonObject message = new JsonObject();
                     message.set("message", "Successfully verified");

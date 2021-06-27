@@ -20,6 +20,7 @@ public class SetUserVerifyStateHandler extends SecuredJsonHandler {
         }
         JsonObject jsonObject = body.asObject();
         String email = jsonObject.getString("email", "");
+        boolean state = jsonObject.getBoolean("state", true);
 
         JsonObject response = new JsonObject();
         try {
@@ -31,9 +32,9 @@ public class SetUserVerifyStateHandler extends SecuredJsonHandler {
                 response.set("success", false);
                 message.set("message", "That email doesn't exist");
             } else {
-                VerifyProcessor.setVerifyState(email);
+                VerifyProcessor.setVerifyState(email, state);
                 response.set("success", true);
-                message.set("message", "Successfully verified");
+                message.set("message", "Successfully set state");
             }
             response.set("response", message);
             HandlerUtils.sendJsonResponse(httpExchange, 200, response);
