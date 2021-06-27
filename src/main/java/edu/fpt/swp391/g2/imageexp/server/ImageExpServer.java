@@ -11,6 +11,7 @@ import edu.fpt.swp391.g2.imageexp.server.handler.category.GetAllCategoriesHandle
 import edu.fpt.swp391.g2.imageexp.server.handler.category.GetCategoryByIdHandler;
 import edu.fpt.swp391.g2.imageexp.server.handler.misc.ChangeableTextHandler;
 import edu.fpt.swp391.g2.imageexp.server.handler.misc.TestBodyHandler;
+import edu.fpt.swp391.g2.imageexp.server.handler.misc.TestEmailHandler;
 import edu.fpt.swp391.g2.imageexp.server.handler.picture.*;
 import edu.fpt.swp391.g2.imageexp.server.handler.post.*;
 import edu.fpt.swp391.g2.imageexp.server.handler.user.*;
@@ -49,6 +50,7 @@ public class ImageExpServer {
         // Misc
         registerHandler("/changeable", new ChangeableTextHandler());
         registerHandler("/testbody", new TestBodyHandler());
+        registerHandler("/testemail", new TestEmailHandler());
 
         // User
         registerHandler("/loginuser", new LoginUserHandler());
