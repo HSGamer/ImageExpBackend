@@ -23,12 +23,24 @@ public class VerifyProcessor {
         // EMPTY
     }
 
+    /**
+     * Create the verify code and send it to the user's email
+     *
+     * @param user the user
+     * @throws SQLException if there is an SQL error
+     */
     public static void createAndSendVerifyCode(User user) throws SQLException {
         String code = Utils.getRandomDigitString();
         insertVerifyCode(user.getUserId(), code);
         sendVerifyCodeAsync(user.getEmail(), code);
     }
 
+    /**
+     * Send the verify code to the email
+     *
+     * @param email the email
+     * @param code  the code
+     */
     public static void sendVerifyCodeAsync(String email, String code) {
         String title = MainConfig.EMAIL_VERIFICATION_TITLE.getValue();
         List<String> content = MainConfig.EMAIL_VERIFICATION_BODY.getValue();
@@ -37,6 +49,13 @@ public class VerifyProcessor {
                 .thenAccept(logger::info);
     }
 
+    /**
+     * Set the verify state of the user
+     *
+     * @param email the email's user
+     * @param state the state
+     * @throws SQLException if there is an SQL error
+     */
     public static void setVerifyState(String email, boolean state) throws SQLException {
         try (
                 PreparedStatementContainer container = PreparedStatementContainer.of(
@@ -49,23 +68,35 @@ public class VerifyProcessor {
         }
     }
 
+    /**
+     * Check the verify code with the available code from the database
+     *
+     * @param id   the user's id
+     * @param code the verify code
+     * @return true if there is a matched code from the database
+     * @throws SQLException if there is an SQL error
+     */
     public static boolean checkVerifyCode(int id, String code) throws SQLException {
         try (
                 PreparedStatementContainer container = PreparedStatementContainer.of(
                         DatabaseConnector.getConnection(),
-                        "select code from code where userID = ?  limit 1",
-                        id
+                        "select * from code where userID = ? and code = ? limit 1",
+                        id, code
                 );
                 ResultSet resultSet = container.query()
         ) {
-            if (!resultSet.next()) {
-                return false;
-            }
-            return code.equals(resultSet.getString("code"));
+            return resultSet.next();
         }
     }
 
-    public static void insertVerifyCode(int id, String code) throws SQLException{
+    /**
+     * Insert the verify code to the database
+     *
+     * @param id   the user's id
+     * @param code the code
+     * @throws SQLException if there is an SQL error
+     */
+    public static void insertVerifyCode(int id, String code) throws SQLException {
         try (
                 PreparedStatementContainer container = PreparedStatementContainer.of(
                         DatabaseConnector.getConnection(),
