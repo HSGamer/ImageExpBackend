@@ -15,7 +15,7 @@ public class TestEmailCommand extends Command {
             return;
         }
         EmailHandler.sendEmailAsync(argument, "Test Email", "<h1>This is a test email</h1><p>If you see this then your email system is working properly</p>")
-                .thenAccept(unused -> getLogger().info("Finished sending email"));
+                .thenAccept(getLogger()::info);
         getLogger().info("Successfully Called");
     }
 

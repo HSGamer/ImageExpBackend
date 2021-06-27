@@ -80,12 +80,13 @@ public class EmailHandler {
      * @param toEmail the email
      * @param title   the title
      * @param content the content
-     * @return the sending task
+     * @return the sending task, with the value is the status message that tells whether the task was successful
      */
-    public static CompletableFuture<Void> sendEmailAsync(String toEmail, String title, String content) {
-        return CompletableFuture.runAsync(() -> {
+    public static CompletableFuture<String> sendEmailAsync(String toEmail, String title, String content) {
+        return CompletableFuture.supplyAsync(() -> {
             try {
                 sendEmail(toEmail, title, content);
+                return "Successfully sent to " + toEmail;
             } catch (MessagingException e) {
                 throw new RuntimeException(e);
             }
@@ -93,7 +94,7 @@ public class EmailHandler {
             if (throwable != null) {
                 logger.log(Level.WARN, () -> "Error when sending email to " + toEmail, throwable);
             }
-            return null;
+            return "Failed to sent to " + toEmail;
         });
     }
 }

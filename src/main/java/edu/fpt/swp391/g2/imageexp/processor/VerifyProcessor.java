@@ -13,11 +13,15 @@ import java.util.List;
 public class VerifyProcessor {
     private static final Logger logger = LogManager.getLogger(VerifyProcessor.class);
 
+    private VerifyProcessor() {
+        // EMPTY
+    }
+
     public static void sendVerifyCodeAsync(String email, String code) {
         String title = MainConfig.EMAIL_VERIFICATION_TITLE.getValue();
         List<String> content = MainConfig.EMAIL_VERIFICATION_BODY.getValue();
         content.replaceAll(s -> s.replace("{code}", code));
         EmailHandler.sendEmailAsync(email, title, String.join("", content))
-                .thenAccept(unused -> logger.info("Finished sending verify code to " + email));
+                .thenAccept(logger::info);
     }
 }
