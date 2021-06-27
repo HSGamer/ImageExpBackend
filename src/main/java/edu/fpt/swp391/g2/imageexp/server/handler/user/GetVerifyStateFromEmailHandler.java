@@ -29,7 +29,7 @@ public class GetVerifyStateFromEmailHandler extends SecuredJsonHandler {
             JsonObject message = new JsonObject();
             if (optionalUser.isPresent()) {
                 response.set("success", true);
-                message.set("state", optionalUser.get().getVerified());
+                message.set("state", optionalUser.get().isVerified());
             } else {
                 response.set("success", false);
                 message.set("message", "That email doesn't exist");

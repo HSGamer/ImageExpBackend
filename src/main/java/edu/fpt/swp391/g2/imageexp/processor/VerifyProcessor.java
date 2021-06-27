@@ -1,11 +1,8 @@
 package edu.fpt.swp391.g2.imageexp.processor;
 
-import com.sun.org.apache.bcel.internal.classfile.Code;
 import edu.fpt.swp391.g2.imageexp.config.MainConfig;
 import edu.fpt.swp391.g2.imageexp.database.DatabaseConnector;
 import edu.fpt.swp391.g2.imageexp.email.EmailHandler;
-import edu.fpt.swp391.g2.imageexp.entity.User;
-import edu.fpt.swp391.g2.imageexp.utils.Utils;
 import me.hsgamer.hscore.database.client.sql.PreparedStatementContainer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,7 +10,6 @@ import org.apache.logging.log4j.Logger;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * The processor for working with verification

@@ -45,6 +45,7 @@ public class ImageExpCommandManager {
         addCommand(new GetAllUsersCommand());
         addCommand(new GetUserByEmailCommand());
         addCommand(new GetStatusCommand());
+        addCommand(new GetVerifyStateCommand());
 
         // Category
         addCommand(new GetAllCategoriesCommand());
