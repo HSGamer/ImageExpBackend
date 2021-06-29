@@ -83,6 +83,7 @@ public class ImageExpServer {
 
         //Picture
         registerHandler("/getallpictures", new GetAllPicturesHandler());
+        registerHandler("/getallpictureswithcontent", new GetAllPicturesWithContentHandler());
         registerHandler("/getpicturesbyuserid", new GetPicturesByUserIdHandler());
         registerHandler("/getpicturebyid", new GetPictureByIdHandler());
         registerHandler("/addpicture", new AddPictureHandler());

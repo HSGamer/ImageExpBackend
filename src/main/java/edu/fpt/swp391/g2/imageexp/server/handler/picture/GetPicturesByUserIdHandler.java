@@ -21,13 +21,14 @@ public class GetPicturesByUserIdHandler extends SecuredJsonHandler {
         }
         JsonObject jsonObject = body.asObject();
         int id = jsonObject.getInt("id", -1);
+        boolean withContent = jsonObject.getBoolean("with-content", false);
 
         JsonObject response = new JsonObject();
         try {
             if (UserProcessor.getUserById(id).isPresent()) {
                 response.set("success", true);
                 JsonArray jsonArray = new JsonArray();
-                GalleryProcessor.getPicturesByUserId(id).forEach(picture -> jsonArray.add(picture.toJsonObject()));
+                GalleryProcessor.getPicturesByUserId(id).forEach(picture -> jsonArray.add(picture.toJsonObject(withContent)));
                 response.set("response", jsonArray);
             } else {
                 response.set("success", false);
