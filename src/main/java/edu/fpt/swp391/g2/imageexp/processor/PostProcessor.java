@@ -160,23 +160,37 @@ public class PostProcessor {
     }
 
     /**
-     * Check if the picture is posted
+     * Get post by its picture
      *
-     * @param picID the picture id
-     * @return true if it is
+     * @param picId the picture id
+     * @return the post
      * @throws SQLException if there is an SQL error
      */
-    public static boolean checkPicturePosted(int picID) throws SQLException {
+    public static Optional<Post> getPostByPicId(int picId) throws SQLException {
         try (
                 PreparedStatementContainer container = PreparedStatementContainer.of(
                         DatabaseConnector.getConnection(),
                         "select * from post where picID = ? limit 1",
-                        picID
+                        picId
                 );
                 ResultSet resultSet = container.query()
         ) {
-            return resultSet.next();
+            if (!resultSet.next()) {
+                return Optional.empty();
+            }
+            return Optional.of(getPost(resultSet));
         }
+    }
+
+    /**
+     * Check if the picture is posted
+     *
+     * @param picId the picture id
+     * @return true if it is
+     * @throws SQLException if there is an SQL error
+     */
+    public static boolean checkPicturePosted(int picId) throws SQLException {
+        return getPostByPicId(picId).isPresent();
     }
 
     /**
