@@ -42,7 +42,7 @@ public class ImageExpServer {
      */
     public void init() throws IOException {
         server = HttpServer.create(new InetSocketAddress(MainConfig.SERVER_PORT.getValue()), 0);
-        server.setExecutor(Executors.newFixedThreadPool(10));
+        server.setExecutor(Executors.newCachedThreadPool());
 
         // Default
         registerHandler("/", new DefaultHandler());
