@@ -124,7 +124,7 @@ public class ImageExpServer {
             if (httpExchange.getRequestMethod().equalsIgnoreCase("OPTIONS")) {
                 headers.add("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
                 headers.add("Access-Control-Allow-Headers", "*");
-                headers.add("Access-Control-Max-Age", "600");
+                headers.add("Access-Control-Max-Age", "86400");
                 httpExchange.sendResponseHeaders(204, -1);
                 return;
             }
