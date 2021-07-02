@@ -46,6 +46,9 @@ public class DatabaseConnector {
                 driver = new SqliteDriver();
             }
             client = new JavaSqlClient(setting, driver);
+            if (driver instanceof SqliteDriver) {
+                client.prepareStatement("PRAGMA foreign_keys = ON;").update();
+            }
             connection = client.getConnection();
             if (MainConfig.DATABASE_FIRST_LOAD.getValue()) {
                 logger.info("Load database at first run");
