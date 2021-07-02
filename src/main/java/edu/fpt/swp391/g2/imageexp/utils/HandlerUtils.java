@@ -3,7 +3,6 @@ package edu.fpt.swp391.g2.imageexp.utils;
 import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
-import com.eclipsesource.json.WriterConfig;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 
@@ -25,7 +24,7 @@ public class HandlerUtils {
     public static void sendJsonResponse(HttpExchange httpExchange, int statusCode, JsonValue jsonValue) throws IOException {
         Headers headers = httpExchange.getResponseHeaders();
         headers.set("Content-Type", "application/json");
-        byte[] bytes = jsonValue.toString(WriterConfig.PRETTY_PRINT).getBytes();
+        byte[] bytes = jsonValue.toString().getBytes();
         httpExchange.sendResponseHeaders(statusCode, bytes.length);
         OutputStream os = httpExchange.getResponseBody();
         os.write(bytes);
