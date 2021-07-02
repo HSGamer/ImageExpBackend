@@ -21,7 +21,7 @@ CREATE TABLE `picture`
     `picID`   INTEGER NOT NULL PRIMARY KEY,
     `userID`  INTEGER NOT NULL,
     `picture` text    NOT NULL,
-    FOREIGN KEY (`userID`) REFERENCES `user` (`userid`)
+    FOREIGN KEY (`userID`) REFERENCES `user` (`userid`) ON DELETE CASCADE
 );
 
 CREATE TABLE `post`
