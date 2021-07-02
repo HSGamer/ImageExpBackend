@@ -83,9 +83,19 @@ public class VerifyProcessor {
                         "select * from code where userID = ? and code = ? limit 1",
                         id, code
                 );
+                PreparedStatementContainer deleteContainer = PreparedStatementContainer.of(
+                        DatabaseConnector.getConnection(),
+                        "delete from code where userID = ? and code = ?",
+                        id, code
+                );
                 ResultSet resultSet = container.query()
         ) {
-            return resultSet.next();
+            if (resultSet.next()) {
+                deleteContainer.update();
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 
