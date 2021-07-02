@@ -38,7 +38,7 @@ public class RegisterUserHandler extends SecuredJsonHandler {
                 UserProcessor.registerUser(email, password);
                 Optional<User> optionalUser = UserProcessor.loginUser(email, password);
                 if (optionalUser.isPresent()) {
-                    if (MainConfig.EMAIL_VERIFICATION_TITLE_SEND_ON_REGISTER.getValue()) {
+                    if (MainConfig.EMAIL_VERIFICATION_SEND_ON_REGISTER.getValue()) {
                         VerifyProcessor.createAndSendVerifyCode(optionalUser.get());
                     }
                     response.set("success", true);
