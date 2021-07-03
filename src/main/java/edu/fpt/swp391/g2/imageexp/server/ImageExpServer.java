@@ -9,6 +9,7 @@ import edu.fpt.swp391.g2.imageexp.server.handler.DefaultHandler;
 import edu.fpt.swp391.g2.imageexp.server.handler.category.AddCategoryHandler;
 import edu.fpt.swp391.g2.imageexp.server.handler.category.GetAllCategoriesHandler;
 import edu.fpt.swp391.g2.imageexp.server.handler.category.GetCategoryByIdHandler;
+import edu.fpt.swp391.g2.imageexp.server.handler.like.*;
 import edu.fpt.swp391.g2.imageexp.server.handler.misc.ChangeableTextHandler;
 import edu.fpt.swp391.g2.imageexp.server.handler.misc.TestBodyHandler;
 import edu.fpt.swp391.g2.imageexp.server.handler.misc.TestEmailHandler;
@@ -81,7 +82,7 @@ public class ImageExpServer {
         registerHandler("/deletepostforuser", new DeletePostForUserHandler());
         registerHandler("/getpostbypicid", new GetPostByPicIdHandler());
 
-        //Picture
+        // Picture
         registerHandler("/getallpictures", new GetAllPicturesHandler());
         registerHandler("/getallpictureswithcontent", new GetAllPicturesWithContentHandler());
         registerHandler("/getpicturesbyuserid", new GetPicturesByUserIdHandler());
@@ -89,6 +90,13 @@ public class ImageExpServer {
         registerHandler("/addpicture", new AddPictureHandler());
         registerHandler("/addmorepictures", new AddMorePicturesHandler());
         registerHandler("/deletepicture", new DeletePictureHandler());
+
+        // Like
+        registerHandler("/checklike", new CheckLikeHandler());
+        registerHandler("/countlikes", new CountLikesHandler());
+        registerHandler("/getlikedpostids", new GetLikedPostIdsHandler());
+        registerHandler("/getlikes", new GetLikesHandler());
+        registerHandler("/togglelike", new ToggleLikeHandler());
     }
 
     /**

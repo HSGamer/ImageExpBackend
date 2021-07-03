@@ -1,0 +1,42 @@
+package edu.fpt.swp391.g2.imageexp.server.handler.like;
+
+import com.eclipsesource.json.JsonArray;
+import com.eclipsesource.json.JsonObject;
+import com.eclipsesource.json.JsonValue;
+import com.sun.net.httpserver.HttpExchange;
+import edu.fpt.swp391.g2.imageexp.processor.LikeProcessor;
+import edu.fpt.swp391.g2.imageexp.processor.PostProcessor;
+import edu.fpt.swp391.g2.imageexp.server.handler.SecuredJsonHandler;
+import edu.fpt.swp391.g2.imageexp.utils.HandlerUtils;
+
+import java.io.IOException;
+import java.io.InvalidObjectException;
+
+public class GetLikesHandler extends SecuredJsonHandler {
+    @Override
+    public void handleJsonRequest(HttpExchange httpExchange, JsonValue body) throws IOException {
+        if (!body.isObject()) {
+            HandlerUtils.sendServerErrorResponse(httpExchange, new InvalidObjectException("Only Json Object is allowed"));
+            return;
+        }
+        JsonObject jsonObject = body.asObject();
+        int postId = jsonObject.getInt("postId", -1);
+        JsonObject response = new JsonObject();
+        try {
+            if (!PostProcessor.getPostById(postId).isPresent()) {
+                response.set("success", false);
+                JsonObject message = new JsonObject();
+                message.set("message", "That post id doesn't exist");
+                response.set("response", message);
+            } else {
+                JsonArray jsonArray = new JsonArray();
+                LikeProcessor.getLikes(postId).forEach(like -> jsonArray.add(like.toJsonObject()));
+                response.set("success", true);
+                response.set("response", jsonArray);
+            }
+            HandlerUtils.sendJsonResponse(httpExchange, 200, response);
+        } catch (Exception e) {
+            HandlerUtils.sendServerErrorResponse(httpExchange, e);
+        }
+    }
+}
