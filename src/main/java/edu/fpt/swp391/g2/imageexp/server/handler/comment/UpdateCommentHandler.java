@@ -4,8 +4,6 @@ import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
 import com.sun.net.httpserver.HttpExchange;
 import edu.fpt.swp391.g2.imageexp.processor.CommentProcessor;
-import edu.fpt.swp391.g2.imageexp.processor.PostProcessor;
-import edu.fpt.swp391.g2.imageexp.processor.UserProcessor;
 import edu.fpt.swp391.g2.imageexp.server.handler.SecuredJsonHandler;
 import edu.fpt.swp391.g2.imageexp.utils.HandlerUtils;
 
@@ -20,24 +18,20 @@ public class UpdateCommentHandler extends SecuredJsonHandler {
             return;
         }
         JsonObject jsonObject = body.asObject();
-        int postId = jsonObject.getInt("postId", -1);
-        int userId = jsonObject.getInt("userId", -1);
+        int commentId = jsonObject.getInt("commentId", -1);
         String comment = jsonObject.getString("comment", "");
 
         JsonObject response = new JsonObject();
         try {
             JsonObject message = new JsonObject();
-            if (!PostProcessor.getPostById(postId).isPresent()) {
+            if (!CommentProcessor.getCommentById(commentId).isPresent()) {
                 response.set("success", false);
-                message.set("message", "The post id doesn't exist");
-            } else if (!UserProcessor.getUserById(userId).isPresent()) {
-                response.set("success", false);
-                message.set("message", "The user id doesn't exist");
-            } else if (comment.isEmpty()) {
+                message.set("message", "The comment id doesn't exist");
+            }  else if (comment.isEmpty()) {
                 response.set("success", false);
                 message.set("message", "Invalid format");
             }else {
-                CommentProcessor.updateComment(postId, userId, comment);
+                CommentProcessor.updateComment(commentId , comment);
                 response.set("success", true);
                 message.set("message", "Successfully updated");
             }

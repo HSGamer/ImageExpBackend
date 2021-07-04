@@ -91,7 +91,7 @@ public class CommentProcessor {
         try (
                 PreparedStatementContainer container = PreparedStatementContainer.of(
                         DatabaseConnector.getConnection(),
-                        "insert into comment(postID,userID,comment) values (?)",
+                        "insert into comment(postID,userID,comment) values (?,?,?)",
                         postId, userId, comment
                 )
         ) {
@@ -99,12 +99,12 @@ public class CommentProcessor {
         }
     }
 
-    public static void updateComment(int postId,int userId, String comment) throws SQLException {
+    public static void updateComment(int commentId, String comment) throws SQLException {
         try (
                 PreparedStatementContainer container = PreparedStatementContainer.of(
                         DatabaseConnector.getConnection(),
-                        "UPDATE comment SET comment = ? WHERE postID = ? AND userID = ?",
-                        comment, postId, userId
+                        "UPDATE comment SET comment = ? WHERE commentId = ?",
+                        comment, commentId
                 )
         ) {
             container.update();

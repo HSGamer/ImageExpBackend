@@ -4,6 +4,10 @@ import edu.fpt.swp391.g2.imageexp.command.Command;
 import edu.fpt.swp391.g2.imageexp.command.HelpCommand;
 import edu.fpt.swp391.g2.imageexp.command.category.AddCategoryCommand;
 import edu.fpt.swp391.g2.imageexp.command.category.GetAllCategoriesCommand;
+import edu.fpt.swp391.g2.imageexp.command.comment.DeleteCommentCommand;
+import edu.fpt.swp391.g2.imageexp.command.comment.GetCommentByIdCommand;
+import edu.fpt.swp391.g2.imageexp.command.comment.GetCommentByPostIdCommand;
+import edu.fpt.swp391.g2.imageexp.command.comment.GetCommentByUserIdCommand;
 import edu.fpt.swp391.g2.imageexp.command.misc.ChangeTextCommand;
 import edu.fpt.swp391.g2.imageexp.command.misc.EchoCommand;
 import edu.fpt.swp391.g2.imageexp.command.misc.TestEmailCommand;
@@ -62,6 +66,12 @@ public class ImageExpCommandManager {
         addCommand(new DeletePictureCommand());
         addCommand(new GetAllPictureCommand());
         addCommand(new GetPictureByUserIdCommand());
+
+        //Comment
+        addCommand(new DeleteCommentCommand());
+        addCommand(new GetCommentByIdCommand());
+        addCommand(new GetCommentByPostIdCommand());
+        addCommand(new GetCommentByUserIdCommand());
     }
 
     /**

@@ -25,7 +25,7 @@ public class GetCommentByPostIdCommand extends Command {
         }
         try {
             if (!PostProcessor.getPostById(id).isPresent()) {
-                getLogger().warn("The user id doesn't exist");
+                getLogger().warn("The post id doesn't exist");
                 return;
             }
             List<Comment> commentList = CommentProcessor.getCommentByPostId(id);
