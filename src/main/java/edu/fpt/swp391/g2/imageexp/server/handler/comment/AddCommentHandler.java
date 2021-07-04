@@ -37,7 +37,7 @@ public class AddCommentHandler extends SecuredJsonHandler {
             } else if (comment.isEmpty()) {
                 response.set("success", false);
                 message.set("message", "Invalid format");
-            }else {
+            } else {
                 CommentProcessor.addComment(postId, userId, comment);
                 response.set("success", true);
                 message.set("message", "Successfully commented");

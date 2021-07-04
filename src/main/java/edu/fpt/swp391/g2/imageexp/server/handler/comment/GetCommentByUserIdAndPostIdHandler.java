@@ -28,7 +28,7 @@ public class GetCommentByUserIdAndPostIdHandler extends SecuredJsonHandler {
             if (UserProcessor.getUserById(userId).isPresent() && PostProcessor.getPostById(postId).isPresent()) {
                 response.set("success", true);
                 JsonArray jsonArray = new JsonArray();
-                CommentProcessor.getCommentByUserIdAndPostId(userId,postId).forEach(post -> jsonArray.add(post.toJsonObject()));
+                CommentProcessor.getCommentByUserIdAndPostId(userId, postId).forEach(post -> jsonArray.add(post.toJsonObject()));
                 response.set("response", jsonArray);
             } else {
                 response.set("success", false);
