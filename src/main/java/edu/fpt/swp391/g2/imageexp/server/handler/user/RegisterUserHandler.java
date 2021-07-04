@@ -3,6 +3,7 @@ package edu.fpt.swp391.g2.imageexp.server.handler.user;
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
 import com.sun.net.httpserver.HttpExchange;
+import edu.fpt.swp391.g2.imageexp.config.MainConfig;
 import edu.fpt.swp391.g2.imageexp.entity.User;
 import edu.fpt.swp391.g2.imageexp.processor.UserProcessor;
 import edu.fpt.swp391.g2.imageexp.processor.VerifyProcessor;
@@ -37,7 +38,9 @@ public class RegisterUserHandler extends SecuredJsonHandler {
                 UserProcessor.registerUser(email, password);
                 Optional<User> optionalUser = UserProcessor.loginUser(email, password);
                 if (optionalUser.isPresent()) {
-                    VerifyProcessor.createAndSendVerifyCode(optionalUser.get());
+                    if (MainConfig.EMAIL_VERIFICATION_SEND_ON_REGISTER.getValue()) {
+                        VerifyProcessor.createAndSendVerifyCode(optionalUser.get());
+                    }
                     response.set("success", true);
                     message.set("message", "Successfully registered");
                 } else {

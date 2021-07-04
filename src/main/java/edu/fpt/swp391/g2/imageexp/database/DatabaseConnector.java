@@ -4,6 +4,7 @@ import edu.fpt.swp391.g2.imageexp.config.MainConfig;
 import me.hsgamer.hscore.config.Config;
 import me.hsgamer.hscore.database.Driver;
 import me.hsgamer.hscore.database.Setting;
+import me.hsgamer.hscore.database.client.sql.PreparedStatementContainer;
 import me.hsgamer.hscore.database.client.sql.java.JavaSqlClient;
 import me.hsgamer.hscore.database.driver.MySqlDriver;
 import me.hsgamer.hscore.database.driver.SqliteDriver;
@@ -47,6 +48,9 @@ public class DatabaseConnector {
             }
             client = new JavaSqlClient(setting, driver);
             connection = client.getConnection();
+            if (driver instanceof SqliteDriver) {
+                PreparedStatementContainer.of(connection, "PRAGMA foreign_keys = ON;").update();
+            }
             if (MainConfig.DATABASE_FIRST_LOAD.getValue()) {
                 logger.info("Load database at first run");
                 LocalDatabaseExecutor.createDatabase(connection);

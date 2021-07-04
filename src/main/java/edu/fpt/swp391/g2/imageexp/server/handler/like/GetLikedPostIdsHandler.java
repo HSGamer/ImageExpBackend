@@ -1,10 +1,10 @@
-package edu.fpt.swp391.g2.imageexp.server.handler.picture;
+package edu.fpt.swp391.g2.imageexp.server.handler.like;
 
 import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
 import com.sun.net.httpserver.HttpExchange;
-import edu.fpt.swp391.g2.imageexp.processor.GalleryProcessor;
+import edu.fpt.swp391.g2.imageexp.processor.LikeProcessor;
 import edu.fpt.swp391.g2.imageexp.processor.UserProcessor;
 import edu.fpt.swp391.g2.imageexp.server.handler.SecuredJsonHandler;
 import edu.fpt.swp391.g2.imageexp.utils.HandlerUtils;
@@ -12,7 +12,7 @@ import edu.fpt.swp391.g2.imageexp.utils.HandlerUtils;
 import java.io.IOException;
 import java.io.InvalidObjectException;
 
-public class GetPicturesByUserIdHandler extends SecuredJsonHandler {
+public class GetLikedPostIdsHandler extends SecuredJsonHandler {
     @Override
     public void handleJsonRequest(HttpExchange httpExchange, JsonValue body) throws IOException {
         if (!body.isObject()) {
@@ -20,21 +20,19 @@ public class GetPicturesByUserIdHandler extends SecuredJsonHandler {
             return;
         }
         JsonObject jsonObject = body.asObject();
-        int id = jsonObject.getInt("id", -1);
-        boolean withContent = jsonObject.getBoolean("with-content", false);
-
+        int userId = jsonObject.getInt("userId", -1);
         JsonObject response = new JsonObject();
         try {
-            if (UserProcessor.getUserById(id).isPresent()) {
-                response.set("success", true);
-                JsonArray jsonArray = new JsonArray();
-                GalleryProcessor.getPicturesByUserId(id).forEach(picture -> jsonArray.add(picture.toJsonObject(withContent)));
-                response.set("response", jsonArray);
-            } else {
+            if (!UserProcessor.getUserById(userId).isPresent()) {
                 response.set("success", false);
                 JsonObject message = new JsonObject();
                 message.set("message", "That user id doesn't exist");
                 response.set("response", message);
+            } else {
+                JsonArray jsonArray = new JsonArray();
+                LikeProcessor.getLikedPostIds(userId).forEach(jsonArray::add);
+                response.set("success", true);
+                response.set("response", jsonArray);
             }
             HandlerUtils.sendJsonResponse(httpExchange, 200, response);
         } catch (Exception e) {

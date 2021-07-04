@@ -1,6 +1,5 @@
 package edu.fpt.swp391.g2.imageexp.email;
 
-import edu.fpt.swp391.g2.imageexp.ImageExpBoostrap;
 import edu.fpt.swp391.g2.imageexp.config.MainConfig;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -20,31 +19,16 @@ public class EmailHandler {
     private static final Logger logger = LogManager.getLogger(EmailHandler.class);
     private static final Properties properties = new Properties();
 
-    private EmailHandler() {
-        // EMPTY
-    }
-
-    /**
-     * Init the settings
-     */
-    public static void init() {
-        properties.clear();
-        if (MainConfig.EMAIL_CHECK_ENV.getValue()) {
-            String username = System.getenv("EMAIL_USERNAME");
-            String password = System.getenv("EMAIL_PASSWORD");
-            if (username != null) {
-                MainConfig.EMAIL_USERNAME.setValue(username);
-            }
-            if (password != null) {
-                MainConfig.EMAIL_PASSWORD.setValue(password);
-            }
-            ImageExpBoostrap.INSTANCE.getMainConfig().save();
-        }
+    static {
         try (InputStream inputStream = EmailHandler.class.getResourceAsStream("/email-host.properties")) {
             properties.load(inputStream);
         } catch (Exception e) {
             logger.error("Error when loading email properties", e);
         }
+    }
+
+    private EmailHandler() {
+        // EMPTY
     }
 
     /**

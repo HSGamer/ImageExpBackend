@@ -26,6 +26,7 @@ public class Post {
         JsonObject postJson = new JsonObject();
         postJson.set("id", id);
         postJson.set("userId", userId);
+        postJson.set("picId", picId);
         postJson.set("title", title);
         postJson.set("description", description);
         JsonArray categoryIdJson = new JsonArray();

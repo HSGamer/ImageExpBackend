@@ -8,12 +8,12 @@ import edu.fpt.swp391.g2.imageexp.utils.HandlerUtils;
 
 import java.io.IOException;
 
-public class GetAllPicturesHandler implements HttpHandler {
+public class GetAllPicturesWithContentHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         try {
             JsonArray pictures = new JsonArray();
-            GalleryProcessor.getAllPictures().forEach(picture -> pictures.add(picture.toJsonObject(false)));
+            GalleryProcessor.getAllPictures().forEach(picture -> pictures.add(picture.toJsonObject()));
             HandlerUtils.sendJsonResponse(exchange, 200, pictures);
         } catch (Exception e) {
             HandlerUtils.sendServerErrorResponse(exchange, e);

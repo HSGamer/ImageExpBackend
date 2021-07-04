@@ -9,6 +9,7 @@ import edu.fpt.swp391.g2.imageexp.server.handler.DefaultHandler;
 import edu.fpt.swp391.g2.imageexp.server.handler.category.AddCategoryHandler;
 import edu.fpt.swp391.g2.imageexp.server.handler.category.GetAllCategoriesHandler;
 import edu.fpt.swp391.g2.imageexp.server.handler.category.GetCategoryByIdHandler;
+import edu.fpt.swp391.g2.imageexp.server.handler.like.*;
 import edu.fpt.swp391.g2.imageexp.server.handler.misc.ChangeableTextHandler;
 import edu.fpt.swp391.g2.imageexp.server.handler.misc.TestBodyHandler;
 import edu.fpt.swp391.g2.imageexp.server.handler.misc.TestEmailHandler;
@@ -42,7 +43,7 @@ public class ImageExpServer {
      */
     public void init() throws IOException {
         server = HttpServer.create(new InetSocketAddress(MainConfig.SERVER_PORT.getValue()), 0);
-        server.setExecutor(Executors.newFixedThreadPool(10));
+        server.setExecutor(Executors.newCachedThreadPool());
 
         // Default
         registerHandler("/", new DefaultHandler());
@@ -64,6 +65,7 @@ public class ImageExpServer {
         registerHandler("/setverifystate", new SetUserVerifyStateHandler());
         registerHandler("/getverifystate", new GetVerifyStateFromEmailHandler());
         registerHandler("/checkverifycode", new CheckUserVerifyCodeHandler());
+        registerHandler("/sendverifycode", new SendVerifyCodeHandler());
 
         // Category
         registerHandler("/addcategory", new AddCategoryHandler());
@@ -78,14 +80,23 @@ public class ImageExpServer {
         registerHandler("/addpost", new AddPostHandler());
         registerHandler("/updatepost", new UpdatePostHandler());
         registerHandler("/deletepostforuser", new DeletePostForUserHandler());
+        registerHandler("/getpostbypicid", new GetPostByPicIdHandler());
 
-        //Picture
+        // Picture
         registerHandler("/getallpictures", new GetAllPicturesHandler());
+        registerHandler("/getallpictureswithcontent", new GetAllPicturesWithContentHandler());
         registerHandler("/getpicturesbyuserid", new GetPicturesByUserIdHandler());
         registerHandler("/getpicturebyid", new GetPictureByIdHandler());
         registerHandler("/addpicture", new AddPictureHandler());
         registerHandler("/addmorepictures", new AddMorePicturesHandler());
         registerHandler("/deletepicture", new DeletePictureHandler());
+
+        // Like
+        registerHandler("/checklike", new CheckLikeHandler());
+        registerHandler("/countlikes", new CountLikesHandler());
+        registerHandler("/getlikedpostids", new GetLikedPostIdsHandler());
+        registerHandler("/getlikes", new GetLikesHandler());
+        registerHandler("/togglelike", new ToggleLikeHandler());
     }
 
     /**
@@ -120,7 +131,8 @@ public class ImageExpServer {
             headers.add("Access-Control-Allow-Origin", "*");
             if (httpExchange.getRequestMethod().equalsIgnoreCase("OPTIONS")) {
                 headers.add("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-                headers.add("Access-Control-Allow-Headers", "Content-Type");
+                headers.add("Access-Control-Allow-Headers", "*");
+                headers.add("Access-Control-Max-Age", "86400");
                 httpExchange.sendResponseHeaders(204, -1);
                 return;
             }

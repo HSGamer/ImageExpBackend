@@ -27,9 +27,9 @@ public class MainConfig extends PathableConfig {
     public static final StringConfigPath DATABASE_USERNAME = new StringConfigPath("database.username", "root");
     public static final StringConfigPath DATABASE_PASSWORD = new StringConfigPath("database.password", "");
     public static final BooleanConfigPath OPTION_AUTO_ASSIGN_NAME = new BooleanConfigPath("option.auto-assign-name-to-new-user", false);
-    public static final BooleanConfigPath EMAIL_CHECK_ENV = new BooleanConfigPath("email.check-env", true);
     public static final StringConfigPath EMAIL_USERNAME = new StringConfigPath("email.username", "");
     public static final StringConfigPath EMAIL_PASSWORD = new StringConfigPath("email.password", "");
+    public static final BooleanConfigPath EMAIL_VERIFICATION_SEND_ON_REGISTER = new BooleanConfigPath("email.verification.send-on-register", false);
     public static final StringConfigPath EMAIL_VERIFICATION_TITLE = new StringConfigPath("email.verification.title", "Verify Code For ImageExp");
     public static final BaseConfigPath<List<String>> EMAIL_VERIFICATION_BODY = new BaseConfigPath<>(
             "email.verification.body",

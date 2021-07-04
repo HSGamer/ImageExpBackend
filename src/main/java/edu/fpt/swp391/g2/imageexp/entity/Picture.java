@@ -9,13 +9,17 @@ public class Picture {
     private int userId;
     private String picture;
 
-
-    public JsonObject toJsonObject() {
+    public JsonObject toJsonObject(boolean withContent) {
         JsonObject pictureJson = new JsonObject();
         pictureJson.set("id", id);
         pictureJson.set("userId", userId);
-        pictureJson.set("picture", picture);
+        if (withContent) {
+            pictureJson.set("picture", picture);
+        }
         return pictureJson;
     }
 
+    public JsonObject toJsonObject() {
+        return toJsonObject(true);
+    }
 }

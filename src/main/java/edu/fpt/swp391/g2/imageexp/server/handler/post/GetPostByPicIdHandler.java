@@ -1,18 +1,18 @@
-package edu.fpt.swp391.g2.imageexp.server.handler.picture;
+package edu.fpt.swp391.g2.imageexp.server.handler.post;
 
-import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
 import com.sun.net.httpserver.HttpExchange;
-import edu.fpt.swp391.g2.imageexp.processor.GalleryProcessor;
-import edu.fpt.swp391.g2.imageexp.processor.UserProcessor;
+import edu.fpt.swp391.g2.imageexp.entity.Post;
+import edu.fpt.swp391.g2.imageexp.processor.PostProcessor;
 import edu.fpt.swp391.g2.imageexp.server.handler.SecuredJsonHandler;
 import edu.fpt.swp391.g2.imageexp.utils.HandlerUtils;
 
 import java.io.IOException;
 import java.io.InvalidObjectException;
+import java.util.Optional;
 
-public class GetPicturesByUserIdHandler extends SecuredJsonHandler {
+public class GetPostByPicIdHandler extends SecuredJsonHandler {
     @Override
     public void handleJsonRequest(HttpExchange httpExchange, JsonValue body) throws IOException {
         if (!body.isObject()) {
@@ -21,19 +21,17 @@ public class GetPicturesByUserIdHandler extends SecuredJsonHandler {
         }
         JsonObject jsonObject = body.asObject();
         int id = jsonObject.getInt("id", -1);
-        boolean withContent = jsonObject.getBoolean("with-content", false);
 
         JsonObject response = new JsonObject();
         try {
-            if (UserProcessor.getUserById(id).isPresent()) {
+            Optional<Post> optionalPost = PostProcessor.getPostByPicId(id);
+            if (optionalPost.isPresent()) {
                 response.set("success", true);
-                JsonArray jsonArray = new JsonArray();
-                GalleryProcessor.getPicturesByUserId(id).forEach(picture -> jsonArray.add(picture.toJsonObject(withContent)));
-                response.set("response", jsonArray);
+                response.set("response", optionalPost.get().toJsonObject());
             } else {
                 response.set("success", false);
                 JsonObject message = new JsonObject();
-                message.set("message", "That user id doesn't exist");
+                message.set("message", "The picture id doesn't exist or the picture isn't posted");
                 response.set("response", message);
             }
             HandlerUtils.sendJsonResponse(httpExchange, 200, response);

@@ -1,18 +1,19 @@
-package edu.fpt.swp391.g2.imageexp.server.handler.picture;
+package edu.fpt.swp391.g2.imageexp.server.handler.user;
 
-import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
 import com.sun.net.httpserver.HttpExchange;
-import edu.fpt.swp391.g2.imageexp.processor.GalleryProcessor;
+import edu.fpt.swp391.g2.imageexp.entity.User;
 import edu.fpt.swp391.g2.imageexp.processor.UserProcessor;
+import edu.fpt.swp391.g2.imageexp.processor.VerifyProcessor;
 import edu.fpt.swp391.g2.imageexp.server.handler.SecuredJsonHandler;
 import edu.fpt.swp391.g2.imageexp.utils.HandlerUtils;
 
 import java.io.IOException;
 import java.io.InvalidObjectException;
+import java.util.Optional;
 
-public class GetPicturesByUserIdHandler extends SecuredJsonHandler {
+public class SendVerifyCodeHandler extends SecuredJsonHandler {
     @Override
     public void handleJsonRequest(HttpExchange httpExchange, JsonValue body) throws IOException {
         if (!body.isObject()) {
@@ -20,22 +21,22 @@ public class GetPicturesByUserIdHandler extends SecuredJsonHandler {
             return;
         }
         JsonObject jsonObject = body.asObject();
-        int id = jsonObject.getInt("id", -1);
-        boolean withContent = jsonObject.getBoolean("with-content", false);
+        String email = jsonObject.getString("email", "");
 
         JsonObject response = new JsonObject();
+        Optional<User> optionalUser;
         try {
-            if (UserProcessor.getUserById(id).isPresent()) {
+            optionalUser = UserProcessor.getUserByEmail(email);
+            JsonObject message = new JsonObject();
+            if (optionalUser.isPresent()) {
+                VerifyProcessor.createAndSendVerifyCode(optionalUser.get());
                 response.set("success", true);
-                JsonArray jsonArray = new JsonArray();
-                GalleryProcessor.getPicturesByUserId(id).forEach(picture -> jsonArray.add(picture.toJsonObject(withContent)));
-                response.set("response", jsonArray);
+                message.set("message", "Successfully sent");
             } else {
                 response.set("success", false);
-                JsonObject message = new JsonObject();
-                message.set("message", "That user id doesn't exist");
-                response.set("response", message);
+                message.set("message", "That email doesn't exist");
             }
+            response.set("response", message);
             HandlerUtils.sendJsonResponse(httpExchange, 200, response);
         } catch (Exception e) {
             HandlerUtils.sendServerErrorResponse(httpExchange, e);
