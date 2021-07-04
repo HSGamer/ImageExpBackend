@@ -5,14 +5,14 @@ import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
 import com.sun.net.httpserver.HttpExchange;
 import edu.fpt.swp391.g2.imageexp.processor.CommentProcessor;
-import edu.fpt.swp391.g2.imageexp.processor.UserProcessor;
+import edu.fpt.swp391.g2.imageexp.processor.PostProcessor;
 import edu.fpt.swp391.g2.imageexp.server.handler.SecuredJsonHandler;
 import edu.fpt.swp391.g2.imageexp.utils.HandlerUtils;
 
 import java.io.IOException;
 import java.io.InvalidObjectException;
 
-public class GetCommentByUserIdHandler extends SecuredJsonHandler {
+public class GetCommentsByPostIdHandler extends SecuredJsonHandler {
     public void handleJsonRequest(HttpExchange httpExchange, JsonValue body) throws IOException {
         if (!body.isObject()) {
             HandlerUtils.sendServerErrorResponse(httpExchange, new InvalidObjectException("Only Json Object is allowed"));
@@ -23,15 +23,15 @@ public class GetCommentByUserIdHandler extends SecuredJsonHandler {
 
         JsonObject response = new JsonObject();
         try {
-            if (UserProcessor.getUserById(id).isPresent()) {
+            if (PostProcessor.getPostById(id).isPresent()) {
                 response.set("success", true);
                 JsonArray jsonArray = new JsonArray();
-                CommentProcessor.getCommentByUserId(id).forEach(post -> jsonArray.add(post.toJsonObject()));
+                CommentProcessor.getCommentByPostId(id).forEach(comment -> jsonArray.add(comment.toJsonObject()));
                 response.set("response", jsonArray);
             } else {
                 response.set("success", false);
                 JsonObject message = new JsonObject();
-                message.set("message", "That user id doesn't exist");
+                message.set("message", "That post id doesn't exist");
                 response.set("response", message);
             }
             HandlerUtils.sendJsonResponse(httpExchange, 200, response);
