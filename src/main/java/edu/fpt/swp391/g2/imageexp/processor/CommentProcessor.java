@@ -22,6 +22,8 @@ public class CommentProcessor {
         comment.setPostId(resultSet.getInt("postId"));
         comment.setUserId(resultSet.getInt("userId"));
         comment.setComment(resultSet.getString("comment"));
+        comment.setCreatedAt(Utils.getDate(resultSet.getString("created_at")));
+        comment.setUpdatedAt(Utils.getDate(resultSet.getString("updated_at")));
         return comment;
     }
 
