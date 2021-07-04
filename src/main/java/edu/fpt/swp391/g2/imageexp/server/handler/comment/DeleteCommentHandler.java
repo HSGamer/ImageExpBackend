@@ -23,7 +23,6 @@ public class DeleteCommentHandler extends SecuredJsonHandler {
         }
         JsonObject jsonObject = body.asObject();
         int commentId = jsonObject.getInt("commentId", -1);
-        int postId = jsonObject.getInt("postId", -1);
         int userId = jsonObject.getInt("userId", -1);
 
 
@@ -34,9 +33,6 @@ public class DeleteCommentHandler extends SecuredJsonHandler {
             if (!optionalComment.isPresent()) {
                 response.set("success", false);
                 message.set("message", "The comment id doesn't exist");
-            } else if (!PostProcessor.getPostById(postId).isPresent()) {
-                response.set("success", false);
-                message.set("message", "The post id doesn't exist");
             } else if (!UserProcessor.getUserById(userId).isPresent()) {
                 response.set("success", false);
                 message.set("message", "The user id doesn't exist");
@@ -50,13 +46,11 @@ public class DeleteCommentHandler extends SecuredJsonHandler {
                     message.set("message", "Successfully deleted");
                 }
             }
-        response.set("response", message);
-        HandlerUtils.sendJsonResponse(httpExchange, 200, response);
-    } catch(
-    Exception e)
-
-    {
-        HandlerUtils.sendServerErrorResponse(httpExchange, e);
+            response.set("response", message);
+            HandlerUtils.sendJsonResponse(httpExchange, 200, response);
+        } catch (
+                Exception e) {
+            HandlerUtils.sendServerErrorResponse(httpExchange, e);
+        }
     }
-}
 }
