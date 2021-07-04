@@ -9,6 +9,7 @@ import edu.fpt.swp391.g2.imageexp.server.handler.DefaultHandler;
 import edu.fpt.swp391.g2.imageexp.server.handler.category.AddCategoryHandler;
 import edu.fpt.swp391.g2.imageexp.server.handler.category.GetAllCategoriesHandler;
 import edu.fpt.swp391.g2.imageexp.server.handler.category.GetCategoryByIdHandler;
+import edu.fpt.swp391.g2.imageexp.server.handler.comment.*;
 import edu.fpt.swp391.g2.imageexp.server.handler.like.*;
 import edu.fpt.swp391.g2.imageexp.server.handler.misc.ChangeableTextHandler;
 import edu.fpt.swp391.g2.imageexp.server.handler.misc.TestBodyHandler;
@@ -97,6 +98,15 @@ public class ImageExpServer {
         registerHandler("/getlikedpostids", new GetLikedPostIdsHandler());
         registerHandler("/getlikes", new GetLikesHandler());
         registerHandler("/togglelike", new ToggleLikeHandler());
+
+        //Comment
+        registerHandler("/addcomment", new AddCommentHandler());
+        registerHandler("/updatecomment", new UpdateCommentHandler());
+        registerHandler("/deletecomment", new DeleteCommentHandler());
+        registerHandler("/getcommentbyid", new GetCommentByIdHandler());
+        registerHandler("/getcommentbypostid", new GetCommentByPostIdHandler());
+        registerHandler("/getcommentuserid", new GetCommentByUserIdHandler());
+        registerHandler("/getcommentbyuseridandpostid", new GetCommentByUserIdAndPostIdHandler());
     }
 
     /**
