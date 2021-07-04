@@ -13,6 +13,7 @@ import java.io.InvalidObjectException;
 import java.util.Optional;
 
 public class GetCommentByIdHandler extends SecuredJsonHandler {
+    @Override
     public void handleJsonRequest(HttpExchange httpExchange, JsonValue body) throws IOException {
         if (!body.isObject()) {
             HandlerUtils.sendServerErrorResponse(httpExchange, new InvalidObjectException("Only Json Object is allowed"));
