@@ -12,6 +12,9 @@ import edu.fpt.swp391.g2.imageexp.utils.HandlerUtils;
 import java.io.IOException;
 import java.io.InvalidObjectException;
 
+/**
+ * Toggle on/off the user likes the post
+ */
 public class ToggleLikeHandler extends SecuredJsonHandler {
     @Override
     public void handleJsonRequest(HttpExchange httpExchange, JsonValue body) throws IOException {

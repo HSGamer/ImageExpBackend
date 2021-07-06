@@ -10,6 +10,9 @@ import edu.fpt.swp391.g2.imageexp.utils.HandlerUtils;
 import java.io.IOException;
 import java.io.InvalidObjectException;
 
+/**
+ * Update the user
+ */
 public class UpdateUserHandler extends SecuredJsonHandler {
 
     @Override

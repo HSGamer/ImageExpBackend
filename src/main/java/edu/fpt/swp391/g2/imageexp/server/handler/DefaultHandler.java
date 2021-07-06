@@ -9,6 +9,9 @@ import com.sun.net.httpserver.HttpHandler;
 import java.io.IOException;
 import java.io.OutputStream;
 
+/**
+ * The default web handler
+ */
 public class DefaultHandler implements HttpHandler {
     private final String version = getClass().getPackage().getImplementationVersion();
 

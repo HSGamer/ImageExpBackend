@@ -12,6 +12,9 @@ import java.io.IOException;
 import java.io.InvalidObjectException;
 import java.util.Optional;
 
+/**
+ * Login the user. Get the user by its email and password
+ */
 public class LoginUserHandler extends SecuredJsonHandler {
     @Override
     public void handleJsonRequest(HttpExchange httpExchange, JsonValue body) throws IOException {

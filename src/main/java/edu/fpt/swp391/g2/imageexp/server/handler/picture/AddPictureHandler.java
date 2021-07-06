@@ -11,6 +11,9 @@ import edu.fpt.swp391.g2.imageexp.utils.HandlerUtils;
 import java.io.IOException;
 import java.io.InvalidObjectException;
 
+/**
+ * Add a picture
+ */
 public class AddPictureHandler extends SecuredJsonHandler {
     @Override
     public void handleJsonRequest(HttpExchange httpExchange, JsonValue body) throws IOException {

@@ -10,6 +10,9 @@ import edu.fpt.swp391.g2.imageexp.utils.HandlerUtils;
 import java.io.IOException;
 import java.io.InvalidObjectException;
 
+/**
+ * Change the user status
+ */
 public class ChangeUserStatusHandler extends SecuredJsonHandler {
 
     @Override

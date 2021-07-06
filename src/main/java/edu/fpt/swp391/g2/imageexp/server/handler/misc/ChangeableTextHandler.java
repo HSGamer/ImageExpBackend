@@ -8,6 +8,9 @@ import lombok.Setter;
 
 import java.io.IOException;
 
+/**
+ * A test handler on a simple changeable text
+ */
 public class ChangeableTextHandler implements HttpHandler {
     @Setter
     private static String text = "This is a text";

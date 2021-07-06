@@ -12,6 +12,9 @@ import java.io.IOException;
 import java.io.InvalidObjectException;
 import java.util.Optional;
 
+/**
+ * Get the post by its picture id
+ */
 public class GetPostByPicIdHandler extends SecuredJsonHandler {
     @Override
     public void handleJsonRequest(HttpExchange httpExchange, JsonValue body) throws IOException {

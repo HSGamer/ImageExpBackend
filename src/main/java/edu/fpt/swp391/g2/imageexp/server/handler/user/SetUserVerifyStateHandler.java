@@ -11,6 +11,9 @@ import edu.fpt.swp391.g2.imageexp.utils.HandlerUtils;
 import java.io.IOException;
 import java.io.InvalidObjectException;
 
+/**
+ * Set the verify state of the email
+ */
 public class SetUserVerifyStateHandler extends SecuredJsonHandler {
 
     @Override

@@ -8,6 +8,9 @@ import edu.fpt.swp391.g2.imageexp.utils.WebUtils;
 
 import java.io.IOException;
 
+/**
+ * A test handler for testing the request body
+ */
 public class TestBodyHandler implements SimpleHttpHandler {
     @Override
     public void handlePostRequest(HttpExchange httpExchange, String parameters) throws IOException {

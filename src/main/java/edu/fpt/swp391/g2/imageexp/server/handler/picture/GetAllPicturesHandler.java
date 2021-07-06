@@ -8,6 +8,9 @@ import edu.fpt.swp391.g2.imageexp.utils.HandlerUtils;
 
 import java.io.IOException;
 
+/**
+ * Get all pictures
+ */
 public class GetAllPicturesHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {

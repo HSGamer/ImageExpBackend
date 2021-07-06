@@ -16,6 +16,9 @@ import java.io.InvalidObjectException;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Add a post
+ */
 public class AddPostHandler extends SecuredJsonHandler {
     @Override
     public void handleJsonRequest(HttpExchange httpExchange, JsonValue body) throws IOException {

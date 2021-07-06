@@ -12,6 +12,9 @@ import java.io.IOException;
 import java.io.InvalidObjectException;
 import java.util.Optional;
 
+/**
+ * Get the user by its ID
+ */
 public class GetUserByIdHandler extends SecuredJsonHandler {
     @Override
     public void handleJsonRequest(HttpExchange httpExchange, JsonValue body) throws IOException {

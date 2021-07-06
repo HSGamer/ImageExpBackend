@@ -14,6 +14,9 @@ import java.io.IOException;
 import java.io.InvalidObjectException;
 import java.util.Optional;
 
+/**
+ * Delete a picture
+ */
 public class DeletePictureHandler extends SecuredJsonHandler {
     @Override
     public void handleJsonRequest(HttpExchange httpExchange, JsonValue body) throws IOException {
