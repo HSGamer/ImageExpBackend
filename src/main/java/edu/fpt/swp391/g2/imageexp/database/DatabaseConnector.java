@@ -1,6 +1,8 @@
 package edu.fpt.swp391.g2.imageexp.database;
 
 import edu.fpt.swp391.g2.imageexp.config.MainConfig;
+import edu.fpt.swp391.g2.imageexp.processor.UserProcessor;
+import edu.fpt.swp391.g2.imageexp.processor.VerifyProcessor;
 import me.hsgamer.hscore.config.Config;
 import me.hsgamer.hscore.database.Driver;
 import me.hsgamer.hscore.database.Setting;
@@ -58,6 +60,10 @@ public class DatabaseConnector {
                 Config config = MainConfig.DATABASE_FIRST_LOAD.getConfig();
                 if (config != null) {
                     config.save();
+                }
+                if (MainConfig.DATABASE_TEST_ACCOUNT.getValue()) {
+                    UserProcessor.registerUser("test@gmail.com", "12345678");
+                    VerifyProcessor.setVerifyState("test@gmail.com", true);
                 }
             }
         } catch (ClassNotFoundException | SQLException | IOException e) {
