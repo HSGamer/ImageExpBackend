@@ -24,23 +24,27 @@ public class ImageExpTerminal {
         terminal = TerminalBuilder.builder()
                 .system(true)
                 .jansi(true)
+                .dumb(System.getProperty("java.class.path").contains("idea_rt.jar"))
                 .build();
         lineReader = LineReaderBuilder.builder()
                 .terminal(terminal)
                 .build();
+        lineReader.setOpt(LineReader.Option.DISABLE_EVENT_EXPANSION);
+        lineReader.unsetOpt(LineReader.Option.INSERT_TAB);
     }
 
     public void start() {
         while (isRunning()) {
             try {
-                String command = lineReader.readLine("> ").trim();
-                if (command.length() > 0) {
-                    new Thread(() -> runCommand(command)).start();
+                String command = lineReader.readLine("> ");
+                if (command == null) {
+                    break;
                 }
+                runCommand(command);
             } catch (UserInterruptException e) {
                 shutdown();
             } catch (EndOfFileException e) {
-                break;
+                // IGNORED
             }
         }
     }
