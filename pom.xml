@@ -67,6 +67,11 @@
             <version>${core.version}</version>
         </dependency>
         <dependency>
+            <groupId>me.HSGamer</groupId>
+            <artifactId>HSCore-collections</artifactId>
+            <version>${core.version}</version>
+        </dependency>
+        <dependency>
             <groupId>me.carleslc.Simple-YAML</groupId>
             <artifactId>Simple-Yaml</artifactId>
             <version>1.7.2</version>

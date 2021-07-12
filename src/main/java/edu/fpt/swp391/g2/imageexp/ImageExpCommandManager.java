@@ -18,16 +18,16 @@ import edu.fpt.swp391.g2.imageexp.command.post.*;
 import edu.fpt.swp391.g2.imageexp.command.system.ReloadCommand;
 import edu.fpt.swp391.g2.imageexp.command.system.StopCommand;
 import edu.fpt.swp391.g2.imageexp.command.user.*;
+import me.hsgamer.hscore.collections.map.CaseInsensitiveStringHashMap;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
  * The command manager, which stores all terminal commands
  */
 public class ImageExpCommandManager {
-    private final Map<String, Command> commands = new HashMap<>();
+    private final Map<String, Command> commands = new CaseInsensitiveStringHashMap<>();
 
     public ImageExpCommandManager() {
         // Help
