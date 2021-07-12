@@ -1,7 +1,14 @@
 package edu.fpt.swp391.g2.imageexp.terminal;
 
 import lombok.extern.log4j.Log4j2;
-import net.minecrell.terminalconsole.SimpleTerminalConsole;
+import org.jline.reader.EndOfFileException;
+import org.jline.reader.LineReader;
+import org.jline.reader.LineReaderBuilder;
+import org.jline.reader.UserInterruptException;
+import org.jline.terminal.Terminal;
+import org.jline.terminal.TerminalBuilder;
+
+import java.io.IOException;
 
 import static edu.fpt.swp391.g2.imageexp.ImageExpBoostrap.INSTANCE;
 
@@ -9,23 +16,47 @@ import static edu.fpt.swp391.g2.imageexp.ImageExpBoostrap.INSTANCE;
  * The terminal console, which also handles the incoming terminal commands
  */
 @Log4j2
-public class ImageExpTerminal extends SimpleTerminalConsole {
+public class ImageExpTerminal {
+    private Terminal terminal;
+    private LineReader lineReader;
 
-    @Override
-    protected boolean isRunning() {
+    public void init() throws IOException {
+        terminal = TerminalBuilder.builder()
+                .system(true)
+                .jansi(true)
+                .build();
+        lineReader = LineReaderBuilder.builder()
+                .terminal(terminal)
+                .build();
+    }
+
+    public void start() {
+        while (isRunning()) {
+            try {
+                String command = lineReader.readLine("> ").trim();
+                if (command.length() > 0) {
+                    new Thread(() -> runCommand(command)).start();
+                }
+            } catch (UserInterruptException e) {
+                shutdown();
+            } catch (EndOfFileException e) {
+                break;
+            }
+        }
+    }
+
+    private boolean isRunning() {
         return !INSTANCE.isShuttingDown();
     }
 
-    @Override
-    protected void runCommand(String s) {
-        String[] split = s.split(" ", 2);
+    private void runCommand(String command) {
+        String[] split = command.split(" ", 2);
         if (!INSTANCE.getCommandManager().handleCommand(split[0], split.length > 1 ? split[1] : "")) {
             INSTANCE.getLogger().warn("No command was found");
         }
     }
 
-    @Override
-    protected void shutdown() {
+    private void shutdown() {
         INSTANCE.getLogger().info("Shutting down!");
         INSTANCE.shutdown();
     }

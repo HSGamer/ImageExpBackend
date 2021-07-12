@@ -9,6 +9,7 @@ import lombok.Setter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.IOException;
 import java.util.Optional;
 
 /**
@@ -29,6 +30,14 @@ public class ImageExpMain {
      * Enable the services
      */
     public void enable() {
+        try {
+            terminal.init();
+        } catch (IOException e) {
+            logger.error("Cannot load the terminal", e);
+            shuttingDown = true;
+            System.exit(1);
+            return;
+        }
         mainConfig.setup();
         checkEnv();
         if (!loadServer()) {
