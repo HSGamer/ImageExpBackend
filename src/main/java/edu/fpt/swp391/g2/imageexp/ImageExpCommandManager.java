@@ -61,6 +61,7 @@ public class ImageExpCommandManager {
         addCommand(new GetPostsByUserIdCommand());
         addCommand(new GetPostsByCategoryIdCommand());
         addCommand(new GetPostByIdCommand());
+        addCommand(new GetPostsBySearchKeyCommand());
 
         // Picture
         addCommand(new DeletePictureCommand());
