@@ -24,7 +24,6 @@ public class ImageExpTerminal {
         terminal = TerminalBuilder.builder()
                 .system(true)
                 .jansi(true)
-                .dumb(System.getProperty("java.class.path").contains("idea_rt.jar"))
                 .build();
         lineReader = LineReaderBuilder.builder()
                 .terminal(terminal)
