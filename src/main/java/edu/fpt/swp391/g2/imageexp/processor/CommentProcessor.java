@@ -12,11 +12,21 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The processor for working with {@link Comment}
+ */
 public class CommentProcessor {
     private CommentProcessor() {
         // EMPTY
     }
 
+    /**
+     * Get the comment from the result set
+     *
+     * @param resultSet the result set
+     * @return the comment
+     * @throws SQLException if there is an SQL error
+     */
     private static Comment getComment(ResultSet resultSet) throws SQLException {
         Comment comment = new Comment(resultSet.getInt("commentID"));
         comment.setPostId(resultSet.getInt("postId"));
@@ -27,6 +37,14 @@ public class CommentProcessor {
         return comment;
     }
 
+    /**
+     * Get the comments by the user from the post
+     *
+     * @param userId the user's id
+     * @param postId the post id
+     * @return the comments
+     * @throws SQLException if there is an SQL error
+     */
     public static List<Comment> getCommentByUserIdAndPostId(int userId, int postId) throws SQLException {
         try (
                 PreparedStatementContainer container = PreparedStatementContainer.of(
@@ -44,7 +62,14 @@ public class CommentProcessor {
         }
     }
 
-    public static List<Comment> getCommentByUserId(int userId) throws SQLException {
+    /**
+     * Get the comments by the user
+     *
+     * @param userId the user's id
+     * @return the comments
+     * @throws SQLException if there is an SQL error
+     */
+    public static List<Comment> getCommentsByUserId(int userId) throws SQLException {
         try (
                 PreparedStatementContainer container = PreparedStatementContainer.of(
                         DatabaseConnector.getConnection(),
@@ -61,7 +86,14 @@ public class CommentProcessor {
         }
     }
 
-    public static List<Comment> getCommentByPostId(int postId) throws SQLException {
+    /**
+     * Get the comments from the post
+     *
+     * @param postId the post id
+     * @return the comments
+     * @throws SQLException if there is an SQL error
+     */
+    public static List<Comment> getCommentsByPostId(int postId) throws SQLException {
         try (
                 PreparedStatementContainer container = PreparedStatementContainer.of(
                         DatabaseConnector.getConnection(),
@@ -78,6 +110,13 @@ public class CommentProcessor {
         }
     }
 
+    /**
+     * Get the comment by its id
+     *
+     * @param commentId the comment id
+     * @return the comment
+     * @throws SQLException if there is an SQL error
+     */
     public static Optional<Comment> getCommentById(int commentId) throws SQLException {
         try (
                 PreparedStatementContainer container = PreparedStatementContainer.of(
@@ -94,6 +133,14 @@ public class CommentProcessor {
         }
     }
 
+    /**
+     * Add a comment to the post
+     *
+     * @param postId  the post id
+     * @param userId  the id of the commenting user
+     * @param comment the comment
+     * @throws SQLException if there is an SQL error
+     */
     public static void addComment(int postId, int userId, String comment) throws SQLException {
         try (
                 PreparedStatementContainer container = PreparedStatementContainer.of(
@@ -106,6 +153,13 @@ public class CommentProcessor {
         }
     }
 
+    /**
+     * Update the comment
+     *
+     * @param commentId the comment's id
+     * @param comment   the new comment
+     * @throws SQLException if there is an SQL error
+     */
     public static void updateComment(int commentId, String comment) throws SQLException {
         try (
                 PreparedStatementContainer container = PreparedStatementContainer.of(
@@ -118,6 +172,12 @@ public class CommentProcessor {
         }
     }
 
+    /**
+     * Delete the comment
+     *
+     * @param commentId the comment's id
+     * @throws SQLException if there is an SQL error
+     */
     public static void deleteComment(int commentId) throws SQLException {
         try (
                 PreparedStatementContainer container = PreparedStatementContainer.of(

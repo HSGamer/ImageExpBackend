@@ -28,7 +28,7 @@ public class GetCommentByUserIdCommand extends Command {
                 getLogger().warn("The user id doesn't exist");
                 return;
             }
-            List<Comment> commentList = CommentProcessor.getCommentByUserId(id);
+            List<Comment> commentList = CommentProcessor.getCommentsByUserId(id);
             commentList.forEach(getLogger()::info);
         } catch (SQLException e) {
             getLogger().log(Level.WARN, "There is an SQL exception when getting data", e);

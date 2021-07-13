@@ -138,6 +138,7 @@ public class PostProcessor {
 
     /**
      * Get post by search key
+     *
      * @param searchKey the key input to search
      * @return list posts
      * @throws SQLException if there is any SQL error
@@ -147,7 +148,7 @@ public class PostProcessor {
                 PreparedStatementContainer container = PreparedStatementContainer.of(
                         DatabaseConnector.getConnection(),
                         "select * from post where keyword LIKE ? OR title LIKE ?",
-                        "%"+searchKey+"%"
+                        "%" + searchKey + "%"
                 );
                 ResultSet resultSet = container.query()
         ) {
@@ -182,8 +183,6 @@ public class PostProcessor {
             return Optional.of(getPost(resultSet));
         }
     }
-
-
 
     /**
      * Get post by its picture
