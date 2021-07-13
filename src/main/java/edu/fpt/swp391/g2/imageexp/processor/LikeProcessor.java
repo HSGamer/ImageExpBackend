@@ -43,7 +43,7 @@ public class LikeProcessor {
             try (
                     PreparedStatementContainer container = PreparedStatementContainer.of(
                             DatabaseConnector.getConnection(),
-                            "delete * from likes where userID = ? and postID = ?",
+                            "delete from likes where userID = ? and postID = ?",
                             userId, postId
                     )
             ) {
