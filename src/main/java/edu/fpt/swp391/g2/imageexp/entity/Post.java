@@ -9,6 +9,9 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * The posted {@link Picture} with title, description, etc
+ */
 @Data
 public class Post {
     private final int id;
@@ -22,6 +25,11 @@ public class Post {
     private String keyword;
     private String status;
 
+    /**
+     * Convert to the json object
+     *
+     * @return the json object
+     */
     public JsonObject toJsonObject() {
         JsonObject postJson = new JsonObject();
         postJson.set("id", id);

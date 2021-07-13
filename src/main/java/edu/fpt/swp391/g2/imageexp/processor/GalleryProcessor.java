@@ -116,7 +116,7 @@ public class GalleryProcessor {
     private static Picture getPicture(ResultSet resultSet) throws SQLException {
         Picture picture = new Picture(resultSet.getInt("picID"));
         picture.setUserId(resultSet.getInt("userID"));
-        picture.setPicture(resultSet.getString("picture"));
+        picture.setContent(resultSet.getString("picture"));
         return picture;
     }
 
