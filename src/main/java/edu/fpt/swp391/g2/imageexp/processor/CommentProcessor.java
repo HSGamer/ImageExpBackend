@@ -1,11 +1,14 @@
 package edu.fpt.swp391.g2.imageexp.processor;
+
 import edu.fpt.swp391.g2.imageexp.database.DatabaseConnector;
 import edu.fpt.swp391.g2.imageexp.entity.Comment;
+import edu.fpt.swp391.g2.imageexp.utils.Utils;
 import me.hsgamer.hscore.database.client.sql.PreparedStatementContainer;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,13 +16,17 @@ public class CommentProcessor {
     private CommentProcessor() {
         // EMPTY
     }
+
     private static Comment getComment(ResultSet resultSet) throws SQLException {
         Comment comment = new Comment(resultSet.getInt("commentID"));
         comment.setPostId(resultSet.getInt("postId"));
         comment.setUserId(resultSet.getInt("userId"));
         comment.setComment(resultSet.getString("comment"));
+        comment.setCreatedAt(Utils.getDate(resultSet.getString("created_at")));
+        comment.setUpdatedAt(Utils.getDate(resultSet.getString("updated_at")));
         return comment;
     }
+
     public static List<Comment> getCommentByUserIdAndPostId(int userId, int postId) throws SQLException {
         try (
                 PreparedStatementContainer container = PreparedStatementContainer.of(
@@ -87,7 +94,7 @@ public class CommentProcessor {
         }
     }
 
-    public static void addComment(int postId,int userId,String comment) throws SQLException {
+    public static void addComment(int postId, int userId, String comment) throws SQLException {
         try (
                 PreparedStatementContainer container = PreparedStatementContainer.of(
                         DatabaseConnector.getConnection(),
@@ -103,8 +110,8 @@ public class CommentProcessor {
         try (
                 PreparedStatementContainer container = PreparedStatementContainer.of(
                         DatabaseConnector.getConnection(),
-                        "UPDATE comment SET comment = ? WHERE commentId = ?",
-                        comment, commentId
+                        "UPDATE comment SET comment = ?, updated_at = ? WHERE commentId = ?",
+                        comment, Utils.convertDateToString(new Date()), commentId
                 )
         ) {
             container.update();
@@ -122,7 +129,6 @@ public class CommentProcessor {
             container.update();
         }
     }
-
 
 
 }

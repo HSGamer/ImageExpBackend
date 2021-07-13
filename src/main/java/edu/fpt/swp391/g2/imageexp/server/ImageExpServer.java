@@ -104,9 +104,9 @@ public class ImageExpServer {
         registerHandler("/updatecomment", new UpdateCommentHandler());
         registerHandler("/deletecomment", new DeleteCommentHandler());
         registerHandler("/getcommentbyid", new GetCommentByIdHandler());
-        registerHandler("/getcommentbypostid", new GetCommentByPostIdHandler());
-        registerHandler("/getcommentuserid", new GetCommentByUserIdHandler());
-        registerHandler("/getcommentbyuseridandpostid", new GetCommentByUserIdAndPostIdHandler());
+        registerHandler("/getcommentsbypostid", new GetCommentsByPostIdHandler());
+        registerHandler("/getcommentsbyuserid", new GetCommentsByUserIdHandler());
+        registerHandler("/getcommentsbyuseridandpostid", new GetCommentsByUserIdAndPostIdHandler());
     }
 
     /**

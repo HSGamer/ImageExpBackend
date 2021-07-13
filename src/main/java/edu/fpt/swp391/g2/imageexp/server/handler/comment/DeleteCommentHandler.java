@@ -5,7 +5,6 @@ import com.eclipsesource.json.JsonValue;
 import com.sun.net.httpserver.HttpExchange;
 import edu.fpt.swp391.g2.imageexp.entity.Comment;
 import edu.fpt.swp391.g2.imageexp.processor.CommentProcessor;
-import edu.fpt.swp391.g2.imageexp.processor.PostProcessor;
 import edu.fpt.swp391.g2.imageexp.processor.UserProcessor;
 import edu.fpt.swp391.g2.imageexp.server.handler.SecuredJsonHandler;
 import edu.fpt.swp391.g2.imageexp.utils.HandlerUtils;
@@ -14,6 +13,9 @@ import java.io.IOException;
 import java.io.InvalidObjectException;
 import java.util.Optional;
 
+/**
+ * Delete a comment for the user
+ */
 public class DeleteCommentHandler extends SecuredJsonHandler {
     @Override
     public void handleJsonRequest(HttpExchange httpExchange, JsonValue body) throws IOException {

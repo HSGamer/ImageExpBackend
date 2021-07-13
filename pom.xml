@@ -27,9 +27,24 @@
 
     <dependencies>
         <dependency>
-            <groupId>net.minecrell</groupId>
-            <artifactId>terminalconsoleappender</artifactId>
-            <version>1.2.0</version>
+            <groupId>org.jline</groupId>
+            <artifactId>jline-terminal</artifactId>
+            <version>3.20.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jline</groupId>
+            <artifactId>jline-reader</artifactId>
+            <version>3.20.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jline</groupId>
+            <artifactId>jline-terminal-jansi</artifactId>
+            <version>3.20.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.14.1</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -64,6 +79,11 @@
         <dependency>
             <groupId>me.HSGamer</groupId>
             <artifactId>HSCore-config-path</artifactId>
+            <version>${core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>me.HSGamer</groupId>
+            <artifactId>HSCore-collections</artifactId>
             <version>${core.version}</version>
         </dependency>
         <dependency>

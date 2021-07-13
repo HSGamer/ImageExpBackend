@@ -12,6 +12,9 @@ import java.io.IOException;
 import java.io.InvalidObjectException;
 import java.util.Optional;
 
+/**
+ * Change the user password
+ */
 public class ChangeUserPasswordHandler extends SecuredJsonHandler {
 
     @Override

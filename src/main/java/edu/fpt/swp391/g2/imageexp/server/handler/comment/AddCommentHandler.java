@@ -12,7 +12,9 @@ import edu.fpt.swp391.g2.imageexp.utils.HandlerUtils;
 import java.io.IOException;
 import java.io.InvalidObjectException;
 
-
+/**
+ * Add a comment
+ */
 public class AddCommentHandler extends SecuredJsonHandler {
     @Override
     public void handleJsonRequest(HttpExchange httpExchange, JsonValue body) throws IOException {
@@ -37,7 +39,7 @@ public class AddCommentHandler extends SecuredJsonHandler {
             } else if (comment.isEmpty()) {
                 response.set("success", false);
                 message.set("message", "Invalid format");
-            }else {
+            } else {
                 CommentProcessor.addComment(postId, userId, comment);
                 response.set("success", true);
                 message.set("message", "Successfully commented");

@@ -13,6 +13,9 @@ import java.io.InvalidObjectException;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * The web handler (POST method) for JSON with Secret Key
+ */
 public abstract class SecuredJsonHandler implements SimpleHttpHandler {
     @Override
     public void handlePostRequest(HttpExchange httpExchange, String parameters) throws IOException {
@@ -42,5 +45,12 @@ public abstract class SecuredJsonHandler implements SimpleHttpHandler {
         handleJsonRequest(httpExchange, body);
     }
 
+    /**
+     * Handle the json request
+     *
+     * @param httpExchange the http exchange
+     * @param body         the json body
+     * @throws IOException if there is an I/O error
+     */
     public abstract void handleJsonRequest(HttpExchange httpExchange, JsonValue body) throws IOException;
 }

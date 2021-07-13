@@ -14,6 +14,9 @@ import java.io.IOException;
 import java.io.InvalidObjectException;
 import java.util.Optional;
 
+/**
+ * Register the user
+ */
 public class RegisterUserHandler extends SecuredJsonHandler {
     @Override
     public void handleJsonRequest(HttpExchange httpExchange, JsonValue body) throws IOException {
@@ -24,6 +27,7 @@ public class RegisterUserHandler extends SecuredJsonHandler {
         JsonObject jsonObject = body.asObject();
         String email = jsonObject.getString("email", "");
         String password = jsonObject.getString("password", "");
+        boolean sendVerifyCode = jsonObject.getBoolean("sendVerifyCode", MainConfig.EMAIL_VERIFICATION_SEND_ON_REGISTER.getValue());
 
         JsonObject response = new JsonObject();
         try {
@@ -38,7 +42,7 @@ public class RegisterUserHandler extends SecuredJsonHandler {
                 UserProcessor.registerUser(email, password);
                 Optional<User> optionalUser = UserProcessor.loginUser(email, password);
                 if (optionalUser.isPresent()) {
-                    if (MainConfig.EMAIL_VERIFICATION_SEND_ON_REGISTER.getValue()) {
+                    if (sendVerifyCode) {
                         VerifyProcessor.createAndSendVerifyCode(optionalUser.get());
                     }
                     response.set("success", true);

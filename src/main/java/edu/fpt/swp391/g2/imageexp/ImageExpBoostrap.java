@@ -1,5 +1,7 @@
 package edu.fpt.swp391.g2.imageexp;
 
+import org.fusesource.jansi.AnsiConsole;
+
 /**
  * The main class, or the boostrap class, which runs first to create the main instance and services
  */
@@ -16,6 +18,7 @@ public class ImageExpBoostrap {
      * @param args the arguments
      */
     public static void main(String[] args) {
+        AnsiConsole.systemInstall();
         INSTANCE.enable();
     }
 }
