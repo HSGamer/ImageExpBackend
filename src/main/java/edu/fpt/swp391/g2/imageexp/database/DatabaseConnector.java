@@ -62,7 +62,7 @@ public class DatabaseConnector {
                     config.save();
                 }
                 if (MainConfig.DATABASE_TEST_ACCOUNT.getValue()) {
-                    UserProcessor.registerUser("test@gmail.com", "12345678");
+                    UserProcessor.registerUser("test@gmail.com", "AbCd!232");
                     VerifyProcessor.setVerifyState("test@gmail.com", true);
                 }
             }
