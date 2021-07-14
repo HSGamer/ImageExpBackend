@@ -5,6 +5,7 @@ import me.hsgamer.hscore.config.BaseConfigPath;
 import me.hsgamer.hscore.config.PathableConfig;
 import me.hsgamer.hscore.config.path.BooleanConfigPath;
 import me.hsgamer.hscore.config.path.IntegerConfigPath;
+import me.hsgamer.hscore.config.path.LongConfigPath;
 import me.hsgamer.hscore.config.path.StringConfigPath;
 import me.hsgamer.hscore.config.simpleconfiguration.SimpleConfig;
 import org.simpleyaml.configuration.file.YamlConfiguration;
@@ -19,6 +20,7 @@ import java.util.List;
 public class MainConfig extends PathableConfig {
     public static final IntegerConfigPath SERVER_PORT = new IntegerConfigPath("server.port", 8080);
     public static final StringConfigPath SERVER_SECRET_KEY = new StringConfigPath("server.secret-key", "d7sTPQBxmSv8OmHdgjS5");
+    public static final LongConfigPath SERVER_CLEAR_UNVERIFIED_PERIOD = new LongConfigPath("server.clear-unverified-period", 300000L);
     public static final BooleanConfigPath DATABASE_MYSQL = new BooleanConfigPath("database.use-mysql", false);
     public static final BooleanConfigPath DATABASE_FIRST_LOAD = new BooleanConfigPath("database.first-load", true);
     public static final BooleanConfigPath DATABASE_TEST_ACCOUNT = new BooleanConfigPath("database.test-account", true);

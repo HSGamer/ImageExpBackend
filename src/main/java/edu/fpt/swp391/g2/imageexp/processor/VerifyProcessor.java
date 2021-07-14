@@ -6,21 +6,53 @@ import edu.fpt.swp391.g2.imageexp.email.EmailHandler;
 import edu.fpt.swp391.g2.imageexp.entity.User;
 import edu.fpt.swp391.g2.imageexp.utils.Utils;
 import me.hsgamer.hscore.database.client.sql.PreparedStatementContainer;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * The processor for working with verification
  */
 public class VerifyProcessor {
     private static final Logger logger = LogManager.getLogger(VerifyProcessor.class);
+    private static final Timer timer = new Timer();
 
     private VerifyProcessor() {
         // EMPTY
+    }
+
+    /**
+     * Schedule the task to clear unverified users
+     */
+    public static void scheduleClearUnverifiedTask() {
+        long period = MainConfig.SERVER_CLEAR_UNVERIFIED_PERIOD.getValue();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                try (PreparedStatementContainer container = PreparedStatementContainer.of(
+                        DatabaseConnector.getConnection(),
+                        "delete from user where verified = ?", false
+                )) {
+                    int row = container.update();
+                    logger.info(() -> "Cleared " + row + " unverified users");
+                } catch (SQLException e) {
+                    logger.log(Level.WARN, "Error when clearing unverified users", e);
+                }
+            }
+        }, period, period);
+    }
+
+    /**
+     * Cancel the timer
+     */
+    public static void stopTimer() {
+        timer.cancel();
     }
 
     /**
