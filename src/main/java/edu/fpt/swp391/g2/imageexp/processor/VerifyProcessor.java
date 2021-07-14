@@ -21,7 +21,7 @@ import java.util.TimerTask;
  */
 public class VerifyProcessor {
     private static final Logger logger = LogManager.getLogger(VerifyProcessor.class);
-    private static final Timer timer = new Timer();
+    private static Timer timer;
 
     private VerifyProcessor() {
         // EMPTY
@@ -31,6 +31,7 @@ public class VerifyProcessor {
      * Schedule the task to clear unverified users
      */
     public static void scheduleClearUnverifiedTask() {
+        timer = new Timer();
         long period = MainConfig.SERVER_CLEAR_UNVERIFIED_PERIOD.getValue();
         timer.schedule(new TimerTask() {
             @Override
@@ -52,7 +53,9 @@ public class VerifyProcessor {
      * Cancel the timer
      */
     public static void stopTimer() {
-        timer.cancel();
+        if (timer != null) {
+            timer.cancel();
+        }
     }
 
     /**

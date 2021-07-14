@@ -61,8 +61,8 @@ public class ImageExpMain {
     public void shutdown() {
         imageExpServer.disable();
         commandManager.disable();
-        DatabaseConnector.disable();
         VerifyProcessor.stopTimer();
+        DatabaseConnector.disable();
         System.exit(0);
     }
 
@@ -71,6 +71,7 @@ public class ImageExpMain {
      */
     public void reload() {
         imageExpServer.disable();
+        VerifyProcessor.stopTimer();
         DatabaseConnector.disable();
         mainConfig.reload();
         if (!loadServer()) {
@@ -79,6 +80,7 @@ public class ImageExpMain {
             return;
         }
         DatabaseConnector.init();
+        VerifyProcessor.scheduleClearUnverifiedTask();
         imageExpServer.enable();
     }
 
