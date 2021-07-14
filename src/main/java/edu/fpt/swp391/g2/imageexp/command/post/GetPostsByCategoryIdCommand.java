@@ -9,6 +9,9 @@ import org.apache.logging.log4j.Level;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * The command to get the posts by category
+ */
 public class GetPostsByCategoryIdCommand extends Command {
     public GetPostsByCategoryIdCommand() {
         super("get-posts-by-category-id");
@@ -38,5 +41,10 @@ public class GetPostsByCategoryIdCommand extends Command {
     @Override
     public String getUsage() {
         return super.getUsage() + " <id>";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Get the posts by category";
     }
 }

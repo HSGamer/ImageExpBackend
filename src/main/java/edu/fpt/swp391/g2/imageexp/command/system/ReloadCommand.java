@@ -2,6 +2,9 @@ package edu.fpt.swp391.g2.imageexp.command.system;
 
 import edu.fpt.swp391.g2.imageexp.command.Command;
 
+/**
+ * The command to reload the server
+ */
 public class ReloadCommand extends Command {
     public ReloadCommand() {
         super("reload");
@@ -15,6 +18,6 @@ public class ReloadCommand extends Command {
 
     @Override
     public String getDescription() {
-        return "Reload Command";
+        return "Reload the server";
     }
 }

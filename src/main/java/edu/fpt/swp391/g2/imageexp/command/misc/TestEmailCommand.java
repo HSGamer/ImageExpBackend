@@ -3,6 +3,9 @@ package edu.fpt.swp391.g2.imageexp.command.misc;
 import edu.fpt.swp391.g2.imageexp.command.Command;
 import edu.fpt.swp391.g2.imageexp.email.EmailHandler;
 
+/**
+ * The command to test email
+ */
 public class TestEmailCommand extends Command {
     public TestEmailCommand() {
         super("test-email");
@@ -22,5 +25,10 @@ public class TestEmailCommand extends Command {
     @Override
     public String getUsage() {
         return super.getUsage() + " <email>";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Test the email";
     }
 }

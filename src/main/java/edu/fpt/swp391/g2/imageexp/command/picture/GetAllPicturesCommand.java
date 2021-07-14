@@ -8,8 +8,11 @@ import org.apache.logging.log4j.Level;
 import java.sql.SQLException;
 import java.util.List;
 
-public class GetAllPictureCommand extends Command {
-    public GetAllPictureCommand() {
+/**
+ * The command to get all pictures
+ */
+public class GetAllPicturesCommand extends Command {
+    public GetAllPicturesCommand() {
         super("get-all-pictures");
     }
 
@@ -21,5 +24,10 @@ public class GetAllPictureCommand extends Command {
         } catch (SQLException e) {
             getLogger().log(Level.WARN, "There is an SQL exception when getting data", e);
         }
+    }
+
+    @Override
+    public String getDescription() {
+        return "Get all pictures";
     }
 }

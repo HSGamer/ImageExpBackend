@@ -6,14 +6,14 @@ import edu.fpt.swp391.g2.imageexp.command.category.AddCategoryCommand;
 import edu.fpt.swp391.g2.imageexp.command.category.GetAllCategoriesCommand;
 import edu.fpt.swp391.g2.imageexp.command.comment.DeleteCommentCommand;
 import edu.fpt.swp391.g2.imageexp.command.comment.GetCommentByIdCommand;
-import edu.fpt.swp391.g2.imageexp.command.comment.GetCommentByPostIdCommand;
-import edu.fpt.swp391.g2.imageexp.command.comment.GetCommentByUserIdCommand;
+import edu.fpt.swp391.g2.imageexp.command.comment.GetCommentsByPostIdCommand;
+import edu.fpt.swp391.g2.imageexp.command.comment.GetCommentsByUserIdCommand;
 import edu.fpt.swp391.g2.imageexp.command.misc.ChangeTextCommand;
 import edu.fpt.swp391.g2.imageexp.command.misc.EchoCommand;
 import edu.fpt.swp391.g2.imageexp.command.misc.TestEmailCommand;
 import edu.fpt.swp391.g2.imageexp.command.picture.DeletePictureCommand;
-import edu.fpt.swp391.g2.imageexp.command.picture.GetAllPictureCommand;
-import edu.fpt.swp391.g2.imageexp.command.picture.GetPictureByUserIdCommand;
+import edu.fpt.swp391.g2.imageexp.command.picture.GetAllPicturesCommand;
+import edu.fpt.swp391.g2.imageexp.command.picture.GetPicturesByUserIdCommand;
 import edu.fpt.swp391.g2.imageexp.command.post.*;
 import edu.fpt.swp391.g2.imageexp.command.system.ReloadCommand;
 import edu.fpt.swp391.g2.imageexp.command.system.StopCommand;
@@ -65,14 +65,14 @@ public class ImageExpCommandManager {
 
         // Picture
         addCommand(new DeletePictureCommand());
-        addCommand(new GetAllPictureCommand());
-        addCommand(new GetPictureByUserIdCommand());
+        addCommand(new GetAllPicturesCommand());
+        addCommand(new GetPicturesByUserIdCommand());
 
         //Comment
         addCommand(new DeleteCommentCommand());
         addCommand(new GetCommentByIdCommand());
-        addCommand(new GetCommentByPostIdCommand());
-        addCommand(new GetCommentByUserIdCommand());
+        addCommand(new GetCommentsByPostIdCommand());
+        addCommand(new GetCommentsByUserIdCommand());
     }
 
     /**

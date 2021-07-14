@@ -8,6 +8,9 @@ import org.apache.logging.log4j.Level;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * The command to get all registered categories
+ */
 public class GetAllCategoriesCommand extends Command {
     public GetAllCategoriesCommand() {
         super("get-all-categories");
@@ -21,5 +24,10 @@ public class GetAllCategoriesCommand extends Command {
         } catch (SQLException e) {
             getLogger().log(Level.WARN, "There is an SQL exception when getting data", e);
         }
+    }
+
+    @Override
+    public String getDescription() {
+        return "Get all registered categories";
     }
 }

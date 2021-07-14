@@ -8,6 +8,9 @@ import org.apache.logging.log4j.Level;
 import java.sql.SQLException;
 import java.util.Optional;
 
+/**
+ * The command to get the user by its id
+ */
 public class GetUserByIdCommand extends Command {
     public GetUserByIdCommand() {
         super("get-user-by-id");
@@ -39,5 +42,10 @@ public class GetUserByIdCommand extends Command {
     @Override
     public String getUsage() {
         return super.getUsage() + " <id>";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Get the user by its ID";
     }
 }

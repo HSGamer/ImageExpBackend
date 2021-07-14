@@ -9,9 +9,12 @@ import org.apache.logging.log4j.Level;
 import java.sql.SQLException;
 import java.util.List;
 
-public class GetCommentByUserIdCommand extends Command {
-    public GetCommentByUserIdCommand() {
-        super("get-comment-by-user-id");
+/**
+ * The command to get the comments from the user
+ */
+public class GetCommentsByUserIdCommand extends Command {
+    public GetCommentsByUserIdCommand() {
+        super("get-comments-by-user-id");
     }
 
     @Override
@@ -38,5 +41,10 @@ public class GetCommentByUserIdCommand extends Command {
     @Override
     public String getUsage() {
         return super.getUsage() + " <id>";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Get the comments from the user";
     }
 }

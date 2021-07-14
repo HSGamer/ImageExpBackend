@@ -6,6 +6,9 @@ import org.apache.logging.log4j.Level;
 
 import java.sql.SQLException;
 
+/**
+ * The command to delete the picture
+ */
 public class DeletePictureCommand extends Command {
     public DeletePictureCommand() {
         super("delete-picture");
@@ -35,5 +38,10 @@ public class DeletePictureCommand extends Command {
     @Override
     public String getUsage() {
         return super.getUsage() + " <picture_id>";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Delete the picture";
     }
 }

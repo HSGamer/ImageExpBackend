@@ -9,6 +9,9 @@ import org.apache.logging.log4j.Level;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * The command to get the posts from the user
+ */
 public class GetPostsByUserIdCommand extends Command {
     public GetPostsByUserIdCommand() {
         super("get-posts-by-user-id");
@@ -38,5 +41,10 @@ public class GetPostsByUserIdCommand extends Command {
     @Override
     public String getUsage() {
         return super.getUsage() + " <id>";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Get the posts from the user";
     }
 }

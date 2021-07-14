@@ -8,6 +8,9 @@ import org.apache.logging.log4j.Level;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * The command to get all registered users
+ */
 public class GetAllUsersCommand extends Command {
     public GetAllUsersCommand() {
         super("get-all-users");
@@ -23,5 +26,10 @@ public class GetAllUsersCommand extends Command {
         } catch (SQLException e) {
             getLogger().log(Level.WARN, "There is an SQL exception when getting data", e);
         }
+    }
+
+    @Override
+    public String getDescription() {
+        return "Get all registered users";
     }
 }

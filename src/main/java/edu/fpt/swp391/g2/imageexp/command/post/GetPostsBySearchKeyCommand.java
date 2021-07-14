@@ -1,4 +1,5 @@
 package edu.fpt.swp391.g2.imageexp.command.post;
+
 import edu.fpt.swp391.g2.imageexp.command.Command;
 import edu.fpt.swp391.g2.imageexp.entity.Post;
 import edu.fpt.swp391.g2.imageexp.processor.PostProcessor;
@@ -7,7 +8,10 @@ import org.apache.logging.log4j.Level;
 import java.sql.SQLException;
 import java.util.List;
 
-public class GetPostsBySearchKeyCommand extends Command{
+/**
+ * The command to get the posts by search key
+ */
+public class GetPostsBySearchKeyCommand extends Command {
     public GetPostsBySearchKeyCommand() {
         super("get-posts-by-search-key");
     }
@@ -36,5 +40,10 @@ public class GetPostsBySearchKeyCommand extends Command{
     @Override
     public String getUsage() {
         return super.getUsage() + " <searchKey>";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Get the posts by search key";
     }
 }

@@ -9,8 +9,11 @@ import org.apache.logging.log4j.Level;
 import java.sql.SQLException;
 import java.util.List;
 
-public class GetPictureByUserIdCommand extends Command {
-    public GetPictureByUserIdCommand() {
+/**
+ * The command to get pictures from the user
+ */
+public class GetPicturesByUserIdCommand extends Command {
+    public GetPicturesByUserIdCommand() {
         super("get-pictures-by-user-id");
     }
 
@@ -38,5 +41,10 @@ public class GetPictureByUserIdCommand extends Command {
     @Override
     public String getUsage() {
         return super.getUsage() + " <user_id>";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Get pictures from the user";
     }
 }

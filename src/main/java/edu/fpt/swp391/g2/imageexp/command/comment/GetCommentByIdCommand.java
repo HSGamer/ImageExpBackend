@@ -1,13 +1,16 @@
 package edu.fpt.swp391.g2.imageexp.command.comment;
 
+import edu.fpt.swp391.g2.imageexp.command.Command;
 import edu.fpt.swp391.g2.imageexp.entity.Comment;
 import edu.fpt.swp391.g2.imageexp.processor.CommentProcessor;
-import edu.fpt.swp391.g2.imageexp.command.Command;
 import org.apache.logging.log4j.Level;
 
 import java.sql.SQLException;
 import java.util.Optional;
 
+/**
+ * The command to get comment by its id
+ */
 public class GetCommentByIdCommand extends Command {
     public GetCommentByIdCommand() {
         super("get-comment-by-id");
@@ -39,5 +42,10 @@ public class GetCommentByIdCommand extends Command {
     @Override
     public String getUsage() {
         return super.getUsage() + " <id>";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Get the comment by its ID";
     }
 }
