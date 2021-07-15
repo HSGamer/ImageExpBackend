@@ -6,6 +6,9 @@ import org.apache.logging.log4j.Level;
 
 import java.sql.SQLException;
 
+/**
+ * The command to add new category
+ */
 public class AddCategoryCommand extends Command {
     public AddCategoryCommand() {
         super("add-category");
@@ -32,5 +35,10 @@ public class AddCategoryCommand extends Command {
     @Override
     public String getUsage() {
         return super.getUsage() + " <category_name>";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Add new category";
     }
 }

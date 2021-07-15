@@ -30,7 +30,7 @@ public class GetCommentsByPostIdHandler extends SecuredJsonHandler {
             if (PostProcessor.getPostById(id).isPresent()) {
                 response.set("success", true);
                 JsonArray jsonArray = new JsonArray();
-                CommentProcessor.getCommentByPostId(id).forEach(comment -> jsonArray.add(comment.toJsonObject()));
+                CommentProcessor.getCommentsByPostId(id).forEach(comment -> jsonArray.add(comment.toJsonObject()));
                 response.set("response", jsonArray);
             } else {
                 response.set("success", false);

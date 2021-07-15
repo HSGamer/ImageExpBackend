@@ -11,8 +11,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The processor for working with {@link Picture}
+ */
 public class GalleryProcessor {
+    private GalleryProcessor() {
+        // EMPTY
+    }
+
     /**
+     * Add a picture
+     *
      * @param userID  user's id
      * @param picture picture as base_64
      * @return the picture id
@@ -41,6 +50,8 @@ public class GalleryProcessor {
     }
 
     /**
+     * Add many pictures
+     *
      * @param userID   user's id
      * @param pictures pictures as base_64
      * @throws Exception sql error
@@ -55,6 +66,8 @@ public class GalleryProcessor {
     }
 
     /**
+     * Delete the picture
+     *
      * @param picID picture's id
      * @throws SQLException sql error
      */
@@ -71,6 +84,8 @@ public class GalleryProcessor {
     }
 
     /**
+     * Get the picture by its id
+     *
      * @param picID picture's id
      * @return picture
      * @throws SQLException sql error
@@ -92,18 +107,22 @@ public class GalleryProcessor {
     }
 
     /**
-     * @param resultSet get picture as set
+     * Get the picture from the result set
+     *
+     * @param resultSet the result set
      * @return picture
      * @throws SQLException sql error
      */
     private static Picture getPicture(ResultSet resultSet) throws SQLException {
         Picture picture = new Picture(resultSet.getInt("picID"));
         picture.setUserId(resultSet.getInt("userID"));
-        picture.setPicture(resultSet.getString("picture"));
+        picture.setContent(resultSet.getString("picture"));
         return picture;
     }
 
     /**
+     * Get all pictures
+     *
      * @return list pictures
      * @throws SQLException sql error
      */
@@ -124,6 +143,8 @@ public class GalleryProcessor {
     }
 
     /**
+     * Get the pictures from the user
+     *
      * @param userId user's id
      * @return list of pictures
      * @throws SQLException sql error

@@ -3,6 +3,9 @@ package edu.fpt.swp391.g2.imageexp.entity;
 import com.eclipsesource.json.JsonObject;
 import lombok.Data;
 
+/**
+ * The user account
+ */
 @Data
 public class User {
     private final int userId;
@@ -12,6 +15,11 @@ public class User {
     private String status;
     private boolean verified;
 
+    /**
+     * Convert to the json object
+     *
+     * @return the json object
+     */
     public JsonObject toJsonObject() {
         JsonObject jsonUser = new JsonObject();
         jsonUser.set("id", userId);

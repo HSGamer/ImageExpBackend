@@ -8,6 +8,9 @@ import org.apache.logging.log4j.Level;
 import java.sql.SQLException;
 import java.util.Optional;
 
+/**
+ * The command to get the user by its email
+ */
 public class GetUserByEmailCommand extends Command {
     public GetUserByEmailCommand() {
         super("get-user-by-email");
@@ -32,5 +35,10 @@ public class GetUserByEmailCommand extends Command {
     @Override
     public String getUsage() {
         return super.getUsage() + " <email>";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Get the user by its email";
     }
 }

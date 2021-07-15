@@ -1,10 +1,14 @@
 package edu.fpt.swp391.g2.imageexp.entity;
+
+import com.eclipsesource.json.JsonObject;
 import edu.fpt.swp391.g2.imageexp.utils.Utils;
 import lombok.Data;
-import com.eclipsesource.json.JsonObject;
 
 import java.util.Date;
 
+/**
+ * The comment of the {@link Post}
+ */
 @Data
 public class Comment {
     private final int commentID;
@@ -14,6 +18,11 @@ public class Comment {
     private Date createdAt;
     private Date updatedAt;
 
+    /**
+     * Convert to the json object
+     *
+     * @return the json object
+     */
     public JsonObject toJsonObject() {
         JsonObject jsonObject = new JsonObject();
         jsonObject.set("commentID", commentID);

@@ -8,6 +8,9 @@ import org.apache.logging.log4j.Level;
 import java.sql.SQLException;
 import java.util.Optional;
 
+/**
+ * The command to get the verify state of the user
+ */
 public class GetVerifyStateCommand extends Command {
     public GetVerifyStateCommand() {
         super("get-verify-state");
@@ -32,5 +35,10 @@ public class GetVerifyStateCommand extends Command {
     @Override
     public String getUsage() {
         return super.getUsage() + " <email>";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Get the verify state of the user";
     }
 }

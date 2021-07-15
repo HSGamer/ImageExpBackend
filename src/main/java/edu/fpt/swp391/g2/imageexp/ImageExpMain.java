@@ -2,6 +2,7 @@ package edu.fpt.swp391.g2.imageexp;
 
 import edu.fpt.swp391.g2.imageexp.config.MainConfig;
 import edu.fpt.swp391.g2.imageexp.database.DatabaseConnector;
+import edu.fpt.swp391.g2.imageexp.processor.VerifyProcessor;
 import edu.fpt.swp391.g2.imageexp.server.ImageExpServer;
 import edu.fpt.swp391.g2.imageexp.terminal.ImageExpTerminal;
 import lombok.Getter;
@@ -47,6 +48,7 @@ public class ImageExpMain {
         }
         logger.info("Connect to the database");
         DatabaseConnector.init();
+        VerifyProcessor.scheduleClearUnverifiedTask();
         logger.info("Start the server");
         imageExpServer.enable();
         logger.info("For help, please type 'help'");
@@ -59,6 +61,7 @@ public class ImageExpMain {
     public void shutdown() {
         imageExpServer.disable();
         commandManager.disable();
+        VerifyProcessor.stopTimer();
         DatabaseConnector.disable();
         System.exit(0);
     }
@@ -68,6 +71,7 @@ public class ImageExpMain {
      */
     public void reload() {
         imageExpServer.disable();
+        VerifyProcessor.stopTimer();
         DatabaseConnector.disable();
         mainConfig.reload();
         if (!loadServer()) {
@@ -76,6 +80,7 @@ public class ImageExpMain {
             return;
         }
         DatabaseConnector.init();
+        VerifyProcessor.scheduleClearUnverifiedTask();
         imageExpServer.enable();
     }
 

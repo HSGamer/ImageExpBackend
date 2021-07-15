@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * The help command, list all registered commands
+ */
 public class HelpCommand extends Command {
     public HelpCommand() {
         super("help");

@@ -113,6 +113,30 @@ public class PostProcessor {
     }
 
     /**
+     * Get the posts that the user likes
+     *
+     * @param userId the user's id
+     * @return the posts
+     * @throws SQLException if there is an SQL exception
+     */
+    public static List<Post> getLikedPosts(int userId) throws SQLException {
+        try (
+                PreparedStatementContainer container = PreparedStatementContainer.of(
+                        DatabaseConnector.getConnection(),
+                        "SELECT p.* FROM likes l JOIN post p ON p.postID = l.postID WHERE l.userID = ?",
+                        userId
+                );
+                ResultSet resultSet = container.query()
+        ) {
+            List<Post> posts = new ArrayList<>();
+            while (resultSet.next()) {
+                posts.add(getPost(resultSet));
+            }
+            return posts;
+        }
+    }
+
+    /**
      * Get posts by category
      *
      * @param categoryId the category id
@@ -138,6 +162,7 @@ public class PostProcessor {
 
     /**
      * Get post by search key
+     *
      * @param searchKey the key input to search
      * @return list posts
      * @throws SQLException if there is any SQL error
@@ -147,7 +172,7 @@ public class PostProcessor {
                 PreparedStatementContainer container = PreparedStatementContainer.of(
                         DatabaseConnector.getConnection(),
                         "select * from post where keyword LIKE ? OR title LIKE ?",
-                        "%"+searchKey+"%"
+                        "%" + searchKey + "%"
                 );
                 ResultSet resultSet = container.query()
         ) {
@@ -182,8 +207,6 @@ public class PostProcessor {
             return Optional.of(getPost(resultSet));
         }
     }
-
-
 
     /**
      * Get post by its picture

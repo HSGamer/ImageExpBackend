@@ -1,17 +1,20 @@
-package edu.fpt.swp391.g2.imageexp.command.picture;
+package edu.fpt.swp391.g2.imageexp.command.comment;
 
 import edu.fpt.swp391.g2.imageexp.command.Command;
-import edu.fpt.swp391.g2.imageexp.entity.Picture;
-import edu.fpt.swp391.g2.imageexp.processor.GalleryProcessor;
+import edu.fpt.swp391.g2.imageexp.entity.Comment;
+import edu.fpt.swp391.g2.imageexp.processor.CommentProcessor;
 import edu.fpt.swp391.g2.imageexp.processor.UserProcessor;
 import org.apache.logging.log4j.Level;
 
 import java.sql.SQLException;
 import java.util.List;
 
-public class GetPictureByUserIdCommand extends Command {
-    public GetPictureByUserIdCommand() {
-        super("get-pictures-by-user-id");
+/**
+ * The command to get the comments from the user
+ */
+public class GetCommentsByUserIdCommand extends Command {
+    public GetCommentsByUserIdCommand() {
+        super("get-comments-by-user-id");
     }
 
     @Override
@@ -28,8 +31,8 @@ public class GetPictureByUserIdCommand extends Command {
                 getLogger().warn("The user id doesn't exist");
                 return;
             }
-            List<Picture> pictureList = GalleryProcessor.getPicturesByUserId(id);
-            pictureList.forEach(getLogger()::info);
+            List<Comment> commentList = CommentProcessor.getCommentsByUserId(id);
+            commentList.forEach(getLogger()::info);
         } catch (SQLException e) {
             getLogger().log(Level.WARN, "There is an SQL exception when getting data", e);
         }
@@ -37,6 +40,11 @@ public class GetPictureByUserIdCommand extends Command {
 
     @Override
     public String getUsage() {
-        return super.getUsage() + " <user_id>";
+        return super.getUsage() + " <id>";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Get the comments from the user";
     }
 }

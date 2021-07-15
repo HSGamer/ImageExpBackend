@@ -8,6 +8,9 @@ import org.apache.logging.log4j.Level;
 import java.sql.SQLException;
 import java.util.Optional;
 
+/**
+ * The command to get the status of the user
+ */
 public class GetStatusCommand extends Command {
     public GetStatusCommand() {
         super("get-status");
@@ -32,5 +35,10 @@ public class GetStatusCommand extends Command {
     @Override
     public String getUsage() {
         return super.getUsage() + " <email>";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Get the status of the user";
     }
 }

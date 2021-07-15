@@ -30,7 +30,7 @@ public class GetCommentsByUserIdHandler extends SecuredJsonHandler {
             if (UserProcessor.getUserById(id).isPresent()) {
                 response.set("success", true);
                 JsonArray jsonArray = new JsonArray();
-                CommentProcessor.getCommentByUserId(id).forEach(comment -> jsonArray.add(comment.toJsonObject()));
+                CommentProcessor.getCommentsByUserId(id).forEach(comment -> jsonArray.add(comment.toJsonObject()));
                 response.set("response", jsonArray);
             } else {
                 response.set("success", false);

@@ -43,7 +43,7 @@ public class LikeProcessor {
             try (
                     PreparedStatementContainer container = PreparedStatementContainer.of(
                             DatabaseConnector.getConnection(),
-                            "delete * from likes where userID = ? and postID = ?",
+                            "delete from likes where userID = ? and postID = ?",
                             userId, postId
                     )
             ) {
@@ -80,30 +80,6 @@ public class LikeProcessor {
                 ResultSet resultSet = container.query()
         ) {
             return resultSet.next();
-        }
-    }
-
-    /**
-     * Get the post id of the posts the user likes
-     *
-     * @param userId the user's id
-     * @return the list of post ids
-     * @throws SQLException if there is an SQL exception
-     */
-    public static List<Integer> getLikedPostIds(int userId) throws SQLException {
-        try (
-                PreparedStatementContainer container = PreparedStatementContainer.of(
-                        DatabaseConnector.getConnection(),
-                        "select postID from likes where userID = ?",
-                        userId
-                );
-                ResultSet resultSet = container.query()
-        ) {
-            List<Integer> list = new ArrayList<>();
-            while (resultSet.next()) {
-                list.add(resultSet.getInt("postID"));
-            }
-            return list;
         }
     }
 

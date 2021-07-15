@@ -1,10 +1,13 @@
 package edu.fpt.swp391.g2.imageexp.command.comment;
 
-import edu.fpt.swp391.g2.imageexp.processor.CommentProcessor;
 import edu.fpt.swp391.g2.imageexp.command.Command;
+import edu.fpt.swp391.g2.imageexp.processor.CommentProcessor;
 import org.apache.logging.log4j.Level;
 
-public class DeleteCommentCommand extends Command{
+/**
+ * The command to delete the comment
+ */
+public class DeleteCommentCommand extends Command {
     public DeleteCommentCommand() {
         super("delete-comment");
     }
@@ -35,4 +38,8 @@ public class DeleteCommentCommand extends Command{
         return super.getUsage() + " <comment_id>";
     }
 
+    @Override
+    public String getDescription() {
+        return "Delete the comment";
+    }
 }

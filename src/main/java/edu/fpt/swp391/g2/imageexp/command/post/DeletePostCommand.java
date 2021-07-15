@@ -4,6 +4,9 @@ import edu.fpt.swp391.g2.imageexp.command.Command;
 import edu.fpt.swp391.g2.imageexp.processor.PostProcessor;
 import org.apache.logging.log4j.Level;
 
+/**
+ * The command to delete the post
+ */
 public class DeletePostCommand extends Command {
     public DeletePostCommand() {
         super("delete-post");
@@ -33,5 +36,10 @@ public class DeletePostCommand extends Command {
     @Override
     public String getUsage() {
         return super.getUsage() + " <post_id>";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Delete the post";
     }
 }
