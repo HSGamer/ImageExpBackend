@@ -113,6 +113,30 @@ public class PostProcessor {
     }
 
     /**
+     * Get the posts that the user likes
+     *
+     * @param userId the user's id
+     * @return the posts
+     * @throws SQLException if there is an SQL exception
+     */
+    public static List<Post> getLikedPosts(int userId) throws SQLException {
+        try (
+                PreparedStatementContainer container = PreparedStatementContainer.of(
+                        DatabaseConnector.getConnection(),
+                        "SELECT p.* FROM likes l JOIN post p ON p.postID = l.postID WHERE l.userID = ?",
+                        userId
+                );
+                ResultSet resultSet = container.query()
+        ) {
+            List<Post> posts = new ArrayList<>();
+            while (resultSet.next()) {
+                posts.add(getPost(resultSet));
+            }
+            return posts;
+        }
+    }
+
+    /**
      * Get posts by category
      *
      * @param categoryId the category id

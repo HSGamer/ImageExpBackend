@@ -1,10 +1,10 @@
-package edu.fpt.swp391.g2.imageexp.server.handler.like;
+package edu.fpt.swp391.g2.imageexp.server.handler.post;
 
 import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
 import com.sun.net.httpserver.HttpExchange;
-import edu.fpt.swp391.g2.imageexp.processor.LikeProcessor;
+import edu.fpt.swp391.g2.imageexp.processor.PostProcessor;
 import edu.fpt.swp391.g2.imageexp.processor.UserProcessor;
 import edu.fpt.swp391.g2.imageexp.server.handler.SecuredJsonHandler;
 import edu.fpt.swp391.g2.imageexp.utils.HandlerUtils;
@@ -13,9 +13,9 @@ import java.io.IOException;
 import java.io.InvalidObjectException;
 
 /**
- * Get the post ids that the user liked
+ * Get the posts that the user liked
  */
-public class GetLikedPostIdsHandler extends SecuredJsonHandler {
+public class GetLikedPostsHandler extends SecuredJsonHandler {
     @Override
     public void handleJsonRequest(HttpExchange httpExchange, JsonValue body) throws IOException {
         if (!body.isObject()) {
@@ -33,7 +33,7 @@ public class GetLikedPostIdsHandler extends SecuredJsonHandler {
                 response.set("response", message);
             } else {
                 JsonArray jsonArray = new JsonArray();
-                LikeProcessor.getLikedPostIds(userId).forEach(jsonArray::add);
+                PostProcessor.getLikedPosts(userId).forEach(post -> jsonArray.add(post.toJsonObject()));
                 response.set("success", true);
                 response.set("response", jsonArray);
             }

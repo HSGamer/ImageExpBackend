@@ -10,7 +10,10 @@ import edu.fpt.swp391.g2.imageexp.server.handler.category.AddCategoryHandler;
 import edu.fpt.swp391.g2.imageexp.server.handler.category.GetAllCategoriesHandler;
 import edu.fpt.swp391.g2.imageexp.server.handler.category.GetCategoryByIdHandler;
 import edu.fpt.swp391.g2.imageexp.server.handler.comment.*;
-import edu.fpt.swp391.g2.imageexp.server.handler.like.*;
+import edu.fpt.swp391.g2.imageexp.server.handler.like.CheckLikeHandler;
+import edu.fpt.swp391.g2.imageexp.server.handler.like.CountLikesHandler;
+import edu.fpt.swp391.g2.imageexp.server.handler.like.GetLikesHandler;
+import edu.fpt.swp391.g2.imageexp.server.handler.like.ToggleLikeHandler;
 import edu.fpt.swp391.g2.imageexp.server.handler.misc.ChangeableTextHandler;
 import edu.fpt.swp391.g2.imageexp.server.handler.misc.TestBodyHandler;
 import edu.fpt.swp391.g2.imageexp.server.handler.misc.TestEmailHandler;
@@ -96,7 +99,7 @@ public class ImageExpServer {
         // Like
         registerHandler("/checklike", new CheckLikeHandler());
         registerHandler("/countlikes", new CountLikesHandler());
-        registerHandler("/getlikedpostids", new GetLikedPostIdsHandler());
+        registerHandler("/getlikedposts", new GetLikedPostsHandler());
         registerHandler("/getlikes", new GetLikesHandler());
         registerHandler("/togglelike", new ToggleLikeHandler());
 
