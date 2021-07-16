@@ -171,8 +171,8 @@ public class PostProcessor {
         try (
                 PreparedStatementContainer container = PreparedStatementContainer.of(
                         DatabaseConnector.getConnection(),
-                        "select * from post where keyword LIKE ? OR title LIKE ?",
-                        "%" + searchKey + "%"
+                        "select * from post where UPPER(keyword) LIKE UPPER(?) OR UPPER(title) LIKE UPPER(?)",
+                        "%" + searchKey + "%", "%" + searchKey + "%"
                 );
                 ResultSet resultSet = container.query()
         ) {
