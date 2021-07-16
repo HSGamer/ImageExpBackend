@@ -27,7 +27,6 @@ public class DeleteCommentHandler extends SecuredJsonHandler {
         int commentId = jsonObject.getInt("commentId", -1);
         int userId = jsonObject.getInt("userId", -1);
 
-
         JsonObject response = new JsonObject();
         try {
             Optional<Comment> optionalComment = CommentProcessor.getCommentById(commentId);
@@ -44,6 +43,7 @@ public class DeleteCommentHandler extends SecuredJsonHandler {
                     response.set("success", false);
                     message.set("message", "The user is not the owner of the comment");
                 } else {
+                    CommentProcessor.deleteComment(commentId);
                     response.set("success", true);
                     message.set("message", "Successfully deleted");
                 }
