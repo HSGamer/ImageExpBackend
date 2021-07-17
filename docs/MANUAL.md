@@ -1,6 +1,6 @@
 # Requires
 * An operating system supports Java (Linux recommended, but Windows is also fine)
-* Java >= 8 (AdoptOpenJDK recommended)
+* Java 8 or higher (AdoptOpenJDK recommended)
 
 # Install
 1. Download the JAR file
