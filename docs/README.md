@@ -5,3 +5,4 @@
 # Document
 
 * Postman: https://documenter.getpostman.com/view/16076359/TzeWFnGW
+* Manual: [MANUAL.md](MANUAL.md)
