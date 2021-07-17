@@ -7,7 +7,7 @@
 2. Open the terminal on the folder that the file is downloaded on
 3. Run the command `java -jar ImageExpBackend.jar`
 4. Wait for the server to load
-5. On the folder, open [`config.yml`](#config.yml), and change some settings
+5. On the folder, open [`config.yml`](#configyml), and change some settings
 6. Back to the terminal, type `reload` and press Enter
 7. Enjoy
 
