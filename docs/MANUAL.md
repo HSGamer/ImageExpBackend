@@ -2,7 +2,7 @@
 * An operating system supports Java (Linux recommended, but Windows is also fine)
 * Java 8 or higher (AdoptOpenJDK recommended)
 
-# Install
+# Install (First Time)
 1. Download the JAR file
 2. Open the terminal on the folder that the file is downloaded on
 3. Run the command `java -jar ImageExpBackend.jar`
@@ -11,6 +11,11 @@
 6. Change some settings
 7. Back to the terminal, type `reload` and press Enter
 8. Enjoy
+
+# Run
+1. Open the terminal on the folder that the file is downloaded on
+2. Run the command `java -jar ImageExpBackend.jar`
+3. Enjoy
 
 * If you want to stop the server, type `stop` on the terminal and press Enter
 
