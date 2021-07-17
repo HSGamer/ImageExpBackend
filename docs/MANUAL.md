@@ -16,4 +16,4 @@
 
 # Operate
 On the terminal, Type `help` and press Enter to get the list of available commands you can use to interact with the server
-![./picture/HelpCommand.PNG]
+!(help)[./picture/HelpCommand.PNG]
